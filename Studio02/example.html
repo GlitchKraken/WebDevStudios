@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>It's elementary</title>
+
+<!--
+CS 3312, spring 2019
+Examples for Studio 2
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<!-- Page content goes here.  Elements can be nested inside other elements. -->
+<h1 id="top-header">Elements everywhere</h1>
+<p>Different HTML elements have different semantics (inherent meanings) and different default appearances.&nbsp; See the comments in this HTML document for more information.</p>
+
+<h2>Block-level elements</h2>
+<p>Most HTML elements are <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements">block-level</a>&mdash;they have their own block-shaped area that can stretch across the document.&nbsp; Many
+block-level elements are meant to be used in particular ways, to provide meaning and structure to the document.</p>
+
+<!-- ul and ol elements present lists of items. -->
+<ul>
+   <li>Here's an unordered list in a <code>ul</code> element.</li>
+   <li>Each list item is its own <code>li</code> element.</li>
+   <li>Lists can be nested:
+      <ul>
+         <li>Apples</li>
+         <li>Bananas</li>
+         <li>Zebras</li>
+      </ul>
+   </li>
+</ul>
+<ol>
+   <li>Here's an ordered list in a <code>ol</code> element.</li>
+   <li>Each list item is its own <code>li</code> element.</li>
+   <li>The list items are numbered automatically.</li>
+</ol>
+
+<!-- A table element presents two-dimensional data. -->
+<table>
+   <caption>Table: Sports teams</caption>
+   <tr> <!-- tr = table row -->
+      <td></td>
+      <th>baseball</th> <!-- th = table header cell -->
+      <th>football</th>
+      <th>basketball</th>
+   </tr>
+   <tr>
+      <th>Dallas / Fort Worth</th>
+      <td>Rangers</td>
+      <td>Cowboys</td>
+      <td>Mavericks</td> <!-- td = table data cell -->
+   </tr>
+   <tr>
+      <th>Houston</th>
+      <td>Astros</td>
+      <td>Texans</td>
+      <td>Rockets</td>
+   </tr>
+</table>
+
+<!-- A fieldset element and a legend element can be used to create a box meant to contain controls and labels. -->
+<fieldset>
+   <legend>Fieldset: Give us some info</legend>
+   What is your name?&nbsp;
+   <input id="name-input" type="text" />
+   <button id="submit-name" type="button">Submit it</button>
+</fieldset>
+
+<p>To create a generic block-level element without any semantics, use <code>div</code>:</p>
+<div>This text is inside its own <code>div</code> element.</div>
+<div class="special">And here's another <code>div</code> element.&nbsp; This one has a <code>class</code> of <code>special</code>, which may have some intended meaning.</div>
+<div>Notice that a <code>div</code> doesn't have any automatic styling applied, unlike the margins automatically given to a <code>p</code> element.</div>
+
+<h3>Headers</h3>
+<p>And header elements, like the <code>h3</code> element just above, are block-level elements.&nbsp; <code>h1</code> is the largest, most important header and <code>h6</code> is the smallest.</p>
+
+<h2>Inline elements</h2>
+<p>Some HTML elements are <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements">inline</a>&mdash;they only take up the area they need inside other elements.&nbsp; Two examples are the <code>a</code>
+element in the previous sentence and the <code>code</code> elements in this sentence.&nbsp; Other examples follow.</p>
+
+<!-- A select element and option elements can be used to create a dropdown menu. -->
+<label>Choose one:&nbsp;<select id="select-a-president">
+   <option value="roosevelt">Theodore Roosevelt</option>
+   <option selected="selected" value="taft">William Howard Taft</option>
+   <option value="wilson">Woodrow Wilson</option>
+</select></label>
+<!-- Notice how the selected attribute indicates the default choice. -->
+
+<!-- Input elements with type radio can be used to create a list of choices.  The name values match up, so a user can only choose one. -->
+<label><input checked="checked" id="plurality-for-roosevelt" name="plurality-ballot" type="radio" />&nbsp;Theodore Roosevelt</label>
+<label><input id="plurality-for-taft" name="plurality-ballot" type="radio" />&nbsp;William Howard Taft</label>
+<label><input id="plurality-for-wilson" name="plurality-ballot" type="radio" />&nbsp;Woodrow Wilson</label>
+<!-- Notice how the checked attribute indicates the default choice. -->
+
+<!-- Input elements with type checkbox can be used to create a list of choices.  A user can turn any of them off and on. -->
+<label><input checked="checked" id="approval-for-roosevelt" type="checkbox" />&nbsp;Theodore Roosevelt</label>
+<label><input id="approval-for-taft" type="checkbox" />&nbsp;William Howard Taft</label>
+<label><input id="approval-for-wilson" type="checkbox" />&nbsp;Woodrow Wilson</label>
+<!-- Notice how the checked attribute indicates the default choice(s). -->
+
+<!-- Here are some other ways to get input.  Some of them are new in HTML5 and may not work in all browsers. -->
+<input type="text" />
+<input type="password" />
+<input type="number" />
+<input max="10" min="0" step="1" type="range" />
+<input type="date" />
+<input type="color" />
+<button type="button">Click me</button>
+
+<p>The <code>a</code> element in this sentence links to <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">another webpage</a>.</p>
+<p>The <code>a</code> element in this sentence links to <a href="#top-header">an element in this webpage</a>.</p>
+<p>The <code>span</code> element in this sentence doesn't have any <span class="special">inherent</span> meaning, but given a class it can be styled according to some intended meaning.</p>
+
+<h2>HTML character entities</h2>
+<p>Some characters, such as <code>&lt;</code> and <code>&gt;</code>, have special meanings in HTML and so must be escaped.&nbsp; The following table gives a few important ones.</p>
+
+<table>
+   <tr>
+      <th>entity</th>
+      <th>result</th>
+      <th>meaning</th>
+   </tr>
+   <tr>
+      <td><code>&amp;lt;</code></td>
+      <td>&lt;</td>
+      <td>less-than symbol</td>
+   </tr>
+   <tr>
+      <td><code>&amp;gt;</code></td>
+      <td>&gt;</td>
+      <td>greater-than symbol</td>
+   </tr>
+   <tr>
+      <td><code>&amp;quot;</code></td>
+      <td>&quot;</td>
+      <td>quotation mark</td>
+   </tr>
+   <tr>
+      <td><code>&amp;amp;</code></td>
+      <td>&amp;</td>
+      <td>ampersand symbol</td>
+   </tr>
+   <tr>
+      <td><code>&amp;nbsp;</code></td>
+      <td>&nbsp;</td>
+      <td>non-breaking space</td>
+   </tr>
+</table>
+
+</body></html>
