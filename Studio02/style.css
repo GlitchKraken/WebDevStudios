@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+/*
+CS 3312, spring 2019
+Studio 2
+DON'T CHANGE THIS FILE
+*/
+
+/* Fixing the box-sizing attribute will make sizing boxes easier. */
+html {
+   box-sizing: border-box;
+}
+
+/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+* {
+   /* Give every element a thin red border to show its extent. */
+   border-color: rgb(255, 0, 0);
+   border-style: solid;
+   border-width: 1px;
+   padding: 1px;
+   /* You can comment out the four rules above to go back to default styling. */
+}
+
+.special {
+   /* Make some block and inline elements stand out. */
+   background-color: rgb(238, 255, 221);
+}
+
+/* Make input elements with invalid input stand out. */
+input:invalid {
+   box-shadow: 0px 0px 20px 0px rgb(255, 0, 0);
+}
