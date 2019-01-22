@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+
+<!-- Changed the title from "First single-page application" to "Gotta start somewhere" -->
+<title>Gotta start somewhere</title>
+
+<!--
+CS 3312, spring 2019
+Studio 1
+YOUR NAMES: Joshua Meek, Chad Fry
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<!-- Page content goes here.  Elements can be nested inside other elements. -->
+<h1>Welcome to CS 3312</h1>
+<p>
+   What is your name?&nbsp;
+   <input id="name-input" type="text" />
+   <button id="submit-name" type="button">Submit it</button>
+</p>
+<p class="greeting" id="howdy">
+   Howdy, <span id="name-output">student</span>!
+</p>
+
+<!-- ADD NEW ELEMENTS HERE -->
+<!-- Created a new smaller heading, and called it "Brainstorms" -->
+<h2>Brainstorms</h2>
+
+<!-- Created a new paragraph below heading 2, with our web app idea -->
+<p class="info" id="web-app-idea">
+Our idea for a web app is one that syncs with your refrigerator
+and keeps track of the food inside, and will order common ingredients if
+they run out. This is not even remotely feasible or useful, but it looks
+like a paragraph just the same.
+</p>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="script.js"></script>
+
+</body></html>

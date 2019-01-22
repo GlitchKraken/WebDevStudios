@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+/*
+CS 3312, spring 2019
+Studio 1
+YOUR NAMES: Joshua Meek, Chad Fry
+*/
+
+/* Fixing the box-sizing attribute will make sizing boxes easier. */
+html {
+   box-sizing: border-box;
+}
+
+/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+body {
+   /* Set the background color of the whole document to a light gray. */
+   background-color: rgb(238, 238, 238);
+}
+
+/* Make a major heading stand out. */
+h1 {
+   background-color: rgb(221, 238, 255);
+   color: rgb(68, 0, 17);
+   font-family: Futura, "Century Gothic", Geneva, Tahoma, Verdana, Arial, sans-serif;
+   font-size: 250%;
+   font-weight: bold;
+   margin-left: 50px;
+   margin-right: 50px;
+   text-align: center;
+}
+
+/* Style the original greeting. */
+.greeting {
+   border-color: rgb(68, 0, 17);
+   border-style: solid;
+   border-width: 1px;
+   padding: 9px;
+}
+
+/* Add style to a greeting that's become more enthusiastic. */
+.greeting.enthusiastic {
+   background-color: rgb(68, 0, 17);
+   color: rgb(255, 255, 255);
+   font-size: 150%;
+   font-style: italic;
+}
+
+/* ADD NEW CSS RULES HERE */
+
+/* Center all h2 elements */
+h2 {
+   text-align: center;
+}
+
+/* Style all elements with class "info" */
+.info {
+   background-color: black;
+   color: rgb(221, 238, 255);
+   font-size: 100%;
+   text-align: center;
+   margin: auto;
+   padding: 2%;
+   width: 50%;
+}
+
+/* Style classes with "info" & "clicked" to font-family "cursive" */
+.info.clicked {
+   font-size: 100%;
+   font-family: cursive;
+}
