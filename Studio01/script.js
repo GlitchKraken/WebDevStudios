@@ -11,10 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
    'use strict';
 
    // Declare this function's local variables.
-   var howdyElement, nameInputElement, nameOutputElement, submitNameButton;
-
    //Declare "webAppIdeaElement" to use with new event listener below
-   var webAppIdeaElement;
+   var howdyElement, nameInputElement, nameOutputElement, submitNameButton, webAppIdeaElement;
 
    // Find all needed elements and save them in variables.
    nameInputElement = document.querySelector('#name-input');
