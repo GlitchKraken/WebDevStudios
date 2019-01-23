@@ -2,12 +2,12 @@
 <html lang="en-US"><head>
 
 <meta charset="UTF-8" />
-<title>CHANGE THIS TITLE!</title>
+<title>Approval voting</title> <!--set title appropriately-->
 
 <!--
 CS 3312, spring 2019
 Studio 2
-YOUR NAMES: 
+YOUR NAMES: Chad Fry, Josh Meek
 -->
 
 <!-- Import a CSS stylesheet to style the page. -->
@@ -16,5 +16,17 @@ YOUR NAMES:
 </head><body>
 
 <!-- Add your HTML code here. -->
+<h1>A new way to vote</h1> <!--create main page header-->
+<p>Why be limited to voting for only one candidate?</p>
 
+<!--First Box is created here. Use a fieldset with a legend to draw it. -->
+<fieldset>
+<legend>A ballot using plurality voting</legend>
+<ul><!--Start an unordered list. this will put the dots in front AND handle the column stuff.-->
+<label><li><input id="plurality-for-taft" name="plurality-ballot" type="radio" />&nbsp; Theodore Roosevelt</li></label>
+<!--note: the <li> marks the element as a member of the list. otherwise it will not be formatted. -->
+<label><li><input id="plurality-for-Bacon" name="plurality-ballot" type="radio" />&nbsp; Sir Bacon</li></label>
+<label><li><input id="plurality-for-Spongebob" name="plurality-ballot" type="radio" />&nbsp; Spongebob</li></label>
+</ul>
+</fieldset>
 </body></html>
