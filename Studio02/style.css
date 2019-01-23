@@ -18,10 +18,15 @@ html {
 
 * {
    /* Give every element a thin red border to show its extent. */
+
+   /* Remove the comments here to make red lines come back
    border-color: rgb(255, 0, 0);
    border-style: solid;
    border-width: 1px;
    padding: 1px;
+   */
+
+
    /* You can comment out the four rules above to go back to default styling. */
 }
 
