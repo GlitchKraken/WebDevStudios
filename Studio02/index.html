@@ -21,18 +21,43 @@ YOUR NAMES: Chad Fry, Josh Meek
 
 <!--First Box is created here. Use a fieldset with a legend to draw it. -->
 <fieldset>
-<legend>A ballot using plurality voting</legend>
-<ul><!--Start an unordered list. this will put the dots in front AND handle the column stuff.-->
-<label><li><input id="plurality-for-roosevelt" name="plurality-ballot" type="radio" />&nbsp; Theodore Roosevelt</li></label>
-<!--note: the <li> marks the element as a member of the list. otherwise it will not be formatted. -->
-<label><li><input checked="checked" id="plurality-for-taft" name="plurality-ballot" type="radio" />&nbsp; Wiliiam Howard Taft</li></label>
-<label><li><input id="plurality-for-wilson" name="plurality-ballot" type="radio" />&nbsp; Woodrow Wilson</li></label>
-</ul>
+   <legend>A ballot using plurality voting</legend>
+   <ul><!--Start an unordered list. this will put the dots in front AND handle the column stuff.-->
+      <label><li><input id="plurality-for-roosevelt" name="plurality-ballot" type="radio" />&nbsp; Theodore Roosevelt</li></label>
+      <!--note: the <li> marks the element as a member of the list. otherwise it will not be formatted. -->
+      <label><li><input checked="checked" id="plurality-for-taft" name="plurality-ballot" type="radio" />&nbsp; William Howard Taft</li></label>
+      <label><li><input id="plurality-for-wilson" name="plurality-ballot" type="radio" />&nbsp; Woodrow Wilson</li></label>
+   </ul>
 </fieldset>
 
 <!--Paragraph that goes in between the two fieldset boxes-->
 <p>Approval voting lets you approve <em>any</em> candidates you like.</p>
 
+<!--Second Box is created here. Use a fieldset and legend to draw it-->
+<fieldset>
+   <legend>A ballot using approval voting</legend>
+   <ul><!--Start an unordered list. This will put the dots in front AND handle the column of check boxes.-->
+      <label><li><input checked="checked" id="approval-for-roosevelt" type="checkbox" />&nbsp; Theodore Roosevelt</li></label>
+      <label><li><input checked="checked" id="approval-for-taft" type="checkbox" />&nbsp; William Howard Taft</li></label>
+      <label><li><input id="approval-for-wilson" type="checkbox" />&nbsp; Woodrow Wilson</li></label>
+   </ul>
+</fieldset>
 
+<!--Paragraph that goes after the second box about the advantages-->
+<p>Some advantages:</p>
+
+<!--Start an ordered list about the advantages-->
+<!--Use href to link the advantages to web pages-->
+<!--Also used the target method to open the web articles in a new tab-->
+<ol>
+   <li>No <a href="https://en.wikipedia.org/wiki/Vote_splitting" target="_blank">vote-splitting.</a></li>
+   <li>No <a href="https://en.wikipedia.org/wiki/Spoiler_effect" target="_blank">spoiler effect.</a></li>
+   <li>No <a href="https://en.wikipedia.org/wiki/Strategic_nomination" target="_blank">strategic nomination.</a></li>
+</ol>
+
+<!--Paragraph that goes after the ordered list of advantages-->
+<p>And now a what-if:</p>
+
+<!--Start rest of stuff here-->
 
 </body></html>
