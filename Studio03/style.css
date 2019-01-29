@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/*
+CS 3312, spring 2019
+Studio 3
+YOUR NAMES: 
+*/
+
+/* Fixing the box-sizing attribute will make sizing boxes easier. */
+html {
+   box-sizing: border-box;
+}
+
+/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+/* Add your CSS rules below. */
