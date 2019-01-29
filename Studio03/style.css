@@ -28,7 +28,46 @@ h1 {
    text-shadow: 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0);
 }
 
-/* Style the baseball stats table */
+
+
+
+
+            /*--- NEW STUFF BELOW ---*/
+
+
+
+
+/*Rules that effect the ENTIRE baseball table.*/
+.baseball-stats
+{
+   border: 1px solid black;
+   border-collapse: collapse; /*collapse the borders, we don't want lines*/
+   font-family: sans-serif;
+   text-align: center; /*Center the text to the middle of its box*/
+}
+
+/*select the home-run col*/
+.baseball-stats tr :nth-child(5n)
+{
+   background-color: rgb(238, 255, 221);
+}
+
+
+/* Style the even rows of the baseball table.*/
 .baseball-stats tr:nth-child(even) {
-background-color: rgb(238, 255, 221);
+background-color: rgb(221, 255, 238);
+}
+
+
+/* Style the odd rows of the baseball table.*/
+.baseball-stats tr:nth-child(odd) {
+background-color: rgb(221, 238, 255);
+}
+
+
+/*Target the baseball table header */
+.baseball-stats th
+{
+   background-color: rgb(255, 221, 238);
+   padding: 10px;
 }
