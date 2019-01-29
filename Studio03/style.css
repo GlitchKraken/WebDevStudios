@@ -9,6 +9,7 @@ YOUR NAMES: Joshua Meek, Chad Fry
 /* Fixing the box-sizing attribute will make sizing boxes easier. */
 html {
    box-sizing: border-box;
+   background-color: rgb(255,250,245); /* Set page background color */
 }
 
 /* Normally the * selector is smart to avoid, but for this purpose it's fine. */
@@ -17,3 +18,4 @@ html {
 }
 
 /* Add your CSS rules below. */
+/* Used a Chrome extension eye dropper to match CSS colors */
