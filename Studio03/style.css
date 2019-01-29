@@ -19,3 +19,16 @@ html {
 
 /* Add your CSS rules below. */
 /* Used a Chrome extension eye dropper to match CSS colors */
+
+/* Style heading one */
+h1 {
+   color: white;
+   font-family: sans-serif;
+   text-align: center;
+   text-shadow: 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0);
+}
+
+/* Style the baseball stats table */
+.baseball-stats tr:nth-child(even) {
+background-color: green;
+}
