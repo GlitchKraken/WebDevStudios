@@ -30,5 +30,5 @@ h1 {
 
 /* Style the baseball stats table */
 .baseball-stats tr:nth-child(even) {
-background-color: green;
+background-color: rgb(238, 255, 221);
 }
