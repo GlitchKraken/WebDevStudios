@@ -41,6 +41,17 @@ h2
             /*--- NEW STUFF BELOW ---*/
 
 
+
+
+/*put the first-two guys in a flexbox together*/
+/*by selecting the 1st .across, which contains them both.*/
+.across:nth-of-type(1)
+{
+   display: flex;
+  align-items: flex-start;
+  padding: 10px;
+}
+
 /*Select the div-box that encapsulates the baseball-table */
 .across:nth-of-type(1) div:nth-of-type(1)
  {
@@ -48,8 +59,8 @@ h2
    display: inline-block;
    flex-wrap: wrap;
    border-radius:  20px 0px 20px 0px;
-   margin: 10px;
    padding: 10px;
+   margin: 5px;
    border-width: thick;
    border-color:  rgb(42, 153, 218);
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
@@ -62,7 +73,7 @@ h2
    display: flex;
    flex-wrap: wrap;
    border-radius:  20px 0px 20px 0px;
-   margin: 30%;
+   margin: 10px;
    padding: 20px;
    border-width: thick;
    border-color:  rgb(42, 153, 218);
