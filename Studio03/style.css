@@ -20,7 +20,8 @@ html {
 /* Add your CSS rules below. */
 /* Used a Chrome extension eye dropper to match CSS colors */
 
-/* Style heading one */
+
+/* Style heading one (Lets get stylish) */
 h1 {
    color: white;
    font-family: sans-serif;
@@ -28,22 +29,24 @@ h1 {
    text-shadow: 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0), 1px 1px 30px rgb(0,0,0);
 }
 
-
-
+/*Style the second heading (Lorem ipsum) accordingly*/
+h2
+{
+  text-decoration: underline;
+  font-family: sans-serif;
+  font-style: italic;
+}
 
 
             /*--- NEW STUFF BELOW ---*/
-
 
 
 /*Select the div-box that encapsulates the baseball-table */
 .across:nth-of-type(1) div:nth-of-type(1)
  {
    border-style: solid;
-   align-items: center;
-   display: inline-flex;
+   display: inline-block;
    flex-wrap: wrap;
-   justify-content: center;
    border-radius:  20px 0px 20px 0px;
    margin: 10px;
    padding: 10px;
@@ -52,6 +55,19 @@ h1 {
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
 }
 
+/*Select the div box corresponding to second heading, AND its text.*/
+.across:nth-of-type(1) div:nth-of-type(2)
+{
+   border-style: solid;
+   display: flex;
+   flex-wrap: wrap;
+   border-radius:  20px 0px 20px 0px;
+   margin: 30%;
+   padding: 20px;
+   border-width: thick;
+   border-color:  rgb(42, 153, 218);
+   box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
+}
 
 
 
