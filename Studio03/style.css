@@ -102,7 +102,7 @@ background-color: rgb(221, 238, 255);
 
 /*Style the paragraph with the class fancy*/
 .fancy {
-   box-shadow: inset 0px 0px 20px 10px red, inset 0px 0px 20px 10px green;
+   box-shadow: inset 0px 20px 10px -10px rgb(0, 26, 51), inset 0px -10px 20px 0px rgb(77, 0, 0), inset -10px 0px 20px -1px rgb(0, 77, 0), inset 10px 0px 20px -1px rgb(0, 77, 0);
    padding: 15px;
    border-radius: 10px;
 }
