@@ -38,39 +38,35 @@ h2
 
 /*put the first-two guys in a flexbox together*/
 /*by selecting the 1st .across, which contains them both.*/
-.across:nth-of-type(1)
+.across
 {
    display: flex;
    align-items: flex-start;
    padding: 10px;
+   justify-content: space-around;
 }
 
-/*Select the div-box that encapsulates the baseball-table */
-.across:nth-of-type(1) div:nth-of-type(1)
- {
-    border-style: solid;
-    display: inline-block;
-    flex-wrap: wrap;
-    border-radius:  20px 0px 20px 0px;
-    padding: 10px;
-    margin: 5px;
-    border-width: thick;
-    border-color:  rgb(42, 153, 218);
-    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
-}
-
-/*Select the div box corresponding to second heading, AND its text.*/
-.across:nth-of-type(1) div:nth-of-type(2)
-{
-   border-style: solid;
+.across > div {
    display: flex;
-   flex-wrap: wrap;
+   flex-direction: column;
+   align-items: flex-start;
+   border-style: solid;
    border-radius:  20px 0px 20px 0px;
    margin: 10px;
-   padding: 20px;
+   padding: 10px;
    border-width: thick;
    border-color:  rgb(42, 153, 218);
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
+}
+
+/*bottom is dark red top, top is dark blue, sides are green and they are going in*/
+/*Stuff for the Lorem ipsum*/
+
+
+/*Using the first across class, align the table centered with the lorem ipsum box*/
+.across:nth-of-type(1)
+{
+   align-items: center;
 }
 
 /*Rules that effect the ENTIRE baseball table.*/
@@ -86,8 +82,6 @@ h2
 .baseball-stats tr :nth-child(5n)
 {
    background-color: rgb(255,255,221);
-   padding-left: 5px;
-   padding-right: 5px;
 }
 
 /* Style the even rows of the baseball table.*/
@@ -104,36 +98,19 @@ background-color: rgb(221, 238, 255);
 .baseball-stats th
 {
    background-color: rgb(255, 221, 238);
-   padding: 12px;
 }
 
 /*Style the paragraph with the class fancy*/
 .fancy {
-   box-shadow: 0 0 5px 10px rgb(52,65,79);
-   padding: 12px;
+   /*box-shadow: 0 0 5px 10px rgb(52,65,79);*/
+   padding: 15px;
 }
 
-/*Put the bottom three boxes together in a flexbox*/
-/*by selecting the 2nd .across*/
-.across:nth-of-type(2) {
-   display: flex;
-   align-items: flex-start;
-   padding: 10px;
-}
-
-/*Style the first div box on bottom*/
-.across:nth-of-type(2) > div:nth-of-type(1) {
+/*Style the font for two of the bottom boxes with fantasy font*/
+.across:nth-of-type(2) > div {
    font-family: fantasy;
-   border-style: solid;
-   display: flex;
-   flex-wrap: wrap;
-   border-radius:  20px 0px 20px 0px;
-   margin: 10px;
-   padding: 10px;
-   border-width: thick;
-   border-color:  rgb(42, 153, 218);
-   box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
 }
+
 
 /*Style the boxes around the text in the div in the first bottom div box*/
 .across:nth-of-type(2) > div:nth-of-type(1) div {
@@ -141,20 +118,6 @@ background-color: rgb(221, 238, 255);
    border-color: rgb(255, 190, 238);
    margin: 6px;
    padding: 5px;
-   box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
-}
-
-/*Style the second div box on bottom*/
-.across:nth-of-type(2) > div:nth-of-type(2) {
-   font-family: fantasy;
-   border-style: solid;
-   display: flex;
-   flex-wrap: wrap;
-   border-radius:  20px 0px 20px 0px;
-   margin: 10px;
-   padding: 10px;
-   border-width: thick;
-   border-color:  rgb(42, 153, 218);
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
 }
 
@@ -167,21 +130,10 @@ background-color: rgb(221, 238, 255);
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
 }
 
-/*Style the third div box on bottom*/
-.across:nth-of-type(2) > div:nth-of-type(3) {
-   border-style: solid;
-   display: flex;
-   flex-wrap: wrap;
-   border-radius:  20px 0px 20px 0px;
-   margin: 10px;
-   padding: 10px;
-   border-width: thick;
-   border-color:  rgb(42, 153, 218);
-   box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
-}
 
 /*Style the border around the text in the third bottom div box*/
 .across:nth-of-type(2) > div:nth-of-type(3) fieldset {
+   font-family: sans-serif;
    border-style: dashed;
    border-width: thick;
    border-color: green;
@@ -198,4 +150,5 @@ background-color: rgb(221, 238, 255);
 /*Style the third div box on the bottom to change color when hovering*/
 .across:nth-of-type(2) > div:nth-of-type(3) li:hover {
    background-color: rgb(255, 221, 238);
+   padding-left: 3px;
 }
