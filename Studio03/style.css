@@ -18,7 +18,6 @@ html {
 }
 
 /* Add your CSS rules below. */
-/* Used a Chrome extension eye dropper to match CSS colors */
 
 /* Style heading one (Lets get stylish) */
 h1 {
@@ -29,23 +28,21 @@ h1 {
 }
 
 /*Style the second heading (Lorem ipsum) accordingly*/
-h2
-{
+h2 {
   text-decoration: underline;
   font-family: sans-serif;
   font-style: italic;
 }
 
-/*put the first-two guys in a flexbox together*/
-/*by selecting the 1st .across, which contains them both.*/
-.across
-{
+/*Put everything in a flexbox together using the across class*/
+.across {
    display: flex;
    align-items: flex-start;
    padding: 10px;
    justify-content: space-around;
 }
 
+/*Style each "div" within the flexbox*/
 .across > div {
    display: flex;
    flex-direction: column;
@@ -59,28 +56,21 @@ h2
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
 }
 
-/*bottom is dark red top, top is dark blue, sides are green and they are going in*/
-/*Stuff for the Lorem ipsum*/
-
-
 /*Using the first across class, align the table centered with the lorem ipsum box*/
-.across:nth-of-type(1)
-{
+.across:nth-of-type(1) {
    align-items: center;
 }
 
 /*Rules that effect the ENTIRE baseball table.*/
-.baseball-stats
-{
+.baseball-stats {
    border: 1px solid black;
    border-collapse: collapse; /*collapse the borders, we don't want lines*/
    font-family: sans-serif;
    text-align: center; /*Center the text to the middle of its box*/
 }
 
-/*select the home-run col*/
-.baseball-stats tr :nth-child(5n)
-{
+/*Select the home-run column*/
+.baseball-stats tr :nth-child(5n) {
    background-color: rgb(255,255,221);
 }
 
@@ -95,8 +85,7 @@ background-color: rgb(221, 238, 255);
 }
 
 /*Target the baseball table header */
-.baseball-stats th
-{
+.baseball-stats th {
    background-color: rgb(255, 221, 238);
 }
 
@@ -106,57 +95,45 @@ background-color: rgb(221, 238, 255);
    padding: 15px;
    border-radius: 10px;
 }
-.fancy::first-letter
-{
+
+/*Style the first letter in the paragraph of Lorem ipsum*/
+.fancy::first-letter {
    font-size: 200%;
 }
 
-/*Style the font for two of the bottom boxes with fantasy font*/
-.across:nth-of-type(2) > div {
+/*Style the text in the div in the first & second bottom div boxes*/
+.across:nth-of-type(2) div > div {
+   border-style: solid;
+   border-width: 1px;
+   border-color: rgb(255, 100, 200);
    font-family: fantasy;
-}
-
-
-/*Style the boxes around the text in the div in the first bottom div box*/
-.across:nth-of-type(2) > div:nth-of-type(1) div {
-   border-style: solid;
-   border-width: 1px;
-   border-color: rgb(255, 100, 200);
    margin: 6px;
    padding: 5px;
    box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
 }
-
-/*Style the boxes around the text in the div in the second bottom div box*/
-.across:nth-of-type(2) > div:nth-of-type(2) div {
-   border-style: solid;
-   border-width: 1px;
-   border-color: rgb(255, 100, 200);
-   margin: 6px;
-   padding: 5px;
-   box-shadow: -5px 5px 5px 1px rgb(17, 51, 17);
-}
-
 
 /*Style the border around the text in the third bottom div box*/
-.across:nth-of-type(2) > div:nth-of-type(3) fieldset {
-   font-family: sans-serif;
+.across:nth-of-type(2) fieldset {
    border-style: dashed;
    border-width: thick;
    border-color: green;
+   font-family: sans-serif;
    margin: 6px;
    padding: 5px;
    border-radius: 3px;
 }
 
 /*Style the border around the legend*/
-.across:nth-of-type(2) > div:nth-of-type(3) fieldset > legend {
+.across:nth-of-type(2) fieldset > legend {
    border-style: solid;
    border-color: green;
+   border-radius: 5px 5px 5px 5px;
+   border-width: thick;
+   padding: 4px;
 }
 
 /*Style the third div box on the bottom to change color when hovering*/
-.across:nth-of-type(2) > div:nth-of-type(3) li:hover {
+.across:nth-of-type(2) li:hover {
    background-color: rgb(255, 221, 238);
    padding-left: 3px;
 }
