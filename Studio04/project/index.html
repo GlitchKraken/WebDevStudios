@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>Studio 4</title>
+
+<!--
+CS 3312, spring 2019
+Studio 4
+DON'T CHANGE THIS FILE
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Let's make things happen</h1>
+
+<fieldset id="temperature-area">
+   <legend>Convert temperatures</legend>
+   <label>Fahrenheit: <input id="fahrenheit" type="text" /></label>
+   <label>Celsius: <input id="celsius" type="text" /></label>
+   <button id="convert-f-to-c" type="button">Convert from &deg;F to &deg;C</button>
+   <button id="convert-c-to-f" type="button">Convert from &deg;C to &deg;F</button>
+</fieldset>
+
+<fieldset id="star-box-area">
+   <legend>Draw a box of stars</legend>
+   <label>Enter size of box: <input id="size-of-box" type="number" /></label>
+   <button id="draw-star-box" type="button">Draw the box</button>
+   <textarea cols="20" id="star-box-output" rows="20"></textarea>
+</fieldset>
+
+<fieldset id="hailstone-area">
+   <legend>Print a hailstone sequence</legend>
+   <label>Enter starting number: <input id="starting-number" type="number" /></label>
+   <button id="print-hailstone" type="button">Hailstone it</button>
+   <textarea cols="20" id="hailstone-output" rows="30"></textarea>
+</fieldset>
+
+<fieldset id="star-boxes-area">
+   <legend>Draw nested boxes of stars</legend>
+   <label>Enter size of outer box: <input id="size-of-outer-box" type="number" /></label>
+   <button id="draw-star-boxes" type="button">Draw the boxes</button>
+   <textarea cols="20" id="star-boxes-output" rows="20"></textarea>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="script.js"></script>
+
+</body></html>

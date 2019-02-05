@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>JavaScript examples for Studio 4</title>
+
+<!--
+CS 3312, spring 2019
+Examples for Studio 4
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="example.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Let's make things happen</h1>
+
+<fieldset id="poetry-area">
+   <legend>Write some poetry</legend>
+   <label>Give me a noun: <input id="noun-input" type="text" /></label>
+   <label>Give me a verb: <input id="verb-input" type="text" /></label>
+   <label>Give me an adjective: <input id="adjective-input" type="text" /></label>
+   <button id="write-poem" type="button">Write a poem!</button>
+   <p class="error-message" id="poem-error"></p>
+   <textarea cols="50" id="poem-output" rows="5"></textarea>
+</fieldset>
+
+<fieldset id="dice-area">
+   <legend>Roll some dice</legend>
+   <label>Enter number of dice to roll: <input id="number-of-dice" type="number" /></label>
+   <button id="roll-dice" type="button">Roll the dice</button>
+   <p class="error-message" id="dice-error"></p>
+   <p class="number-output" id="dice-output"></p>
+</fieldset>
+
+<fieldset id="powers-area">
+   <legend>Calculate some powers</legend>
+   <button id="show-powers" type="button">Print those powers</button>
+   <textarea cols="20" id="powers-output" rows="20"></textarea>
+</fieldset>
+
+<fieldset id="random-map-area">
+   <legend>Draw a random map</legend>
+   <label>Enter size of map: <input id="size-of-map" type="number" /></label>
+   <button id="draw-random-map" type="button">Draw the map</button>
+   <textarea cols="20" id="random-map-output" rows="20"></textarea>
+</fieldset>
+
+<fieldset id="math-game-area">
+   <legend>Play a math game</legend>
+   <p>Try to make the number: <span class="number-output" id="goal-number"></span></p>
+   <button id="mult-3" type="button">Multiply it by 3</button>
+   <button id="add-5" type="button">Add 5 to it</button>
+   <button id="restart-math-game" type="button">Start over</button>
+   <p>Your number so far: <span class="number-output" id="number-so-far"></span></p>
+   <p id="math-game-message"></p>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="example.js"></script>
+
+</body></html>
