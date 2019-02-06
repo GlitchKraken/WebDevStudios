@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var fahrenheitVal, celsiusVal;
 
     //grab the value inside the fahrenheit box, but convert it to an int (by default it may be string).
-    fahrenheitVal = parseInt(document.querySelector('#fahrenheit').textContent);
+    fahrenheitVal = parseInt(document.querySelector('#fahrenheit').value, 10);
     //test outputting before we get to any serious work.
-    document.querySelector('#celsius').value = 'The type of FV is: ' + typeof fahrenheitVal;
+    document.querySelector('#celsius').value = 'the value of fahrenheit is: ' + fahrenheitVal;
   }, false); //end of
 
 }, false); //end main-listener
