@@ -137,6 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
     //Variables for the dimensions of the box
     var boxDimensions, row, col, boxOutput;
 
+    // we may need this! was suggested we calculate this and use it.
+    var distanceFromNearestEdge;
+
     //Grab the value inside the box to get the size of the boxes
     boxDimensions = document.querySelector('#size-of-outer-box').value;
 
@@ -145,8 +148,18 @@ document.addEventListener('DOMContentLoaded', function() {
       boxOutput = "";
 
       //Loop through the rows and columns "drawing" asterisks
+      // he also mentioned that we SHOULD be using a double for loop.
+      //we need to calculate how far we are from the closest edge, and then user THAT number.
       for (row = 0; row < boxDimensions; row += 1) {
         for (col = 0; col < boxDimensions; col += 1) {
+
+           // if nearestEdgeDistance == EVEN_NUM -> output a "*"
+
+          //  if nearestEdgeDistance == ODD_NUM -> output a " "
+
+
+
+
           if (row === 0 || col === 0) {
             boxOutput += '*';
           } else if (row !== boxDimensions && col === boxDimensions - 1) {
