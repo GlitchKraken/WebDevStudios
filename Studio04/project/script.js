@@ -9,6 +9,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
+
+
   // *** The user has clicked "convert fahrenheit to celsius" ***
   document.querySelector('#convert-f-to-c').addEventListener('click', function() {
     var fahrenheitVal, celsiusVal;
@@ -28,6 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   }, false); //end of "convert fahrenheit to celsius"
 
+
+
   // *** The user has clicked "convert celsius to fahrenheit" ***
   document.querySelector('#convert-c-to-f').addEventListener('click', function() {
     var fahrenheitVal, celsiusVal;
@@ -45,45 +49,123 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('#fahrenheit').value = fahrenheitVal; // put the value inside the text-box
     }
 
-   }, false); //end of "convert celsius to fahrenheit"
+  }, false); //end of "convert celsius to fahrenheit"
 
-   // *** The user clicked "Draw the box" ***
-   document.querySelector('#draw-star-box').addEventListener('click', function() {
-      //Variables for the dimensions of the box
-      var boxDimensions, row, col, boxOutput;
 
-      //Grab the value inside the box to get the size of the boxes
-      boxDimensions = document.querySelector('#size-of-box').value;
 
-      if (isFinite(boxDimensions) && boxDimensions >= 0) {
-         boxOutput = ""; //Clear out the box area so it is empty
+  // *** The user clicked "Draw the box" ***
+  document.querySelector('#draw-star-box').addEventListener('click', function() {
+    //Variables for the dimensions of the box
+    var boxDimensions, row, col, boxOutput;
 
-         //Loop through the rows and columns "drawing" asterisks
-         for (row = 0; row < boxDimensions; row += 1) {
-            for (col = 0; col < boxDimensions; col += 1) {
-               if (row === 0 || col === 0) {
-                  boxOutput += '*';
-               } else if (row !== boxDimensions && col === boxDimensions - 1) {
-                  boxOutput += '*';
-               } else if (col !== boxDimensions && row === boxDimensions - 1) {
-                  boxOutput += '*';
-               } else {
-                  boxOutput += " ";
-               }
-            }
-            boxOutput += '\n'; //Move to the next row
-         }
+    //Grab the value inside the box to get the size of the boxes
+    boxDimensions = document.querySelector('#size-of-box').value;
 
-         //Output the design
-         document.querySelector('#star-box-output').value = boxOutput;
+    if (isFinite(boxDimensions) && boxDimensions >= 0) {
+      boxOutput = ""; //Clear out the box area so it is empty
 
-      } else {
-         //If the value is a nonnegative number, tell the user to input a new number
-         document.querySelector('#star-box-output').value = 'I need a number to draw a box.';
+      //Loop through the rows and columns "drawing" asterisks
+      for (row = 0; row < boxDimensions; row += 1) {
+        for (col = 0; col < boxDimensions; col += 1) {
+          if (row === 0 || col === 0) {
+            boxOutput += '*';
+          } else if (row !== boxDimensions && col === boxDimensions - 1) {
+            boxOutput += '*';
+          } else if (col !== boxDimensions && row === boxDimensions - 1) {
+            boxOutput += '*';
+          } else {
+            boxOutput += " ";
+          }
+        }
+        boxOutput += '\n'; //Move to the next row
       }
 
-   }, false); //End of "Draw the box"
+      //Output the design
+      document.querySelector('#star-box-output').value = boxOutput;
+
+    } else {
+      //If the value is not a nonnegative number, tell the user to input a new number
+      document.querySelector('#star-box-output').value = 'I need a number to draw a box.';
+    }
+
+  }, false); //End of "Draw the box"
 
 
+
+  // *** The user clicked "Hailstone it" ***
+  document.querySelector('#print-hailstone').addEventListener('click', function() {
+    //Variable to hold the number to Hailstone
+    var numToChange, length, outputString;
+    outputString = ""; //Start with an empty string
+    // for anything to be executed, we need at LEAST one number.
+    length = 1;
+
+    //Grab the value inside the box to get the hailstone number.
+    numToChange = parseInt(document.querySelector('#starting-number').value);
+
+    //Check to make sure the number is a positive integer
+    if (isFinite(numToChange) && numToChange > 0) {
+      // keep going until we reach 1. or we're outright given 1.
+      while (numToChange !== 1) {
+        //before doing anything, output the original number
+        outputString += numToChange + "\n";
+        //Condition if numToChange is even
+        if ((numToChange % 2) === 0) {
+          numToChange = (numToChange / 2);
+        } else {
+          //Condition if numToChange is odd
+          numToChange = ((numToChange * 3) + 1);
+        }
+        length += 1;
+      }
+      //if we're here, then numToChange MUST === 1. add it to the output string.
+      outputString += numToChange;
+
+      outputString += '\n' + 'Length = ' + length; //Output the total number of numbers hailstoned
+      document.querySelector('#hailstone-output').value = outputString;
+    } else {
+      document.querySelector('#hailstone-output').value = 'I need a number to start with.';
+    }
+
+  }, false); //end of "hailstone-click"
+
+
+
+
+  // *** The user clicked "Draw the boxes" ***
+  document.querySelector('#draw-star-boxes').addEventListener('click', function() {
+    //Variables for the dimensions of the box
+    var boxDimensions, row, col, boxOutput;
+
+    //Grab the value inside the box to get the size of the boxes
+    boxDimensions = document.querySelector('#size-of-outer-box').value;
+
+    // ensure valid user input before drawing box.
+    if (isFinite(boxDimensions) && boxDimensions >= 0) {
+      boxOutput = "";
+
+      //Loop through the rows and columns "drawing" asterisks
+      for (row = 0; row < boxDimensions; row += 1) {
+        for (col = 0; col < boxDimensions; col += 1) {
+          if (row === 0 || col === 0) {
+            boxOutput += '*';
+          } else if (row !== boxDimensions && col === boxDimensions - 1) {
+            boxOutput += '*';
+          } else if (col !== boxDimensions && row === boxDimensions - 1) {
+            boxOutput += '*';
+          } else {
+            boxOutput += " ";
+          }
+        }
+        boxOutput += '\n'; //Move to the next row
+      }
+
+      //Output the design
+      document.querySelector('#star-boxes-output').value = boxOutput;
+
+    } else {
+      document.querySelector('star-boxes-output').value = 'I need a number to draw boxes.';
+    }
+  }, false); //End of "Draw the boxes"
 
 }, false); //end main-listener
