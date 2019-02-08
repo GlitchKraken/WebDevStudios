@@ -9,8 +9,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
-
-
   // *** The user has clicked "convert fahrenheit to celsius" ***
   document.querySelector('#convert-f-to-c').addEventListener('click', function() {
     var fahrenheitVal, celsiusVal;
@@ -30,8 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   }, false); //end of "convert fahrenheit to celsius"
 
-
-
   // *** The user has clicked "convert celsius to fahrenheit" ***
   document.querySelector('#convert-c-to-f').addEventListener('click', function() {
     var fahrenheitVal, celsiusVal;
@@ -49,9 +45,44 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('#fahrenheit').value = fahrenheitVal; // put the value inside the text-box
     }
 
+   }, false); //end of "convert celsius to fahrenheit"
 
+   // *** The user clicked "Draw the box" ***
+   document.querySelector('#draw-star-box').addEventListener('click', function() {
+      //Variables for the dimensions of the box
+      var boxDimensions, row, col, boxOutput;
 
-  }, false);
+      //Grab the value inside the box to get the size of the boxes
+      boxDimensions = document.querySelector('#size-of-box').value;
+
+      if (isFinite(boxDimensions) && boxDimensions >= 0) {
+         boxOutput = ""; //Clear out the box area so it is empty
+
+         //Loop through the rows and columns "drawing" asterisks
+         for (row = 0; row < boxDimensions; row += 1) {
+            for (col = 0; col < boxDimensions; col += 1) {
+               if (row === 0 || col === 0) {
+                  boxOutput += '*';
+               } else if (row !== boxDimensions && col === boxDimensions - 1) {
+                  boxOutput += '*';
+               } else if (col !== boxDimensions && row === boxDimensions - 1) {
+                  boxOutput += '*';
+               } else {
+                  boxOutput += " ";
+               }
+            }
+            boxOutput += '\n'; //Move to the next row
+         }
+
+         //Output the design
+         document.querySelector('#star-box-output').value = boxOutput;
+
+      } else {
+         //If the value is a nonnegative number, tell the user to input a new number
+         document.querySelector('#star-box-output').value = 'I need a number to draw a box.';
+      }
+
+   }, false); //End of "Draw the box"
 
 
 
