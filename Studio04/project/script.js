@@ -138,47 +138,68 @@ document.addEventListener('DOMContentLoaded', function() {
     var boxDimensions, row, col, boxOutput;
 
     // we may need this! was suggested we calculate this and use it.
-    var distanceFromNearestEdge;
+    var nearestEdgeDistance;
+    var distanceFromTop, distanceFromBottom, distanceFromLeft, distanceFromRight;
 
+    // Initialize vars to sigil values.
+    distanceFromTop = -1;
+    distanceFromLeft = -1;
+    distanceFromRight = -1;
+    distanceFromBottom = -1;
+    nearestEdgeDistance = -1;
     //Grab the value inside the box to get the size of the boxes
-    boxDimensions = document.querySelector('#size-of-outer-box').value;
+    boxDimensions = parseInt(document.querySelector('#size-of-outer-box').value);
 
     // ensure valid user input before drawing box.
     if (isFinite(boxDimensions) && boxDimensions >= 0) {
-      boxOutput = "";
-
-      //Loop through the rows and columns "drawing" asterisks
-      // he also mentioned that we SHOULD be using a double for loop.
-      //we need to calculate how far we are from the closest edge, and then user THAT number.
+      boxOutput = '';
+      //Loop through the rows and columns.
       for (row = 0; row < boxDimensions; row += 1) {
         for (col = 0; col < boxDimensions; col += 1) {
 
-           // if nearestEdgeDistance == EVEN_NUM -> output a "*"
+          //calculate the current distance from each side.
+          distanceFromTop = row;
+          distanceFromLeft = col;
+          distanceFromRight = ((boxDimensions - 1) - col);
+          distanceFromBottom = ((boxDimensions - 1) - row);
 
-          //  if nearestEdgeDistance == ODD_NUM -> output a " "
+          // assume the top is the closest side, and check the rest for confirmation.
+          nearestEdgeDistance = distanceFromTop;
 
+          // if anything has a shorter distance than the "nearest" side, assign that side as nearest.
+          if (distanceFromLeft < nearestEdgeDistance) {
+            nearestEdgeDistance = distanceFromLeft;
+          }
 
+          if (distanceFromRight < nearestEdgeDistance) {
+            nearestEdgeDistance = distanceFromRight;
+          }
 
+          if (distanceFromBottom < nearestEdgeDistance) {
+            nearestEdgeDistance = distanceFromBottom;
+          }
+          // shortest distance is now currently in nearestEdgeDistance
 
-          if (row === 0 || col === 0) {
-            boxOutput += '*';
-          } else if (row !== boxDimensions && col === boxDimensions - 1) {
-            boxOutput += '*';
-          } else if (col !== boxDimensions && row === boxDimensions - 1) {
+          // if nearestEdgeDistance is EVEN_NUM -> output a "*"
+          if (nearestEdgeDistance % 2 === 0) {
             boxOutput += '*';
           } else {
-            boxOutput += " ";
+            boxOutput += ' '; //  if nearestEdgeDistance is ODD_NUM -> output a " "
           }
-        }
-        boxOutput += '\n'; //Move to the next row
-      }
+
+
+        } // end col for loop
+        boxOutput += '\n'; //Move to the next row, make sure to print a new line.
+      } // end row for loop
 
       //Output the design
+
       document.querySelector('#star-boxes-output').value = boxOutput;
 
     } else {
-      document.querySelector('star-boxes-output').value = 'I need a number to draw boxes.';
+      document.querySelector('#star-boxes-output').value = 'I need a number to draw boxes.';
     }
+
   }, false); //End of "Draw the boxes"
 
 }, false); //end main-listener
