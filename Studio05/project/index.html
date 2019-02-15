@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>Studio 5</title>
+
+<!--
+CS 3312, spring 2019
+Studio 5
+DON'T CHANGE THIS FILE
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Make it functional</h1>
+
+<fieldset id="primality-area">
+   <legend>Test for prime numbers</legend>
+   <p>
+      <input id="primality-input" type="number" /> is <span id="prime-or-not"></span>.
+   </p>
+</fieldset>
+
+<fieldset id="fibonacci-area">
+   <legend>Calculate Fibonacci values</legend>
+   <label>Which Fibonacci number do you want? <input id="fibonacci-input" type="number" /></label>
+   <button id="calculate-fibonacci" type="button">Calculate it</button>
+   <p>The
+      <span class="number-output" id="which-fibonacci-number"></span>th
+      Fibonacci number is
+      <span class="number-output" id="fibonacci-number"></span>.
+   </p>
+</fieldset>
+
+<fieldset id="remember-total-number-area">
+   <legend>Accumulator</legend>
+   <label>Enter a number: <input id="number-input" type="number" /></label>
+   <button id="add-to-total" type="button">Add it to the total</button>
+   <p>Your total so far:
+      <span class="number-output" id="total-number"></span>
+   </p>
+</fieldset>
+
+<fieldset id="reversal-area">
+   <legend>I'll reverse your input</legend>
+   <label>Enter a string: <input id="reversal-input" type="text" /></label>
+</fieldset>
+
+<fieldset id="colors-area">
+   <legend>Make this square colorful</legend>
+   <div class="square" id="colors"></div>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="script.js"></script>
+
+</body></html>
