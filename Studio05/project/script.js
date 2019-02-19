@@ -81,10 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
             //Recursive step to find the fibonacci number
             return (fibonacci(n - 2) + fibonacci(n - 1));
          }
-
          return 0; //Failsafe, doesn't fall within other categories
-
-      }
+      };
 
       // Do things when the "Calculate it" button is clicked.
       document.querySelector('#calculate-fibonacci').addEventListener('click', function () {
@@ -101,6 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
       var rememberTotal;
 
       // WRITE YOUR rememberTotal FUNCTION HERE
+      rememberTotal = (function rememberTotal (num) {
+         var runningTotal = 0; //Private variable for total, initialized to 0
+
+         return function (num) {
+            //Make sure num is a finite number, then add it to num
+            if (typeof(num) === 'number' && isFinite(num)) {
+               runningTotal += num;
+            }
+            return runningTotal; //Return the new total
+         }
+      }());
 
       // Output the initial total.
       document.querySelector('#total-number').textContent = rememberTotal();
