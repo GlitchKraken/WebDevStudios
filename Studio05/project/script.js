@@ -13,9 +13,24 @@ document.addEventListener('DOMContentLoaded', function () {
       var isPrime;
 
       // WRITE YOUR isPrime FUNCTION HERE
-      isPrime function isPrime (number) {
+      isPrime = function isPrime (number) {
          if (typeof(number) === 'number' && isFinite(number)) {
-            reee;
+            if(number < 2) {
+               // all cases before 2 are not prime.
+               return false;
+            }
+            for(var i = 2; i < number; i+=1) {
+               if(number % i === 0) {
+                  //then, we've found an i that divides number, it cannot be prime.
+                  return false;
+               }
+            }
+            //if we're here, we've looked at every number from 2 to number, and nothing divides it.
+            return true;
+         }
+         else {
+            // we were given an invalid entry.
+            return false;
          }
       };
 
@@ -24,7 +39,17 @@ document.addEventListener('DOMContentLoaded', function () {
          var report;
 
          // WRITE YOUR report FUNCTION HERE
-
+         report = function report (parameter) {
+            if(typeof(parameter) === 'number' && isFinite(parameter) && isPrime(parameter)) {
+               document.querySelector('#prime-or-not').textContent = 'prime';
+            }
+            else if(typeof(parameter) === 'number' && isFinite(parameter) && !isPrime(parameter)) {
+               document.querySelector('#prime-or-not').textContent = 'not prime';
+            }
+            else {
+               document.querySelector('#prime-or-not').textContent = 'not a number';
+            }
+         };
          // Call the report function even before there's a value to use.
          report();
          // When the number is changed at all, immediately . . .
