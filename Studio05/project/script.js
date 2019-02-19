@@ -95,12 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }, false);
    }());
 
-
-
-
-
-
-
    (function () {
       var rememberTotal;
 
@@ -114,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                runningTotal += num;
             }
             return runningTotal; //Return the new total
-         };
+         }
       }());
 
       // Output the initial total.
@@ -126,27 +120,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }, false);
    }());
 
-
-
-
-
-
-
    (function () {
       var reverseString;
 
       // WRITE YOUR reverseString FUNCTION HERE
-      reverseString = function reverseString (str) {
-
-                  if(typeof(str) === 'string' && str.length > 0) {
-                     //throw the first character at the end of the next-part of the recursive step.
-                     
-                     return (reverseString(str.slice(1, str.length)) + str.charAt(0) );
-                  }
-                  else return '';
-
-      };
-
 
       (function () {
          var reversalInputElement;
@@ -158,51 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
       }());
    }());
-
-
-
-
-
-
-
-/*
-   (function () {
-      var reverseString;
-
-      // WRITE YOUR reverseString FUNCTION HERE
-      reverseString = (function reverseString (str) {
-
-         if(typeof(str) === 'string' && str.length() > 0) {
-            return 'crup';
-            //return (str.charAt(0) + reverseString( (str.slice(1, str.length()-1)) ).charAt(length-1));
-         }
-         return 'cryd';
-      }());
-
-      (function () {
-         var reversalInputElement;
-         reversalInputElement = document.querySelector('#reversal-input');
-         // When the user changes the string and focuses on another part of the page, reverse the new string.
-         // Notice the difference between the 'change' event and the 'input' event.
-         reversalInputElement.addEventListener('change', function () {
-            reversalInputElement.value = reverseString(reversalInputElement.value);
-         }, false);
-      }());
-   }());
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
 
    (function () {
       // If you like, write code here that will change the color of the square when the mouse interacts with it.
