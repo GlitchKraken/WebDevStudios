@@ -64,6 +64,23 @@ document.addEventListener('DOMContentLoaded', function () {
       var fibonacci;
 
       // WRITE YOUR fibonacci FUNCTION HERE
+      fibonacci = function fibonacci (n) {
+         if (typeof(n) === 'number' && isFinite(n)) {
+            n = Math.round(n); //Round n to the nearest integer
+
+            //Base case. If n is 0, 1, or 2, return n
+            if (n < 2 && n >= 0) {
+               return n;
+            } else if (n < 0){ //If n is a negative number
+               return 0;
+            }
+
+            //Recursive step to find the fibonacci number
+            return (fibonacci(n - 2) + fibonacci(n - 1));
+         } else {
+            return 0; //Failsafe, doesn't fall within other categories
+         }
+      }
 
       // Do things when the "Calculate it" button is clicked.
       document.querySelector('#calculate-fibonacci').addEventListener('click', function () {
