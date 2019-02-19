@@ -71,15 +71,19 @@ document.addEventListener('DOMContentLoaded', function () {
             //Base case. If n is 0, 1, or 2, return n
             if (n < 2 && n >= 0) {
                return n;
-            } else if (n < 0){ //If n is a negative number
+            }
+
+            //If n is a negative number
+            if (n < 0) {
                return 0;
             }
 
             //Recursive step to find the fibonacci number
             return (fibonacci(n - 2) + fibonacci(n - 1));
-         } else {
-            return 0; //Failsafe, doesn't fall within other categories
          }
+
+         return 0; //Failsafe, doesn't fall within other categories
+
       }
 
       // Do things when the "Calculate it" button is clicked.
