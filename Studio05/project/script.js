@@ -124,6 +124,14 @@ document.addEventListener('DOMContentLoaded', function () {
       var reverseString;
 
       // WRITE YOUR reverseString FUNCTION HERE
+      reverseString = function reverseString (str) {
+         if (str.length === 0) {
+            return '';
+         }
+
+         //Recursion step. First char, concatenated with reverse string
+         return reverseString(str.slice(1)) + str.charAt(0);
+      };
 
       (function () {
          var reversalInputElement;
@@ -136,9 +144,31 @@ document.addEventListener('DOMContentLoaded', function () {
       }());
    }());
 
+   //Used the function from example.js
+   //Altered the "crazy colors" to make it to where
+   //when clicking anywhere on the page, the color will change
    (function () {
       // If you like, write code here that will change the color of the square when the mouse interacts with it.
       // You may find the updateSquare function from the examples useful.
-   }());
+      var crazyColorsElement, randomizeColor;
 
+      function randomizeColor () {
+         var blue, green, red;
+         // Randomize the square's background color.
+         red = Math.floor(Math.random() * 256);
+         green = Math.floor(Math.random() * 256);
+         blue = Math.floor(Math.random() * 256);
+         crazyColorsElement.style.backgroundColor = 'rgb(' + red.toString() + ', ' + green.toString() + ', ' + blue.toString() + ')';
+      };
+
+      crazyColorsElement = document.querySelector('#colors');
+
+      // Randomize the initial color.
+      randomizeColor();
+
+      // When the square is clicked down, start the color change animation
+      crazyColorsElement.addEventListener('click', function () {
+         document.addEventListener('click', randomizeColor, false);
+      }, false);
+   }());
 }, false);
