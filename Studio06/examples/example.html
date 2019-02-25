@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>JavaScript examples for Studio 6</title>
+
+<!--
+CS 3312, spring 2019
+Examples for Studio 6
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="example.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Let's get objective</h1>
+
+<fieldset id="experiment-area">
+   <legend>Object experiments</legend>
+   <button id="run-experiments" type="button">Experiment with objects</button>
+   <textarea cols="90" id="experiment-output" rows="30"></textarea>
+</fieldset>
+
+<fieldset id="soccer-game-area">
+   <legend>Soccer scorekeeper</legend>
+   <button id="soccer-score-for-a" type="button">Score for team A</button>
+   <button id="soccer-score-for-b" type="button">Score for team B</button>
+   <button id="reset-soccer-game" type="button">Reset game</button>
+   <p>Score:&nbsp; <span class="score" id="soccer-score"></span></p>
+</fieldset>
+
+<fieldset id="hockey-game-area">
+   <legend>Hockey scorekeeper</legend>
+   <button id="hockey-score-for-a" type="button">Score for team A</button>
+   <button id="hockey-score-for-b" type="button">Score for team B</button>
+   <button id="reset-hockey-game" type="button">Reset game</button>
+   <p>Score:&nbsp; <span class="score" id="hockey-score"></span></p>
+</fieldset>
+
+<fieldset id="to-do-list-area">
+   <legend>To-do list</legend>
+   <div>
+      <label>I need to do: <input id="to-do-list-item-to-add" type="text" /></label>
+      <button id="add-to-do-list-item" type="button">Add it to list!</button>
+   </div>
+   <div>
+      <label>I accomplished: <input id="to-do-list-item-to-remove" type="text" /></label>
+      <button id="remove-to-do-list-item" type="button">Remove it from list!</button>
+   </div>
+   <textarea id="to-do-list-output" rows="20"></textarea>
+</fieldset>
+
+<fieldset id="letter-counter-area">
+   <legend>Letter counter</legend>
+   <div>
+      <label>Give me a word: <input id="letter-counter-input" type="text" /></label>
+      <button id="count-the-letters" type="button">Count the letters</button>
+   </div>
+   <textarea id="letter-counter-output" rows="26"></textarea>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="example.js"></script>
+
+</body></html>

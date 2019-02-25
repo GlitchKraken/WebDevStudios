@@ -13,14 +13,15 @@ document.addEventListener('DOMContentLoaded', function () {
       var isPrime;
 
       // WRITE YOUR isPrime FUNCTION HERE
-      isPrime = function isPrime (number) {
-         if (typeof(number) === 'number' && isFinite(number)) {
-            if(number < 2) {
+      isPrime = function isPrime(number) {
+         var i;
+         if (typeof number === 'number' && isFinite(number)) {
+            if (number < 2) {
                // all cases before 2 are not prime.
                return false;
             }
-            for(var i = 2; i < number; i+=1) {
-               if(number % i === 0) {
+            for (i = 2; i < number; i += 1) {
+               if (number % i === 0) {
                   //then, we've found an i that divides number, it cannot be prime.
                   return false;
                }
@@ -28,10 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
             //if we're here, we've looked at every number from 2 to number, and nothing divides it.
             return true;
          }
-         else {
-            // we were given an invalid entry.
-            return false;
-         }
+         // we were given an invalid entry.
+         return false;
       };
 
       // The report function is hidden from the isPrime function using an IIFE.
@@ -39,14 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
          var report;
 
          // WRITE YOUR report FUNCTION HERE
-         report = function report (parameter) {
-            if(typeof(parameter) === 'number' && isFinite(parameter) && isPrime(parameter)) {
+         report = function report(parameter) {
+            if (typeof parameter === 'number' && isFinite(parameter) && isPrime(parameter)) {
                document.querySelector('#prime-or-not').textContent = 'prime';
-            }
-            else if(typeof(parameter) === 'number' && isFinite(parameter) && !isPrime(parameter)) {
+            } else if (typeof parameter === 'number' && isFinite(parameter) && !isPrime(parameter)) {
                document.querySelector('#prime-or-not').textContent = 'not prime';
-            }
-            else {
+            } else {
                document.querySelector('#prime-or-not').textContent = 'not a number';
             }
          };
@@ -64,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
       var fibonacci;
 
       // WRITE YOUR fibonacci FUNCTION HERE
-      fibonacci = function fibonacci (n) {
-         if (typeof(n) === 'number' && isFinite(n)) {
+      fibonacci = function fibonacci(n) {
+         if (typeof n === 'number' && isFinite(n)) {
             n = Math.round(n); //Round n to the nearest integer
 
             //Base case. If n is 0, 1, or 2, return n
@@ -99,16 +96,16 @@ document.addEventListener('DOMContentLoaded', function () {
       var rememberTotal;
 
       // WRITE YOUR rememberTotal FUNCTION HERE
-      rememberTotal = (function rememberTotal (num) {
+      rememberTotal = (function rememberTotal() {
          var runningTotal = 0; //Private variable for total, initialized to 0
 
          return function (num) {
             //Make sure num is a finite number, then add it to num
-            if (typeof(num) === 'number' && isFinite(num)) {
+            if (typeof num === 'number' && isFinite(num)) {
                runningTotal += num;
             }
             return runningTotal; //Return the new total
-         }
+         };
       }());
 
       // Output the initial total.
@@ -124,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var reverseString;
 
       // WRITE YOUR reverseString FUNCTION HERE
-      reverseString = function reverseString (str) {
+      reverseString = function reverseString(str) {
          if (str.length === 0) {
             return '';
          }
@@ -150,16 +147,16 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       // If you like, write code here that will change the color of the square when the mouse interacts with it.
       // You may find the updateSquare function from the examples useful.
-      var crazyColorsElement, randomizeColor;
+      var crazyColorsElement;
 
-      function randomizeColor () {
+      function randomizeColor() {
          var blue, green, red;
          // Randomize the square's background color.
          red = Math.floor(Math.random() * 256);
          green = Math.floor(Math.random() * 256);
          blue = Math.floor(Math.random() * 256);
          crazyColorsElement.style.backgroundColor = 'rgb(' + red.toString() + ', ' + green.toString() + ', ' + blue.toString() + ')';
-      };
+      }
 
       crazyColorsElement = document.querySelector('#colors');
 

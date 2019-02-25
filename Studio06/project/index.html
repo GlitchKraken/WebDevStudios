@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>Studio 6</title>
+
+<!--
+CS 3312, spring 2019
+Studio 6
+DON'T CHANGE THIS FILE
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Make it objective</h1>
+
+<fieldset id="to-do-list-area">
+   <legend>To-do list</legend>
+   <div>
+      <label>I need to do: <input id="to-do-list-item-to-add" type="text" /></label>
+      <button id="add-to-do-list-item" type="button">Add it to list!</button>
+   </div>
+   <div>
+      <label>I accomplished: <input id="to-do-list-item-to-remove" type="text" /></label>
+      <button id="remove-to-do-list-item" type="button">Remove it from list!</button>
+   </div>
+   <textarea id="to-do-list-output" rows="20"></textarea>
+</fieldset>
+
+<fieldset id="unique-letters-area">
+   <legend>Find unique letters</legend>
+   <div>
+      <label>Give me a word: <input id="unique-letters-word" type="text" /></label>
+   </div>
+   <div>
+      <button id="find-unique-letters" type="button">Reduce it to its unique letters</button>
+   </div>
+</fieldset>
+
+<fieldset id="codebook-area">
+   <legend>Codebook</legend>
+   <div>
+      <label>Codeword: <input id="codeword-input" type="text" /></label>
+   </div>
+   <div>
+      <label>Its meaning: <input id="meaning-input" type="text" /></label>
+   </div>
+   <div>
+      <button id="save-codeword" type="button">Save it to the codebook</button>
+   </div>
+   <div>
+      <button id="get-meaning" type="button">Get the codeword's meaning</button>
+   </div>
+   <div>
+      <button id="print-codebook" type="button">Print the whole codebook</button>
+   </div>
+   <div>
+      <button id="clear-codebook" type="button">Clear the codebook</button>
+   </div>
+   <textarea id="codebook-output" rows="20"></textarea>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="script.js"></script>
+
+</body></html>
