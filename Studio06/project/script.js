@@ -27,18 +27,18 @@ document.addEventListener('DOMContentLoaded', function () {
             addItem: function (item) {
                if (typeof item === 'string') {
                   //save item to toDoList, with name converted to all lowercase, and value === item.
-                  priv[toDoList[item.toLowerCase()]] = item; //works... but it uses the forbidden syntax
+                  priv.toDoList[item.toLowerCase()] = item; //works... but it uses the forbidden syntax
                   //toDoList.toLowerCase(item) = item; //doesn't?
                }
             },
             removeItem: function (item) {
-               delete priv[toDoList[item.toLowerCase()]];
+               delete priv.toDoList[item.toLowerCase()];
             },
             toString: function () {
                var listString;
                listString = '';
 
-               Object.keys(priv[toDoList]).forEach(function (prop) {
+               Object.keys(priv.toDoList).forEach(function (prop) {
                   //go through each property of the toDoList, and do a thing
                   listString += priv.toDoList[prop] + '\n';
                });
@@ -50,10 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
          //freeze the object "self", and return it.
          return Object.freeze(self);
       };
-
-
-
-
     //***************************************************
 
 
