@@ -2,7 +2,7 @@
 
 // CS 3312, spring 2019
 // Studio 6
-// YOUR NAMES: 
+// YOUR NAMES: Chad Fry, Josh Meek
 
 // All the code below will be run once the page content finishes loading.
 document.addEventListener('DOMContentLoaded', function () {
@@ -11,9 +11,55 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       var createToDoList, toDoList;
 
-      // WRITE YOUR createToDoList FUNCTION HERE
 
-      // Create a new object that keeps track of a to-do list.
+    // WRITE YOUR createToDoList FUNCTION HERE
+    //**************************************************
+      createToDoList = function () {
+         var priv, self;
+
+       // create priv, as per instructions.
+         priv = {
+            toDoList: {}
+         };
+
+      //create the object "self", as per instructions
+         self = {
+            addItem: function (item) {
+               if (typeof item === 'string') {
+                  //save item to toDoList, with name converted to all lowercase, and value === item.
+                  priv[toDoList[item.toLowerCase()]] = item; //works... but it uses the forbidden syntax
+                  //toDoList.toLowerCase(item) = item; //doesn't?
+               }
+            },
+            removeItem: function (item) {
+               delete priv[toDoList[item.toLowerCase()]];
+            },
+            toString: function () {
+               var listString;
+               listString = '';
+
+               Object.keys(priv[toDoList]).forEach(function (prop) {
+                  //go through each property of the toDoList, and do a thing
+                  listString += priv.toDoList[prop] + '\n';
+               });
+
+               return listString;
+            }
+         };
+
+         //freeze the object "self", and return it.
+         return Object.freeze(self);
+      };
+
+
+
+
+    //***************************************************
+
+
+
+
+    // Create a new object that keeps track of a to-do list.
       toDoList = createToDoList();
 
       document.querySelector('#add-to-do-list-item').addEventListener('click', function () {
@@ -32,7 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       var findUniqueLetters;
 
-      // WRITE YOUR findUniqueLetters FUNCTION HERE
+    // WRITE YOUR findUniqueLetters FUNCTION HERE
+    //**************************************************
+
+
+
+
+
+    //***************************************************
 
       document.querySelector('#find-unique-letters').addEventListener('click', function () {
          // Filter the characters in the textbox, leaving only the first of each letter found.
@@ -45,9 +98,16 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       var codebook, createCodeBook;
 
-      // WRITE YOUR createCodeBook FUNCTION HERE
+    // WRITE YOUR createCodeBook FUNCTION HERE
+    //**************************************************
 
-      // Create a new object that keeps track of a codebook.
+
+
+
+
+    //***************************************************
+
+    // Create a new object that keeps track of a codebook.
       codebook = createCodeBook();
 
       document.querySelector('#save-codeword').addEventListener('click', function () {
