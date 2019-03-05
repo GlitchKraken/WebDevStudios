@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
       createToDoList = function () {
          var priv, self;
 
-       // create priv, as per instructions.
+       //Create priv, an object with a empty object, toDoList
          priv = {
             toDoList: {}
          };
 
-      //create the object "self", as per instructions
+      //Create the object "self" with three methods
          self = {
             addItem: function (item) {
                if (typeof item === 'string') {
@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
                listString = '';
 
                Object.keys(priv.toDoList).forEach(function (prop) {
-                  //go through each property of the toDoList, and do a thing
+                  //go through each property of the toDoList
+                  //and output each item to the To-do box
                   listString += priv.toDoList[prop] + '\n';
                });
 
@@ -51,9 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
          return Object.freeze(self);
       };
     //***************************************************
-
-
-
 
     // Create a new object that keeps track of a to-do list.
       toDoList = createToDoList();
@@ -73,35 +71,77 @@ document.addEventListener('DOMContentLoaded', function () {
 
    (function () {
       var findUniqueLetters;
+      // WRITE YOUR findUniqueLetters FUNCTION HERE
+      //**************************************************
+      //Create findUniqueLetters function with one parameter, inputString
+      findUniqueLetters = function (inputString) {
+         var uniqueLetters;
 
-    // WRITE YOUR findUniqueLetters FUNCTION HERE
-    //**************************************************
+         //Convert "inputString" to all uppercase
+         inputString = inputString.toUpperCase();
 
+         //Create an empty object uniqueLetters with no properties
+         uniqueLetters = {};
+         //***************************************************
 
-
-
-
-    //***************************************************
-
-      document.querySelector('#find-unique-letters').addEventListener('click', function () {
-         // Filter the characters in the textbox, leaving only the first of each letter found.
-         var wordElement;
-         wordElement = document.querySelector('#unique-letters-word');
-         wordElement.value = findUniqueLetters(wordElement.value);
-      }, false);
+         document.querySelector('#find-unique-letters').addEventListener('click', function () {
+            // Filter the characters in the textbox, leaving only the first of each letter found.
+            var wordElement;
+            wordElement = document.querySelector('#unique-letters-word');
+            wordElement.value = findUniqueLetters(wordElement.value);
+         }, false);
+      };
    }());
 
    (function () {
       var codebook, createCodeBook;
 
-    // WRITE YOUR createCodeBook FUNCTION HERE
-    //**************************************************
+      // WRITE YOUR createCodeBook FUNCTION HERE
+      //**************************************************
+      createCodeBook = function () {
+         var priv, self;
 
+         //Create priv, an object with a empty object property, codebook
+         priv = {
+            codebook: {}
+         };
 
+         //Create the object "self" with four methods
+         self = {
+            add: function (codeword, meaning) {
+               if (typeof codeword === 'string') {
+               //save codeword to codebook, with name codeword and value meaning
+                  priv.codebook[codeword] = meaning;
+               }
+            },
+            isCodeword: function (codeword) {
+               if (codebook.includes(codeword)) {
+                  return true;
+               }
+               return false;
+            },
+            retrieve: function (codeword) {
+               if (codebook.isCodeword(codeword)) {
+                  return priv.codebook[codeword];
+               }
+               return '[meaningless]';
+            },
+            toString: function () {
+               var string;
+               string = '';
 
+               Object.keys(priv.codebook).forEach(function (codeword) {
+                  string += codeword + ":" + priv.codebook[codeword] + '\n';
+               });
 
+               return string;
+            }
+         };
 
-    //***************************************************
+         //freeze the object "self", and return it.
+         return Object.freeze(self);
+      };
+      //***************************************************
 
     // Create a new object that keeps track of a codebook.
       codebook = createCodeBook();
