@@ -82,15 +82,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Create an empty object uniqueLetters with no properties
          uniqueLetters = {};
+      };
          //***************************************************
 
-         document.querySelector('#find-unique-letters').addEventListener('click', function () {
-            // Filter the characters in the textbox, leaving only the first of each letter found.
-            var wordElement;
-            wordElement = document.querySelector('#unique-letters-word');
-            wordElement.value = findUniqueLetters(wordElement.value);
-         }, false);
-      };
+      document.querySelector('#find-unique-letters').addEventListener('click', function () {
+         // Filter the characters in the textbox, leaving only the first of each letter found.
+         var wordElement;
+         wordElement = document.querySelector('#unique-letters-word');
+         wordElement.value = findUniqueLetters(wordElement.value);
+      }, false);
    }());
 
    (function () {
