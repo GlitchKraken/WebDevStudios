@@ -75,13 +75,27 @@ document.addEventListener('DOMContentLoaded', function () {
       //**************************************************
       //Create findUniqueLetters function with one parameter, inputString
       findUniqueLetters = function (inputString) {
-         var uniqueLetters;
+         var uniqueLetters, result;
+         result = ''; //Make sure result is an empty string
 
          //Convert "inputString" to all uppercase
          inputString = inputString.toUpperCase();
 
          //Create an empty object uniqueLetters with no properties
          uniqueLetters = {};
+
+         //Look through each character one by one
+         inputString.split('').forEach(function (charValue) {
+            if (/^[A-Z]$/.test(charValue)) {
+               uniqueLetters[charValue] = true;
+            }
+         });
+
+         Object.keys(uniqueLetters).forEach(function (charValue) {
+            result += charValue;
+         });
+
+         return result;
       };
          //***************************************************
 
