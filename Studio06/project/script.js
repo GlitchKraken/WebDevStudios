@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // WRITE YOUR createCodeBook FUNCTION HERE
       //**************************************************
+      alert("Running createCodeBook!");
       createCodeBook = function () {
          var priv, self;
 
@@ -128,16 +129,23 @@ document.addEventListener('DOMContentLoaded', function () {
                   priv.codebook[codeword] = meaning;
                }
             },
+            //this function is broken, somehow.
             isCodeword: function (codeword) {
-               if (codebook.includes(codeword)) {
+               alert("inside isCodeWord!");
+               if (priv.codebook.hasOwnProperty(codeword)) {
+                  alert("returned true!");
                   return true;
                }
+               alert("returned false!");
                return false;
             },
             retrieve: function (codeword) {
+               alert("retrieve function callled!");
                if (codebook.isCodeword(codeword)) {
+                  alert("codeword itself returned");
                   return priv.codebook[codeword];
                }
+               alert("meaningless was returned");
                return '[meaningless]';
             },
             toString: function () {
@@ -145,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
                string = '';
 
                Object.keys(priv.codebook).forEach(function (codeword) {
-                  string += codeword + ":" + priv.codebook[codeword] + '\n';
+                  string += codeword + ": " + priv.codebook[codeword] + '\n';
                });
 
                return string;
