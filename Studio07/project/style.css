@@ -1,0 +1,110 @@
+@charset "UTF-8";
+
+/*
+CS 3312, spring 2019
+Studio 7
+DON'T CHANGE THIS FILE
+*/
+
+/* Fixing the box-sizing attribute will make sizing boxes easier. */
+html {
+   box-sizing: border-box;
+}
+
+/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+body {
+   background-color: rgb(255, 250, 245);
+   font-family: Georgia, serif;
+}
+
+h1 {
+   color: rgb(34, 68, 102);
+   text-align: center;
+}
+
+fieldset {
+   border-color: rgb(68, 136, 204);
+   border-radius: 10px;
+   border-style: solid;
+   border-width: 2px;
+   float: left;
+}
+
+legend {
+   border-color: rgb(68, 136, 204);
+   border-style: solid;
+   border-width: 2px;
+   padding: 0px 5px;
+}
+
+input {
+   text-align: center;
+}
+
+textarea {
+   display: block;
+}
+
+.number-output {
+   color: rgb(17, 68, 34);
+   font-size: 200%;
+}
+
+.box-of-dice {
+   display: flex;
+   font-family: monospace;
+   font-size: 200%;
+}
+
+.box-of-dice div {
+   border-color: rgb(68, 136, 204);
+   border-style: solid;
+   border-width: 2px;
+   margin: 5px;
+   padding: 5px;
+}
+
+.hand-of-cards {
+   display: flex;
+   font-family: monospace;
+   font-size: 200%;
+}
+
+.hand-of-cards div {
+   border-color: rgb(68, 136, 204);
+   border-style: solid;
+   border-width: 2px;
+   margin: 5px;
+   padding: 5px;
+}
+
+.gameboard tr td {
+   border-color: rgb(0, 0, 0);
+   border-style: solid;
+   border-width: 1px;
+   font-family: monospace;
+   font-size: 400%;
+   height: 100px;
+   text-align: center;
+   width: 100px;
+}
+
+.gameboard tr td:first-child {
+   border-left-style: none;
+}
+
+.gameboard tr td:last-child {
+   border-right-style: none;
+}
+
+.gameboard tr:first-child td {
+   border-top-style: none;
+}
+
+.gameboard tr:last-child td {
+   border-bottom-style: none;
+}

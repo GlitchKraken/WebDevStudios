@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>Studio 7</title>
+
+<!--
+CS 3312, spring 2019
+Studio 7
+DON'T CHANGE THIS FILE
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>A wide array of applications</h1>
+
+<fieldset id="fibonacci-area">
+   <legend>Calculate Fibonacci values</legend>
+   <label>Which Fibonacci number do you want? <input id="fibonacci-input" type="number" /></label>
+   <button id="calculate-fibonacci" type="button">Calculate it</button>
+   <p>The
+      <span class="number-output" id="which-fibonacci-number"></span>th
+      Fibonacci number is
+      <span class="number-output" id="fibonacci-number"></span>.
+   </p>
+</fieldset>
+
+<fieldset id="dice-area">
+   <legend>Dice</legend>
+   <div class="box-of-dice" id="dice">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+   </div>
+</fieldset>
+
+<fieldset id="cards-area">
+   <legend>Hand of cards</legend>
+   <div class="hand-of-cards" id="cards">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+   </div>
+   <button id="sort-cards" type="button">Sort</button>
+   <button id="reverse-cards" type="button">Reverse</button>
+</fieldset>
+
+<fieldset id="tic-tac-toe-area">
+   <legend>Tic-tac-toe</legend>
+   <p id="tic-tac-toe-status"></p>
+   <table class="gameboard" id="tic-tac-toe">
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+   </table>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="script.js"></script>
+
+</body></html>

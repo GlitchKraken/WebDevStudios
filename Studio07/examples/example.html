@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>JavaScript examples for Studio 7</title>
+
+<!--
+CS 3312, spring 2019
+Examples for Studio 7
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="example.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Arrays of possibilities</h1>
+
+<fieldset id="experiment-area">
+   <legend>Array experiments</legend>
+   <button id="run-experiments" type="button">Experiment with arrays</button>
+   <textarea cols="90" id="experiment-output" rows="30"></textarea>
+</fieldset>
+
+<fieldset id="factorial-area">
+   <legend>Calculate a factorial</legend>
+   <label>Enter a number: <input id="factorial-input" type="number" /></label>
+   <button id="calculate-factorial" type="button">Calculate its factorial</button>
+   <textarea cols="45" id="factorial-output" rows="10"></textarea>
+</fieldset>
+
+<fieldset id="dice-area">
+   <legend>Dice</legend>
+   <div class="box-of-dice" id="dice">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+   </div>
+</fieldset>
+
+<fieldset id="digits-area">
+   <legend>Numerical keypad</legend>
+   <div class="keypad" id="numerical-input">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+   </div>
+   <p id="numerical-output"></p>
+</fieldset>
+
+<fieldset id="matrix-area">
+   <legend>Matrix of lights</legend>
+   <table class="matrix" id="lights">
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+   </table>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="example.js"></script>
+
+</body></html>
