@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // WRITE YOUR createToDoList FUNCTION HERE
     //**************************************************
       createToDoList = function () {
+         //Declare variables priv and self
          var priv, self;
 
        //Create priv, an object with a empty object, toDoList
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       //Create the object "self" with three methods
          self = {
+            //Method to add an item to the toDoList
             addItem: function (item) {
                if (typeof item === 'string') {
                   //save item to toDoList, with name converted to all lowercase, and value === item.
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   //toDoList.toLowerCase(item) = item; //doesn't?
                }
             },
+            //Method to remove an item from toDoList
             removeItem: function (item) {
                delete priv.toDoList[item.toLowerCase()];
             },
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   listString += priv.toDoList[prop] + '\n';
                });
 
+               //Return the new toDoList
                return listString;
             }
          };
@@ -75,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
       //**************************************************
       //Create findUniqueLetters function with one parameter, inputString
       findUniqueLetters = function (inputString) {
+         //Declare variables
          var uniqueLetters, result;
          result = ''; //Make sure result is an empty string
 
@@ -84,20 +89,22 @@ document.addEventListener('DOMContentLoaded', function () {
          //Create an empty object uniqueLetters with no properties
          uniqueLetters = {};
 
-         //Look through each character one by one
+         //Look through each character one by one and add the unique letters
          inputString.split('').forEach(function (charValue) {
             if (/^[A-Z]$/.test(charValue)) {
                uniqueLetters[charValue] = true;
             }
          });
 
+         //Get the properties from uniqueLetters (the unique letters) and add it to the string
          Object.keys(uniqueLetters).forEach(function (charValue) {
             result += charValue;
          });
 
+         //Return the string of unique letters
          return result;
       };
-         //***************************************************
+      //***************************************************
 
       document.querySelector('#find-unique-letters').addEventListener('click', function () {
          // Filter the characters in the textbox, leaving only the first of each letter found.
@@ -112,8 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // WRITE YOUR createCodeBook FUNCTION HERE
       //**************************************************
-      alert("Running createCodeBook!");
       createCodeBook = function () {
+         //Declare variables
          var priv, self;
 
          //Create priv, an object with a empty object property, codebook
@@ -123,39 +130,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Create the object "self" with four methods
          self = {
+            //Method to add a code and meanting to the codebook
             add: function (codeword, meaning) {
                if (typeof codeword === 'string') {
                //save codeword to codebook, with name codeword and value meaning
                   priv.codebook[codeword] = meaning;
                }
             },
-            //this function is broken, somehow.
+            //Method to see if the codeword is already in the codebook
             isCodeword: function (codeword) {
-               alert("inside isCodeWord!");
                if (priv.codebook.hasOwnProperty(codeword)) {
-                  alert("returned true!");
                   return true;
                }
-               alert("returned false!");
                return false;
             },
+            //Method to retrieve the codeword meaning
             retrieve: function (codeword) {
-               alert("retrieve function callled!");
                if (codebook.isCodeword(codeword)) {
-                  alert("codeword itself returned");
                   return priv.codebook[codeword];
                }
-               alert("meaningless was returned");
                return '[meaningless]';
             },
+            //Method to put the codeword and meaning into a toString
+            //to output to the textbox
             toString: function () {
                var string;
                string = '';
 
+               //Make a string with all the codewords and their meaning
                Object.keys(priv.codebook).forEach(function (codeword) {
                   string += codeword + ": " + priv.codebook[codeword] + '\n';
                });
 
+               //Output the codebook
                return string;
             }
          };
@@ -165,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
       };
       //***************************************************
 
-    // Create a new object that keeps track of a codebook.
+      // Create a new object that keeps track of a codebook.
       codebook = createCodeBook();
 
       document.querySelector('#save-codeword').addEventListener('click', function () {
