@@ -2,7 +2,7 @@
 
 // CS 3312, spring 2019
 // Studio 7
-// YOUR NAMES: 
+// YOUR NAMES: Josh Meek, Chad Fry
 
 // All the code below will be run once the page content finishes loading.
 document.addEventListener('DOMContentLoaded', function () {
@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
       var fibonacci, whichFibonacciNumber;
 
       // WRITE YOUR fibonacci FUNCTION HERE
+      (function fibonacci() {
+         //
+
+      }());
 
       // Get the user's number.
       whichFibonacciNumber = parseInt(document.querySelector('#fibonacci-input').value, 10);
