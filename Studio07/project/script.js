@@ -108,6 +108,29 @@ document.addEventListener('DOMContentLoaded', function () {
          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          //EVENT HANDLER HERE FOR WHEN CLICKING CARDS
          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         card.addEventListener('click', function() {
+
+            // re-create cardValues, using the parts of the array directly
+            // to the left and right of the currently clicked card.
+            // Then, concatenate them.
+            cardValues = (cardValues.slice(0, cardIndex).concat( (cardValues.slice(cardIndex+1, cardValues.length))));
+
+            // now, we have the original array, minus that card, so just put
+            // it onto the end.
+            cardValues.push(card.textContent);
+
+
+            // after doing so, update each cards value visually.
+            // we do this by editing the cardElements array.
+            cardElements.forEach(function (card, cardIndex) {
+               card.textContent = cardValues[cardIndex];
+            });
+         });
+         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         //EVENT HANDLER HERE FOR WHEN CLICKING CARDS
+         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
       });
 
       //Event handler for "Sort" button
