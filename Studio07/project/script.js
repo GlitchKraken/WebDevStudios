@@ -104,6 +104,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Also store the value into cardValues Array
          cardValues.push(card.textContent);
+
+         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         //EVENT HANDLER HERE FOR WHEN CLICKING CARDS
+         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       });
 
       //Event handler for "Sort" button
@@ -138,8 +142,23 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       var nextToMove, ticTacToeElements, ticTacToeValues;
 
-      // WRITE CODE HERE TO MAKE THE #tic-tac-toe ELEMENT WORK
+      //Initialize nextToMove variable as string value x. x moves first
+      nextToMove = 'X';
+
+      //Initialize ticTacToeValues as an empty array.
+      //This array will store the strings of moves
+      ticTacToeValues = [];
+
+      //Initialize ticTacToeElements as an empty array.
+      //This array will store the div elements of the squares
+      ticTacToeElements = [];
+
+      //Output a status message of who moves first
+      document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next';
+
+
+
+
 
    }());
-
 }, false);
