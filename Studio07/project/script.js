@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next.';
 
       //Get an array of all tr elements in tic tac toe element
-      Array.from(document.querySelectorAll('#tic-tac-toe tr')).forEach(function (value, index) {
+      (Array.from(document.querySelectorAll('#tic-tac-toe tr'))).forEach(function (value, index) {
          //Variable rowElements holds the td
          var rowElements = Array.from(document.querySelectorAll('#tic-tac-toe tr > td'));
 
@@ -191,10 +191,27 @@ document.addEventListener('DOMContentLoaded', function () {
          ticTacToeValues.push(rowValues);
       });
 
-      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //Nested for each loops to iterate through ticTacToeElements
-      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      ticTacToeElements.forEach(function (row, whichRow) {
+         row.forEach(function (tdguy, whichColumn) {
+            tdguy.textContent = ticTacToeValues[whichRow][whichColumn];
 
+            tdguy.addEventListener('click', function () {
+               if(tdguy.textContent === '') {
+                  tdguy.textContent = nextToMove;
+               }
+               ticTacToeValues[whichRow][whichColumn] = nextToMove;
 
+               //Update who is next to go
+               if (nextToMove === 'X') {
+                  nextToMove = 'O';
+               } else {
+                  nextToMove = 'X';
+               }
+
+               //Output a status message of who moves next
+               document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next.';
+            });
+         });
+      });
    }());
 }, false);
