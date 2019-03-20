@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
          //is its index.
 
          //Set the value of the current die when the page loads.
-         die.textContent = dieIndex + 1;
+         die.textContent = Math.floor(Math.random() * 6) + 1;
 
          //Create an event handler that rerolls the die when clicked, and all the ones to the
          //left of it.
