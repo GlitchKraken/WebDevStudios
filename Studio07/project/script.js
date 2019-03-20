@@ -88,8 +88,40 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       var cardElements, cardValues;
 
-      // WRITE CODE HERE TO MAKE THE #cards ELEMENT WORK
+      // Get an array of all div elements inside the #cards element and put them
+      // in the variable cardElements.
+      cardElements = Array.from(document.querySelectorAll('#cards div'));
 
+      //Initialize cardValues as an empty array.
+      cardValues = [];
+
+      //Go through the cards one by one
+      cardElements.forEach(function (card, cardIndex) {
+         //card is the element, cardIndex is its index
+
+         //Set the value of the current card when the page loads.
+         card.textContent = Math.floor(Math.random() * 99) + 1;
+
+         //Also store the value into cardValues Array
+         cardValues.push(card.textContent);
+      });
+
+      //Event handler for "Sort" button
+
+      //Event handler for "Reverse" button
+      document.querySelector('#reverse-cards').addEventListener('click', function (){
+         //Reverse the array in place
+         cardValues.reverse();
+
+         //Go through and output each card after reversing
+         cardElements.forEach(function (card, cardIndex) {
+            //card is the element, cardIndex is its index
+
+            //Set the new value of the card to the value
+            //of its index in the card values array.
+            card.textContent = cardValues[cardIndex];
+         });
+      }, false);
    }());
 
    (function () {
