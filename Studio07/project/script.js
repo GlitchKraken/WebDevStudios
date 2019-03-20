@@ -107,6 +107,19 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       //Event handler for "Sort" button
+      document.querySelector('#sort-cards').addEventListener('click', function (){
+         //Sort the cardValues array numerically
+         cardValues.sort(function(x, y) {
+            return x - y;
+         });
+
+         //Go through and output each card after sorting
+         cardElements.forEach(function (card, cardIndex) {
+            //Set the new value of the card to the value
+            //of its index in the card values array.
+            card.textContent = cardValues[cardIndex];
+         });
+      }, false);
 
       //Event handler for "Reverse" button
       document.querySelector('#reverse-cards').addEventListener('click', function (){
@@ -115,8 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Go through and output each card after reversing
          cardElements.forEach(function (card, cardIndex) {
-            //card is the element, cardIndex is its index
-
             //Set the new value of the card to the value
             //of its index in the card values array.
             card.textContent = cardValues[cardIndex];
