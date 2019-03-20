@@ -105,9 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
          //Also store the value into cardValues Array
          cardValues.push(card.textContent);
 
-         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         //EVENT HANDLER HERE FOR WHEN CLICKING CARDS
-         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         //Event handler for when clicking cards
          card.addEventListener('click', function() {
 
             // re-create cardValues, using the parts of the array directly
@@ -119,18 +117,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // it onto the end.
             cardValues.push(card.textContent);
 
-
             // after doing so, update each cards value visually.
             // we do this by editing the cardElements array.
             cardElements.forEach(function (card, cardIndex) {
                card.textContent = cardValues[cardIndex];
             });
          });
-         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         //EVENT HANDLER HERE FOR WHEN CLICKING CARDS
-         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
       });
 
       //Event handler for "Sort" button
@@ -177,10 +169,31 @@ document.addEventListener('DOMContentLoaded', function () {
       ticTacToeElements = [];
 
       //Output a status message of who moves first
-      document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next';
+      document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next.';
 
+      //Get an array of all tr elements in tic tac toe element
+      Array.from(document.querySelectorAll('#tic-tac-toe tr')).forEach(function (value, index) {
+         //Variable rowElements holds the td
+         var rowElements = Array.from(document.querySelectorAll('#tic-tac-toe tr > td'));
 
+         //Create rowValues, an empty Array
+         var rowValues = [];
 
+         //Push a empty string to rowValues for each td element
+         rowElements.forEach(function (value, index) {
+            rowValues.push('');
+         });
+
+         //Push rowElements onto ticTacToeElements Array
+         ticTacToeElements.push(rowElements);
+
+         //Push rowValues onto ticTacToeValues Array
+         ticTacToeValues.push(rowValues);
+      });
+
+      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      //Nested for each loops to iterate through ticTacToeElements
+      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
    }());
