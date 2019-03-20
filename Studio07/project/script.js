@@ -12,9 +12,43 @@ document.addEventListener('DOMContentLoaded', function () {
    document.querySelector('#calculate-fibonacci').addEventListener('click', function () {
       var fibonacci, whichFibonacciNumber;
 
+      var blah;
+
       // WRITE YOUR fibonacci FUNCTION HERE
-      (function fibonacci() {
-         //
+      fibonacci = (function () {
+
+
+         // credate the fibonacci array.
+         var fibonacciResults = [];
+         // set the first two values in-stone.
+         fibonacciResults[0] = 0;
+         fibonacciResults[1] = 1;
+
+         return function f(n) {
+
+            // round n to the nearest whole number.
+            n = Math.round(n);
+
+            //make sure that n is a valid number.
+            if(isFinite(n) && n >= 0) {
+               // have we already calculated this number?
+               if(fibonacciResults.hasOwnProperty(n)) {
+                  // yup, so return it.
+                  return fibonacciResults[n];
+               }
+               else {
+                  // otherwise, calculate it recursively,
+                  // making sure to save the result!
+                  fibonacciResults[n] = (f(n-1) + f(n-2));
+                  return fibonacciResults[n];
+               }
+            }
+            else {
+               return 0;
+            }
+         };
+
+
 
       }());
 
