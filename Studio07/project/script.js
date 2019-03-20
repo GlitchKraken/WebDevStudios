@@ -12,13 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
    document.querySelector('#calculate-fibonacci').addEventListener('click', function () {
       var fibonacci, whichFibonacciNumber;
 
-      var blah;
-
       // WRITE YOUR fibonacci FUNCTION HERE
       fibonacci = (function () {
 
-
-         // credate the fibonacci array.
+         // create the fibonacci array.
          var fibonacciResults = [];
          // set the first two values in-stone.
          fibonacciResults[0] = 0;
@@ -47,9 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
                return 0;
             }
          };
-
-
-
       }());
 
       // Get the user's number.
@@ -62,8 +56,33 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       var dieElements;
 
-      // WRITE CODE HERE TO MAKE THE #dice ELEMENT WORK
+      // Get an array of all div elements inside the #dice element and put them
+      // in the variable dieElements.
+      dieElements = Array.from(document.querySelectorAll('#dice div'));
 
+      // Go through each div element one by one.
+      dieElements.forEach(function (die, dieIndex) {
+         //For this function, die is the current element being looked at, and dieIndex
+         //is its index.
+
+         //Set the value of the current die when the page loads.
+         die.textContent = dieIndex + 1;
+
+         //Create an event handler that rerolls the die when clicked, and all the ones to the
+         //left of it.
+         die.addEventListener('click', function() {
+            //Rerolls the die clicked
+            die.textContent = Math.floor(Math.random() * 6) + 1;
+
+            //Rerolls all the die to the left of the one clicked
+            dieElements.forEach(function (dieToChange, indexOfDie) {
+               //If the die index is one to the left of the one clicked, reroll it
+               if (indexOfDie < dieIndex) {
+                  dieToChange.textContent = Math.floor(Math.random() * 6) + 1;
+               }
+            });
+         }, false);
+      });
    }());
 
    (function () {
