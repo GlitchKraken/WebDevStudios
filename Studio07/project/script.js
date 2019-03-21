@@ -27,22 +27,18 @@ document.addEventListener('DOMContentLoaded', function () {
             n = Math.round(n);
 
             //make sure that n is a valid number.
-            if(isFinite(n) && n >= 0) {
+            if (isFinite(n) && n >= 0) {
                // have we already calculated this number?
-               if(fibonacciResults.hasOwnProperty(n)) {
+               if (fibonacciResults.hasOwnProperty(n)) {
                   // yup, so return it.
                   return fibonacciResults[n];
                }
-               else {
-                  // otherwise, calculate it recursively,
-                  // making sure to save the result!
-                  fibonacciResults[n] = (f(n-1) + f(n-2));
-                  return fibonacciResults[n];
-               }
+               // otherwise, calculate it recursively,
+               // making sure to save the result!
+               fibonacciResults[n] = (f(n - 1) + f(n - 2));
+               return fibonacciResults[n];
             }
-            else {
-               return 0;
-            }
+            return 0;
          };
       }());
 
@@ -70,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Create an event handler that rerolls the die when clicked, and all the ones to the
          //left of it.
-         die.addEventListener('click', function() {
+         die.addEventListener('click', function () {
             //Rerolls the die clicked
             die.textContent = Math.floor(Math.random() * 6) + 1;
 
@@ -106,12 +102,12 @@ document.addEventListener('DOMContentLoaded', function () {
          cardValues.push(card.textContent);
 
          //Event handler for when clicking cards
-         card.addEventListener('click', function() {
+         card.addEventListener('click', function () {
 
             // re-create cardValues, using the parts of the array directly
             // to the left and right of the currently clicked card.
             // Then, concatenate them.
-            cardValues = (cardValues.slice(0, cardIndex).concat( (cardValues.slice(cardIndex+1, cardValues.length))));
+            cardValues = (cardValues.slice(0, cardIndex).concat((cardValues.slice(cardIndex + 1, cardValues.length))));
 
             // now, we have the original array, minus that card, so just put
             // it onto the end.
@@ -126,9 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       //Event handler for "Sort" button
-      document.querySelector('#sort-cards').addEventListener('click', function (){
+      document.querySelector('#sort-cards').addEventListener('click', function () {
          //Sort the cardValues array numerically
-         cardValues.sort(function(x, y) {
+         cardValues.sort(function (x, y) {
             return x - y;
          });
 
@@ -141,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }, false);
 
       //Event handler for "Reverse" button
-      document.querySelector('#reverse-cards').addEventListener('click', function (){
+      document.querySelector('#reverse-cards').addEventListener('click', function () {
          //Reverse the array in place
          cardValues.reverse();
 
@@ -172,15 +168,12 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next.';
 
       //Get an array of all tr elements in tic tac toe element
-      (Array.from(document.querySelectorAll('#tic-tac-toe tr'))).forEach(function (value, index) {
-         //Variable rowElements holds the td
-         var rowElements = Array.from(document.querySelectorAll('#tic-tac-toe tr > td'));
-
-         //Create rowValues, an empty Array
-         var rowValues = [];
+      (Array.from(document.querySelectorAll('#tic-tac-toe tr'))).forEach(function () {
+         //Variable rowElements holds the td, and create an empty array rowValues
+         var rowElements = Array.from(document.querySelectorAll('#tic-tac-toe tr > td')), rowValues = [];
 
          //Push a empty string to rowValues for each td element
-         rowElements.forEach(function (value, index) {
+         rowElements.forEach(function () {
             rowValues.push('');
          });
 
@@ -191,22 +184,28 @@ document.addEventListener('DOMContentLoaded', function () {
          ticTacToeValues.push(rowValues);
       });
 
+      //Go through the ticTacToeElements array
       ticTacToeElements.forEach(function (row, whichRow) {
          row.forEach(function (tdguy, whichColumn) {
+            //Update the visuals for the tic tac toe board
             tdguy.textContent = ticTacToeValues[whichRow][whichColumn];
 
+            //Event handler for clicking a tic tac toe square
             tdguy.addEventListener('click', function () {
-               if(tdguy.textContent === '') {
+               //If square is empty, put the player's move
+               if (tdguy.textContent === '') {
+                  //Set the square clicked to the player's move
                   tdguy.textContent = nextToMove;
-               }
-               ticTacToeValues[whichRow][whichColumn] = nextToMove;
 
-               //Update who is next to go
-               if (nextToMove === 'X') {
-                  nextToMove = 'O';
-               } else {
-                  nextToMove = 'X';
+                  //Update who goes next
+                  if (nextToMove === 'X') {
+                     nextToMove = 'O';
+                  } else {
+                     nextToMove = 'X';
+                  }
                }
+               //Update the ticTacToeValues array with the played move
+               ticTacToeValues[whichRow][whichColumn] = nextToMove;
 
                //Output a status message of who moves next
                document.querySelector('#tic-tac-toe-status').textContent = nextToMove.toString() + ' moves next.';
