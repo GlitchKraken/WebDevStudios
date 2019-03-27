@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Create a new state object that is the default state of the data
          state = {
-            numChangesMade = 0; //Give numChangesMade property a value of 0
-            savedText = ''; //Give savedText property a empty string
+            numChangesMade: 0, //Give numChangesMade property a value of 0
+            savedText: '' //Give savedText property a empty string
          };
 
          //Try to parse oldState as a JSON string save result in state.
          //If oldState is not avlid JSON string, do not change the default state
-         if (typeof oldState == 'string') {
+         if (typeof oldState === 'string') {
             try {
                state = JSON.parse(oldState);
             } catch (ignore) {
@@ -61,13 +61,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // WRITE YOUR updateTextKeeper FUNCTION HERE
          updateTextKeeper = function () {
+            //Save the state in web storage if available
+            if (localStorage && localStorage.setItem) {
+               localStorage.setItem('CS 3312 Studio 8 sticky text', textKeeper.getState());
+            }
 
+            //Update the view
+            document.querySelector('#text-input').textContent = textKeeper.getSavedText();
+            document.querySelector('#text-changes-made').value = textKeeper.getNumChangesMade();
          };
 
          // WRITE CODE FOR THE CONTROLLER HERE
+         document.querySelector('#text-input').onchange = function () {
+            textKeeper.saveNewText(document.querySelector('#text-input').value);
+            updateTextKeeper();
+         };
 
          // WRITE CODE TO GET THINGS STARTED HERE
-
+         //When the page is loaded retrieve any data and update the model
+         textKeeper = createTextKeeper(localStorage && localStorage.getItem && localStorage.getItem('CS 3312 Studio 8 sticky text'));
+         updateTextKeeper();
       }());
    }());
 
