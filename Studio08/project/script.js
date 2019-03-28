@@ -67,15 +67,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             //Update the view
-            document.querySelector('#text-input').textContent = textKeeper.getSavedText();
+            document.querySelector('#text-input').value = textKeeper.getSavedText();
             document.querySelector('#text-changes-made').textContent = textKeeper.getNumChangesMade();
-            updateTextKeeper();
+
          };
 
          // WRITE CODE FOR THE CONTROLLER HERE
-         document.querySelector('#text-input').onchange = function () {
+         document.querySelector('#text-input').oninput = function () {
+            // we needed to use oninput rather than onchange.
             textKeeper.saveNewText(document.querySelector('#text-input').value);
             updateTextKeeper();
+            
          };
 
          // WRITE CODE TO GET THINGS STARTED HERE
