@@ -68,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //Update the view
             document.querySelector('#text-input').textContent = textKeeper.getSavedText();
-            document.querySelector('#text-changes-made').value = textKeeper.getNumChangesMade();
+            document.querySelector('#text-changes-made').textContent = textKeeper.getNumChangesMade();
+            updateTextKeeper();
          };
 
          // WRITE CODE FOR THE CONTROLLER HERE
