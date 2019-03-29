@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // we needed to use oninput rather than onchange.
             textKeeper.saveNewText(document.querySelector('#text-input').value);
             updateTextKeeper();
-            
+
          };
 
          // WRITE CODE TO GET THINGS STARTED HERE
@@ -91,15 +91,88 @@ document.addEventListener('DOMContentLoaded', function () {
       var createCounter;
 
       // WRITE YOUR createCounter FUNCTION HERE
+      createCounter = function (oldState) {
+         var self, state;
+
+         state = {
+            count: 1
+         };
+
+         //Try to parse oldState as a JSON string save result in state.
+         //If oldState is not avlid JSON string, do not change the default state
+         if (typeof oldState === 'string') {
+            try {
+               state = JSON.parse(oldState);
+            } catch (ignore) {
+            }
+         }
+
+         self = {
+            getCount: function () {
+               return state.count;
+            },
+            getState: function () {
+               return JSON.stringify(state);
+            },
+            increment: function (num) {
+               state.count += num;
+            }
+         };
+
+         //Freeze the self object and return it
+         return Object.freeze(self);
+      };
+
 
       (function () {
          var cardCounter, updateCards;
 
          // WRITE YOUR updateCards FUNCTION HERE
+         updateCards = function () {
+            // Save the new state in the web storage.
+            if(localStorage && localStorage.setItem) {
+               localStorage.setItem('CS 3312 Studio 8 card clicker')
+            }
 
+            // Update the view by...
+
+            // creating a variable for the cards element.
+            var cardsOutputElement = document.querySelector('#cards');
+
+            // emptying it of children nodes.
+            while (cardsOutputElement.hasChildNodes()) {
+               cardsOutputElement.removeChild(cardsOutputElement.lastChild);
+            }
+
+            // Insert the nums as a new div element one by one, from 1 to count.
+            var currentNum = 1;
+
+            while (currentNum <= cardCounter.getCount()) {
+               var newElement;
+               newElement = document.createElement('div');
+               newElement.textContent = currentNum;
+               cardsOutputElement.appendChild(newElement);
+               currentNum += 1;
+            }
+
+
+         };
          // WRITE CODE FOR THE CONTROLLER HERE
-
+         // updating the controller: adding a click handler to each 'div' card...
+         Array.prototype.slice.call(cardsOutputElement.querySelectorAll('div')).forEach(function(element, whichItem) {
+            element.addEventListener('click', function () {
+               // somehow add the numerical value of the element to count here.
+               cardCounter.increment(parseInt(element.textContent, 10));
+               // update the thing.
+               updateCards();
+            }, false);
+         });
          // WRITE CODE TO GET THINGS STARTED HERE
+
+         document.querySelector('#reset-cards').addEventListener('click', function () {
+            createCounter();
+            updateCards();
+         }, false);
 
       }());
    }());
