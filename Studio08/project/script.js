@@ -129,9 +129,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // WRITE YOUR updateCards FUNCTION HERE
          updateCards = function () {
+
             // Save the new state in the web storage.
             if(localStorage && localStorage.setItem) {
-               localStorage.setItem('CS 3312 Studio 8 card clicker')
+               localStorage.setItem('CS 3312 Studio 8 card clicker');
             }
 
             // Update the view by...
@@ -155,25 +156,33 @@ document.addEventListener('DOMContentLoaded', function () {
                currentNum += 1;
             }
 
-
+            // Update the controller.
+            Array.prototype.slice.call(cardsOutputElement.querySelectorAll('div')).forEach(function(element, whichItem) {
+               element.addEventListener('click', function () {
+                  // somehow add the numerical value of the element to count here.
+                  cardCounter.increment(parseInt(element.textContent, 10));
+                  // update the thing.
+                  updateCards();
+               }, false);
+            });
          };
          // WRITE CODE FOR THE CONTROLLER HERE
-         // updating the controller: adding a click handler to each 'div' card...
-         Array.prototype.slice.call(cardsOutputElement.querySelectorAll('div')).forEach(function(element, whichItem) {
-            element.addEventListener('click', function () {
-               // somehow add the numerical value of the element to count here.
-               cardCounter.increment(parseInt(element.textContent, 10));
-               // update the thing.
-               updateCards();
-            }, false);
-         });
-         // WRITE CODE TO GET THINGS STARTED HERE
+         // this code here should setup the controller....?
 
+
+
+         // Add stuff for reset button.
          document.querySelector('#reset-cards').addEventListener('click', function () {
+            // !!!!!!!
+            // this needs some sort of parameter to create a new one from scratch.
             createCounter();
+            // !!!!!!!
             updateCards();
          }, false);
 
+         // WRITE CODE TO GET THINGS STARTED HERE
+         cardCounter = createCounter(localStorage && localStorage.getItem && localStorage.getItem('CS 3312 Studio 8 card clicker'));
+         updateCards();
       }());
    }());
 
