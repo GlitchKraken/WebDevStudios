@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
                cardsOutputElement.removeChild(cardsOutputElement.lastChild);
             }
 
-            // Insert the nums as a new div element one by one, from 1 to count.
+            // ... and inserting the nums as a new div element one by one, from 1 to count.
             var currentNum = 1;
 
             while (currentNum <= cardCounter.getCount()) {
@@ -157,10 +157,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Update the controller.
-            Array.prototype.slice.call(cardsOutputElement.querySelectorAll('div')).forEach(function(element, whichItem) {
+            Array.from(cardsOutputElement.querySelectorAll('div')).forEach(function(element, whichItem) {
                element.addEventListener('click', function () {
                   // somehow add the numerical value of the element to count here.
-                  cardCounter.increment(parseInt(element.textContent, 10));
+                  cardCounter.increment(whichItem+1);
                   // update the thing.
                   updateCards();
                }, false);
@@ -175,7 +175,8 @@ document.addEventListener('DOMContentLoaded', function () {
          document.querySelector('#reset-cards').addEventListener('click', function () {
             // !!!!!!!
             // this needs some sort of parameter to create a new one from scratch.
-            createCounter();
+            
+            cardCounter = createCounter();
             // !!!!!!!
             updateCards();
          }, false);
