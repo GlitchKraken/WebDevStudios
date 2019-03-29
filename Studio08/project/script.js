@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Save the new state in the web storage.
             if(localStorage && localStorage.setItem) {
-               localStorage.setItem('CS 3312 Studio 8 card clicker');
+               localStorage.setItem('CS 3312 Studio 8 card clicker', cardCounter.getState());
             }
 
             // Update the view by...
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
          // WRITE CODE FOR THE CONTROLLER HERE
          // this code here should setup the controller....?
 
-
+         // apparently the code below will serve as the controller?
 
          // Add stuff for reset button.
          document.querySelector('#reset-cards').addEventListener('click', function () {
@@ -179,6 +179,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // !!!!!!!
             updateCards();
          }, false);
+
+
+
+
 
          // WRITE CODE TO GET THINGS STARTED HERE
          cardCounter = createCounter(localStorage && localStorage.getItem && localStorage.getItem('CS 3312 Studio 8 card clicker'));
