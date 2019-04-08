@@ -2,7 +2,7 @@
 <html lang="en-US"><head>
 
 <meta charset="UTF-8" />
-<title>Studio 8</title>
+<title>Wumpus World</title>
 
 <!--
 CS 3312, spring 2019
@@ -15,27 +15,54 @@ DON'T CHANGE THIS FILE
 
 </head><body>
 
-<h1>Web apps</h1>
+<h1>Hunt The Wumpus</h1>
 
-<fieldset id="sticky-text-area">
-   <legend>Sticky text</legend>
-   <textarea cols="80" id="text-input" rows="20"></textarea>
-   <p>
-      Changes made:
-      <span class="number-output" id="text-changes-made"></span>
-   </p>
+<div class="across">
+
+<fieldset id="Game Description">
+   <legend>How to play Hunt the Wumpus</legend>
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 </fieldset>
 
-<fieldset id="card-clicker-area">
-   <legend>Card clicker</legend>
-   <p>
-      Click a card below to collect more cards.
-   </p>
-   <div class="card-set" id="cards">
-   </div>
-   <button id="reset-cards" type="button">Reset cards</button>
+<fieldset id="cave-area">
+   <legend>The Wumpus Lair</legend>
+   <p id="cave-status"></p>
+   <table class="gameboard" id="cave">
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+   </table>
 </fieldset>
 
+<fieldset id="toggles">
+   <legend> Toggle Features</legend>
+
+      <label><input checked="checked" id="approval-for-roosevelt" type="checkbox" />&nbsp; Feature1</label>
+      <label><input checked="checked" id="approval-for-taft" type="checkbox" />&nbsp; Feature2</label>
+      <label><input id="approval-for-wilson" type="checkbox" />&nbsp; Feature3</label>
+</fieldset>
+</div>
 <!-- Import a JavaScript script to add interactivity to the page. -->
 <script src="script.js"></script>
 
