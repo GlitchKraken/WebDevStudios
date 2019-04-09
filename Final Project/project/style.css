@@ -49,6 +49,11 @@ legend {
    padding: 0px 5px;
 }
 
+/*Making changes here will update the how to play window*/
+#HowToPlay > p {
+
+}
+
 .gameboard tr td {
    border-color: rgb(0, 0, 0);
    border-style: solid;

@@ -5,9 +5,9 @@
 <title>Wumpus World</title>
 
 <!--
-CS 3312, spring 2019
-Studio 8
-DON'T CHANGE THIS FILE
+CS 3312, Spring 2019
+Final Project
+Josh Meek & Chad Fry
 -->
 
 <!-- Import a CSS stylesheet to style the page. -->
@@ -17,11 +17,52 @@ DON'T CHANGE THIS FILE
 
 <h1>Hunt The Wumpus</h1>
 
+<fieldset id="gameDescription">
+   <p>In this game, your mission will be to explore the Wumpus World in search for gold.</p>
+   <p>You will start in the bottom left square (0,0) equipped with a bow and one arrow.</p>
+   <p>In a single room of the cave, sits a immobile Wumpus, ready for dinner</p>
+   <p>Some rooms of the cave my have a pit that will kill players who slip in!</p>
+   <legend>Game Description: </legend>
+   <p>In this game, your mission will be to explore the Wumpus World in search for gold.</p>
+   <p>You will start in the bottom left square (0,0) equipped with a bow and one arrow.</p>
+   <p>In a single room of the cave, sits a immobile Wumpus, ready for dinner</p>
+   <p>Some rooms of the cave my have a deep slimy pit that will kill players who slip into its depth</p>
+</fieldset>
+
+
+
 <div class="across">
 
-<fieldset id="Game Description">
+<fieldset id="HowToPlay">
    <legend>How to play Hunt the Wumpus</legend>
-   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
+
+   <p>Points</p>
+   <ul>
+      <li>-1 point for each action taken</li>
+      <li>-10 points for shooting the arrow</li>
+      <li>-1000 points for being eaten by the wumpus or falling into a pit</li>
+      <li>-2000 points for starving (after 160 actions without death)</li>
+      <li>+1000 points for escaping the cave with the gold</li>
+   </ul>
+
+   <p>Player Actions</p>
+   <ul>
+      <li>Move Left: (A Key)</li>
+      <li>Move Right: (D Key)</li>
+      <li>Move Up: (W Key)</li>
+      <li>Move Down: (S Key)</li>
+      <li>Shoot Arrow: (Arrow keys decide direction)</li>
+      <li>Pick up Gold: (Enter Key)</li>
+      <li>Climb Out: (C Key)</li>
+   </ul>
+
+   <p>Game Parameters</p>
+   <ul>
+      <li>One Wumpus in a random room other than (0,0)</li>
+      <li>Pits randomly placed, with 20% probability in each room other than (0,0)</li>
+      <li>Gold in a random room</li>
+   </ul>
 </fieldset>
 
 <fieldset id="cave-area">
