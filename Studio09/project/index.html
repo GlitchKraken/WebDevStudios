@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>Studio 9</title>
+
+<!--
+CS 3312, spring 2019
+Studio 9
+DON'T CHANGE THIS FILE
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="style.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Drawing and animating</h1>
+
+<fieldset id="sketchy-area">
+   <legend>Sketch it</legend>
+   <div>
+      <canvas id="sketchy"></canvas>
+   </div>
+</fieldset>
+
+<fieldset id="voronoi-area">
+   <legend>Voronoi diagram</legend>
+   <p id="voronoi-instructions">
+      Click on the canvas below to add a new point to the plane.
+   </p>
+   <div>
+      <canvas id="voronoi"></canvas>
+   </div>
+</fieldset>
+
+<fieldset id="ripples-area">
+   <legend>Pond ripples</legend>
+   <p id="ripples-instructions">
+      Click on the canvas below to touch the surface of the pond.
+   </p>
+   <div>
+      <canvas id="ripples"></canvas>
+   </div>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="script.js"></script>
+
+</body></html>

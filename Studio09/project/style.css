@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/*
+CS 3312, spring 2019
+Studio 9
+DON'T CHANGE THIS FILE
+*/
+
+/* Fixing the box-sizing attribute will make sizing boxes easier. */
+html {
+   box-sizing: border-box;
+}
+
+/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+body {
+   background-color: rgb(255, 250, 245);
+   font-family: Georgia, serif;
+}
+
+h1 {
+   color: rgb(34, 68, 102);
+   text-align: center;
+}
+
+fieldset {
+   border-color: rgb(68, 136, 204);
+   border-radius: 10px;
+   border-style: solid;
+   border-width: 2px;
+   float: left;
+}
+
+legend {
+   border-color: rgb(68, 136, 204);
+   border-style: solid;
+   border-width: 2px;
+   padding: 0px 5px;
+}
