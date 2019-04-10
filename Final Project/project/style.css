@@ -38,8 +38,7 @@ fieldset {
    border-color: rgb(68, 136, 204);
    border-radius: 10px;
    border-style: solid;
-   border-width: 2px;
-   float: left;
+   border-width: 4px;
 }
 
 legend {
@@ -54,13 +53,30 @@ legend {
 
 }
 
+.gameDescription {
+   display: flex;
+   justify-content: center;
+   margin: 20px;
+   margin-bottom: 100px;
+}
+
+
+.across {
+   display: flex;
+   flex-direction: row;
+}
+
 .gameboard tr td {
    border-color: rgb(0, 0, 0);
    border-style: solid;
-   border-width: 5px;
+   border-width: 8px;
    font-family: monospace;
    font-size: 400%;
-   height: 100px;
+   height: 200px;
    text-align: center;
-   width: 100px;
+   width: 200px;
+}
+
+.theWumpusLair {
+   justify-content: center;
 }
