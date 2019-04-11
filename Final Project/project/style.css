@@ -53,6 +53,11 @@ legend {
 
 }
 
+#toggles {
+   display: flex;
+   flex-direction: column;
+}
+
 .gameDescription {
    display: flex;
    justify-content: center;
