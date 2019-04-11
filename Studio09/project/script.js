@@ -24,6 +24,25 @@ document.addEventListener('DOMContentLoaded', function () {
       sketchyCanvas.height = 360;
 
       // WRITE YOUR updateSketchyCanvas FUNCTION HERE
+      updateSketchyCanvas = function () {
+
+         //Make the black outline of the canvs.
+         sketchyContext.fillStyle = 'rgb(0,0,0)';
+         sketchyContext.fillRect(0, 0, sketchyCanvas.width, sketchyCanvas.height);
+
+         //Fill the canvs with white.
+         sketchyContext.fillStyle = 'rgb(255,255,255)';
+         sketchyContext.fillRect(1, 1, 358, 358);
+
+         //Draw the green sideways L shape
+         sketchyContext.lineWidth = 1;
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(50,50);
+         sketchyContext.lineTo(60,50);
+         sketchyContext.closePath();
+         sketchyContext.strokeStyle = 'rgb(0,128,0)';
+         sketchyContext.stroke();
+      };
 
       // Draw on the canvas.
       updateSketchyCanvas();
