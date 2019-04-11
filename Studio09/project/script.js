@@ -26,15 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
       // WRITE YOUR updateSketchyCanvas FUNCTION HERE
       updateSketchyCanvas = function () {
 
-         //Make the black outline of the canvs.
+         // Make the black outline of the canvs.
          sketchyContext.fillStyle = 'rgb(0,0,0)';
          sketchyContext.fillRect(0, 0, sketchyCanvas.width, sketchyCanvas.height);
 
-         //Fill the canvs with white.
+         // Fill the canvs with white.
          sketchyContext.fillStyle = 'rgb(255,255,255)';
          sketchyContext.fillRect(1, 1, 358, 358);
 
-         //Draw the green sideways L shape
+         // Draw the green sideways L shape
          sketchyContext.lineWidth = 1;
          sketchyContext.beginPath();
          sketchyContext.moveTo(50,50);
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.fillStyle = 'rgb(0,190,0)';
          sketchyContext.fill();
 
-
+         // Draw the red L outline
          sketchyContext.lineWidth = 2;
          sketchyContext.beginPath();
          sketchyContext.moveTo(50,120);
@@ -59,6 +59,68 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.closePath();
          sketchyContext.strokeStyle = 'rgb(160,0,0)';
          sketchyContext.stroke();
+
+
+         // Begin the circle-drawing thing.
+
+         // Blue quadrant.
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(80, 290);
+         sketchyContext.arc(80, 290, 60, 0, 3 * Math.PI / 2, true);
+         //sketchyContext.closePath();
+         sketchyContext.fillStyle = 'rgb(0,0,255)';
+         sketchyContext.fill();
+
+         // Yellow quadrant/
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(80, 290);
+         sketchyContext.arc(80, 290, 60, Math.PI, 3 * Math.PI / 2, false);
+         sketchyContext.closePath();
+         sketchyContext.fillStyle = 'rgb(255,255,0)';
+         sketchyContext.fill();
+
+         // Red quadrant
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(80, 290);
+         sketchyContext.arc(80, 290, 60, Math.PI, 1 * Math.PI / 2, true);
+         sketchyContext.closePath();
+         sketchyContext.fillStyle = 'rgb(255,0,0)';
+         sketchyContext.fill();
+
+
+         // Green quadrant
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(80, 290);
+         sketchyContext.arc(80, 290, 60, 0, 1 * Math.PI / 2, false);
+         //sketchyContext.closePath();
+         sketchyContext.fillStyle = 'rgb(0,255,0)';
+         sketchyContext.fill();
+
+
+         //Draw a medium-black circle.
+         sketchyContext.lineWidth = 1;
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(80, 290);
+         sketchyContext.arc(80, 290, 20, 0, 2 * Math.PI , false);
+         //sketchyContext.closePath();
+         sketchyContext.fillStyle = 'rgb(0, 0, 0)';
+         sketchyContext.fill();
+
+
+         // draw the outline
+         sketchyContext.lineWidth = 3;
+         sketchyContext.moveTo(80, 290);
+         sketchyContext.beginPath();
+         sketchyContext.arc(80, 290, 60, 0, 2 * Math.PI, false);
+         sketchyContext.strokeStyle = 'rgb(0,0,0)';
+         sketchyContext.stroke();
+         //sketchyContext.stroke();
+
+
+         // end of circle drawing thing.
+
+
+
       };
 
       // Draw on the canvas.
