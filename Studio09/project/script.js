@@ -38,9 +38,26 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.lineWidth = 1;
          sketchyContext.beginPath();
          sketchyContext.moveTo(50,50);
-         sketchyContext.lineTo(60,50);
+         sketchyContext.lineTo(63,50);
+         sketchyContext.lineTo(63, 80);
+         sketchyContext.lineTo(120, 80);
+         sketchyContext.lineTo(120, 93);
+         sketchyContext.lineTo(50, 93);
          sketchyContext.closePath();
-         sketchyContext.strokeStyle = 'rgb(0,128,0)';
+         sketchyContext.fillStyle = 'rgb(0,190,0)';
+         sketchyContext.fill();
+
+
+         sketchyContext.lineWidth = 2;
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(50,120);
+         sketchyContext.lineTo(63,120);
+         sketchyContext.lineTo(63, 150);
+         sketchyContext.lineTo(120, 150);
+         sketchyContext.lineTo(120, 163);
+         sketchyContext.lineTo(50, 163);
+         sketchyContext.closePath();
+         sketchyContext.strokeStyle = 'rgb(160,0,0)';
          sketchyContext.stroke();
       };
 
