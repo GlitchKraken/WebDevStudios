@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // WRITE YOUR updateSketchyCanvas FUNCTION HERE
       updateSketchyCanvas = function () {
+         var controlPoints;
 
          // Make the black outline of the canvs.
          sketchyContext.fillStyle = 'rgb(0,0,0)';
@@ -119,6 +120,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // end of circle drawing thing.
 
+
+
+
+         // Begin Drawing the Bezier curve.
+
+         // but first, define its control points.
+
+         controlPoints = [
+            {
+               // starting point
+               x: 300,
+               y: 80
+            }, {
+               // first pulling point.
+               x: 80,
+               y: 60
+            }, {
+               // second pulling point.
+               x: 450,
+               y: 340
+            }, {
+               // finish point
+               x: 250,
+               y: 330
+            }
+         ];
+
+         sketchyContext.lineWidth = 9;
+         sketchyContext.lineCap = 'round';
+         sketchyContext.lineJoin = 'round';
+         sketchyContext.beginPath();
+         sketchyContext.moveTo(controlPoints[0].x, controlPoints[0].y);
+         sketchyContext.bezierCurveTo(controlPoints[1].x, controlPoints[1].y, controlPoints[2].x, controlPoints[2].y, controlPoints[3].x, controlPoints[3].y);
+         sketchyContext.strokeStyle = 'rgb(0, 0, 190)';
+         sketchyContext.stroke();
 
 
       };
