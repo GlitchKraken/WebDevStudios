@@ -283,6 +283,36 @@ document.addEventListener('DOMContentLoaded', function () {
       ripplesContext.fillRect(0, 0, ripplesCanvas.width, ripplesCanvas.height);
 
       // WRITE YOUR drawRipple FUNCTION HERE
+      //DrawRipple function will take the parameter "state" including parameters from the event addEventListener
+      //and do the "drawing"
+      drawRipple = function drawRipple(state) {
+         //Draw a filled circle same dark background of the pond, drawing over previous circle
+         ripplesContext.lineWidth = 1;
+         ripplesContext.beginPath();
+         ripplesContext.moveTo(state.x,state.y);
+         ripplesContext.arc(state.x,state.y,state.radius,0,2 * Math.PI, false);
+         ripplesContext.fillStyle = 'rgb(0, 17, 51)';
+         ripplesContext.fill();
+
+         //Update the state object using radiusIncrement & opacityIncrement
+         state.radius += state.radiusIncrement;
+         state.opacity += state.opacityIncrement;
+
+         //Check to see if opacity property is still positive, draw a filled circle with a new radius
+         if (state.opacity > 0) {
+            ripplesContext.lineWidth = 1;
+            ripplesContext.beginPath();
+            ripplesContext.moveTo(state.x,state.y);
+            ripplesContext.arc(state.x,state.y,state.radius,0,2 * Math.PI, false);
+            ripplesContext.fillStyle = 'rgba(200,200,255, ' + state.opacity + ')';
+            ripplesContext.fill();
+
+            //Run the drawRipple again for timeIncrement until the opacity is negative
+            setTimeout(function () {
+               drawRipple(state);
+            }, state.timeIncrement);
+         }
+      };
 
       // When the mouse is moved over the canvas, animate an expanding and fading ripple.
       ripplesCanvas.addEventListener('click', function (ev) {
