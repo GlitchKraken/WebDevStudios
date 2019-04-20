@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.fillStyle = 'rgb(0,0,255)';
          sketchyContext.fill();
 
-         // Yellow quadrant/
+         // Yellow quadrant
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
          sketchyContext.arc(80, 290, 60, Math.PI, 3 * Math.PI / 2, false);
@@ -88,25 +88,20 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.fillStyle = 'rgb(255,0,0)';
          sketchyContext.fill();
 
-
          // Green quadrant
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
          sketchyContext.arc(80, 290, 60, 0, 1 * Math.PI / 2, false);
-         //sketchyContext.closePath();
          sketchyContext.fillStyle = 'rgb(0,255,0)';
          sketchyContext.fill();
-
 
          //Draw a medium-black circle.
          sketchyContext.lineWidth = 1;
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
          sketchyContext.arc(80, 290, 20, 0, 2 * Math.PI , false);
-         //sketchyContext.closePath();
          sketchyContext.fillStyle = 'rgb(0, 0, 0)';
          sketchyContext.fill();
-
 
          // draw the outline
          sketchyContext.lineWidth = 3;
@@ -115,18 +110,10 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.arc(80, 290, 60, 0, 2 * Math.PI, false);
          sketchyContext.strokeStyle = 'rgb(0,0,0)';
          sketchyContext.stroke();
-         //sketchyContext.stroke();
-
 
          // end of circle drawing thing.
 
-
-
-
-         // Begin Drawing the Bezier curve.
-
-         // but first, define its control points.
-
+         // Begin Drawing the Bezier curve but first, define its control points.
          controlPoints = [
             {
                // starting point
@@ -155,8 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.bezierCurveTo(controlPoints[1].x, controlPoints[1].y, controlPoints[2].x, controlPoints[2].y, controlPoints[3].x, controlPoints[3].y);
          sketchyContext.strokeStyle = 'rgb(0, 0, 190)';
          sketchyContext.stroke();
-
-
       };
 
       // Draw on the canvas.
@@ -185,9 +170,8 @@ document.addEventListener('DOMContentLoaded', function () {
       // At first we have no generating points.
       generatingPoints = [];
 
-
-      //*******************************************************************
       // WRITE YOUR getPointFromEvent FUNCTION HERE
+      // When the user clicks, capture that point creating a new object....an x value, y value, and a random color for the point
       getPointFromEvent = function (ev) {
          var shapeCanvas;
          shapeCanvas = voronoiCanvas.getBoundingClientRect();
@@ -197,76 +181,58 @@ document.addEventListener('DOMContentLoaded', function () {
             y: ev.clientY - shapeCanvas.top
          };
       };
-      //*******************************************************************
 
-
-
-
-      //*******************************************************************
       // WRITE YOUR updateVoronoiDiagram FUNCTION HERE
       updateVoronoiDiagram = function () {
-         var distance, x, y, valueToReturn;
+         var distance, i, x, y, valueToReturn;
 
-         //For loop for generating controlPoints
-            //For each pixel x
-            //For each pixel y
-               //If smaller distance save that x and y as new point
+         //Function findPoint will be given the middle of a pixel from the shapeCanvas
+         //and will find the shortest distance to a generatingPoint
+         function findPoint(x,y) {
 
-            function findPoint(x,y) {
-               distance = Infinity;
-               // go through all of the generatingPoints.
-               if(generatingPoints.length > 0) {
-                  var i;
-                  for(i = 0; i < generatingPoints.length; i++) {
-                     //given some x, and some y, find the closest of the generating points to the given. (by finding the "smallest" of the distance values)
+            //Set distance to infinity that can be used to compare when finding the shortest distance between the pixel and a generatingPoint
+            distance = Infinity;
 
-                     if (Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y))) < distance) {
-                        distance = Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y)));
-                        valueToReturn = i;
-                     }
+            //If there is at least one generating point, then start going through them to find the closest one to the given pixel
+            if(generatingPoints.length > 0) {
+               var i;
+               //Loop through all the generating points
+               for(i = 0; i < generatingPoints.length; i++) {
+                  //Given the x and y value, i.e. the center of a pixel. Find the generating point closest to the pixel using Euclidean distance
+                  //valueToReturn will be set, which is the value in the array containing the object that has the closest distance value.
+                  if (Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y))) < distance) {
+                     distance = Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y)));
+                     valueToReturn = i;
                   }
                }
+            }
 
+            //After the smallest point, or a tie, has been found for a generatingPoint
+            //Return the index in the array of that generatingPoint
+            return valueToReturn;
+         };
 
-               // after we have gone through all of the generatingPoints, we must have
-               // the smallest point, or a tie, so return that point.
-               return valueToReturn;
-
-            };
-
-         // go through every pixel on the entire canvas.
+         //Go through the center of every pixel on the cavas.
+         //The values loop through the centers of the pixel to be used for calculating the distance
          for (x = 0.5; x <= 360; x += 1) {
             for (y = 0.5; y <= 360; y += 1) {
 
-               // find the closest generatingPoint to that pixel.
-               var closestPoint;
-               closestPoint = findPoint(x,y);
+               //Use the findPoint function to find the color that needs to be used when coloring each pixel
+               voronoiContext.fillStyle = generatingPoints[findPoint(x,y)].color;
 
-
-               // in the odd case that somehow this all gets called before
-               // we ever click on the canvas.
-               if(closestPoint === Infinity) {
-                  alert('Error: Closest-Point is Infinity');
-               }
-
-
-
-               //set the color equal to the closest generatingPoint's color
-               voronoiContext.fillStyle = generatingPoints[closestPoint].color;
-               // now, actually fill that pixel in.
+               //Will actually be filling in the pixel, you don't want to fill in from the center of the pixels
+               //You want to add .5 back to the x and y value, to fill the pixel starting from its top left corner
+               //If you don't do this, then the colors will show through each other.
                voronoiContext.fillRect(x + .5,y + .5,1,1);
-
             }
          }
 
-         //Draw the generating points
-         var i;
+         //Loop through the generatingPoints, and draw them
          for(i = 0; i < generatingPoints.length; i++) {
             // Draw a black circle with a radius of 5
             voronoiContext.lineWidth = 1;
             voronoiContext.beginPath();
             voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
-            //                (startX,startY, radius, startingAngle, EndAngle, clockwise?)
             voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 5, 0, 2 * Math.PI , false);
             voronoiContext.fillStyle = 'rgb(0, 0, 0)';
             voronoiContext.fill();
@@ -275,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
             voronoiContext.lineWidth = 1;
             voronoiContext.beginPath();
             voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
-            //                (startX,startY, radius, startingAngle, EndAngle, clockwise?)
             voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 4, 0, 2 * Math.PI , false);
             voronoiContext.fillStyle = 'rgb(255, 255, 255)';
             voronoiContext.fill();
@@ -284,14 +249,11 @@ document.addEventListener('DOMContentLoaded', function () {
             voronoiContext.lineWidth = 1;
             voronoiContext.beginPath();
             voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
-            //                (startX,startY, radius, startingAngle, EndAngle, clockwise?)
             voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 3, 0, 2 * Math.PI , false);
             voronoiContext.fillStyle = generatingPoints[i].color;
             voronoiContext.fill();
          }
       };
-      //********************************************************************
-
 
       // When the canvas is clicked, add a generating point and redraw the Voronoi diagram.
       voronoiCanvas.addEventListener('click', function (ev) {
