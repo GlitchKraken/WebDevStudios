@@ -185,9 +185,113 @@ document.addEventListener('DOMContentLoaded', function () {
       // At first we have no generating points.
       generatingPoints = [];
 
-      // WRITE YOUR getPointFromEvent FUNCTION HERE
 
+      //*******************************************************************
+      // WRITE YOUR getPointFromEvent FUNCTION HERE
+      getPointFromEvent = function (ev) {
+         var shapeCanvas;
+         shapeCanvas = voronoiCanvas.getBoundingClientRect();
+         return {
+            color: 'rgb(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ')',
+            x: ev.clientX - shapeCanvas.left,
+            y: ev.clientY - shapeCanvas.top
+         };
+      };
+      //*******************************************************************
+
+
+
+
+      //*******************************************************************
       // WRITE YOUR updateVoronoiDiagram FUNCTION HERE
+      updateVoronoiDiagram = function () {
+         var distance, x, y, valueToReturn;
+
+         //For loop for generating controlPoints
+            //For each pixel x
+            //For each pixel y
+               //If smaller distance save that x and y as new point
+
+            function findPoint(x,y) {
+               distance = Infinity;
+               // go through all of the generatingPoints.
+               if(generatingPoints.length > 0) {
+                  var i;
+                  for(i = 0; i < generatingPoints.length; i++) {
+                     //given some x, and some y, find the closest of the generating points to the given. (by finding the "smallest" of the distance values)
+
+                     if (Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y))) < distance) {
+                        distance = Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y)));
+                        valueToReturn = i;
+                     }
+                  }
+               }
+
+
+               // after we have gone through all of the generatingPoints, we must have
+               // the smallest point, or a tie, so return that point.
+               return valueToReturn;
+
+            };
+
+         // go through every pixel on the entire canvas.
+         for (x = 0.5; x <= 360; x += 1) {
+            for (y = 0.5; y <= 360; y += 1) {
+
+               // find the closest generatingPoint to that pixel.
+               var closestPoint;
+               closestPoint = findPoint(x,y);
+
+
+               // in the odd case that somehow this all gets called before
+               // we ever click on the canvas.
+               if(closestPoint === Infinity) {
+                  alert('Error: Closest-Point is Infinity');
+               }
+
+
+
+               //set the color equal to the closest generatingPoint's color
+               voronoiContext.fillStyle = generatingPoints[closestPoint].color;
+               // now, actually fill that pixel in.
+               voronoiContext.fillRect(x + .5,y + .5,1,1);
+
+            }
+         }
+
+         //Draw the generating points
+         var i;
+         for(i = 0; i < generatingPoints.length; i++) {
+            // Draw a black circle with a radius of 5
+            voronoiContext.lineWidth = 1;
+            voronoiContext.beginPath();
+            voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
+            //                (startX,startY, radius, startingAngle, EndAngle, clockwise?)
+            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 5, 0, 2 * Math.PI , false);
+            voronoiContext.fillStyle = 'rgb(0, 0, 0)';
+            voronoiContext.fill();
+
+            // Draw a smaller whiter circle with radius of 4
+            voronoiContext.lineWidth = 1;
+            voronoiContext.beginPath();
+            voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
+            //                (startX,startY, radius, startingAngle, EndAngle, clockwise?)
+            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 4, 0, 2 * Math.PI , false);
+            voronoiContext.fillStyle = 'rgb(255, 255, 255)';
+            voronoiContext.fill();
+
+            //Draw the generating points color with radius of 3
+            voronoiContext.lineWidth = 1;
+            voronoiContext.beginPath();
+            voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
+            //                (startX,startY, radius, startingAngle, EndAngle, clockwise?)
+            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 3, 0, 2 * Math.PI , false);
+            voronoiContext.fillStyle = generatingPoints[i].color;
+            voronoiContext.fill();
+         }
+      };
+      //********************************************************************
+
 
       // When the canvas is clicked, add a generating point and redraw the Voronoi diagram.
       voronoiCanvas.addEventListener('click', function (ev) {
