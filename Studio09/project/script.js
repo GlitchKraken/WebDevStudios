@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
          // Draw the green sideways L shape
          sketchyContext.lineWidth = 1;
          sketchyContext.beginPath();
-         sketchyContext.moveTo(50,50);
-         sketchyContext.lineTo(63,50);
+         sketchyContext.moveTo(50, 50);
+         sketchyContext.lineTo(63, 50);
          sketchyContext.lineTo(63, 80);
          sketchyContext.lineTo(120, 80);
          sketchyContext.lineTo(120, 93);
@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
          // Draw the red L outline
          sketchyContext.lineWidth = 2;
          sketchyContext.beginPath();
-         sketchyContext.moveTo(50,120);
-         sketchyContext.lineTo(63,120);
+         sketchyContext.moveTo(50, 120);
+         sketchyContext.lineTo(63, 120);
          sketchyContext.lineTo(63, 150);
          sketchyContext.lineTo(120, 150);
          sketchyContext.lineTo(120, 163);
@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
          sketchyContext.arc(80, 290, 60, 0, 3 * Math.PI / 2, true);
-         //sketchyContext.closePath();
          sketchyContext.fillStyle = 'rgb(0,0,255)';
          sketchyContext.fill();
 
@@ -83,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
          // Red quadrant
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
-         sketchyContext.arc(80, 290, 60, Math.PI, 1 * Math.PI / 2, true);
+         sketchyContext.arc(80, 290, 60, Math.PI, Math.PI / 2, true);
          sketchyContext.closePath();
          sketchyContext.fillStyle = 'rgb(255,0,0)';
          sketchyContext.fill();
@@ -91,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
          // Green quadrant
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
-         sketchyContext.arc(80, 290, 60, 0, 1 * Math.PI / 2, false);
+         sketchyContext.arc(80, 290, 60, 0, Math.PI / 2, false);
          sketchyContext.fillStyle = 'rgb(0,255,0)';
          sketchyContext.fill();
 
@@ -99,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
          sketchyContext.lineWidth = 1;
          sketchyContext.beginPath();
          sketchyContext.moveTo(80, 290);
-         sketchyContext.arc(80, 290, 20, 0, 2 * Math.PI , false);
+         sketchyContext.arc(80, 290, 20, 0, 2 * Math.PI, false);
          sketchyContext.fillStyle = 'rgb(0, 0, 0)';
          sketchyContext.fill();
 
@@ -188,16 +187,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
          //Function findPoint will be given the middle of a pixel from the shapeCanvas
          //and will find the shortest distance to a generatingPoint
-         function findPoint(x,y) {
+         function findPoint(x, y) {
 
             //Set distance to infinity that can be used to compare when finding the shortest distance between the pixel and a generatingPoint
             distance = Infinity;
 
             //If there is at least one generating point, then start going through them to find the closest one to the given pixel
-            if(generatingPoints.length > 0) {
-               var i;
+            if (generatingPoints.length > 0) {
                //Loop through all the generating points
-               for(i = 0; i < generatingPoints.length; i++) {
+               for (i = 0; i < generatingPoints.length; i += 1) {
                   //Given the x and y value, i.e. the center of a pixel. Find the generating point closest to the pixel using Euclidean distance
                   //valueToReturn will be set, which is the value in the array containing the object that has the closest distance value.
                   if (Math.sqrt(((generatingPoints[i].x - x) * (generatingPoints[i].x - x)) + ((generatingPoints[i].y - y) * (generatingPoints[i].y - y))) < distance) {
@@ -210,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //After the smallest point, or a tie, has been found for a generatingPoint
             //Return the index in the array of that generatingPoint
             return valueToReturn;
-         };
+         }
 
          //Go through the center of every pixel on the cavas.
          //The values loop through the centers of the pixel to be used for calculating the distance
@@ -218,22 +216,22 @@ document.addEventListener('DOMContentLoaded', function () {
             for (y = 0.5; y <= 360; y += 1) {
 
                //Use the findPoint function to find the color that needs to be used when coloring each pixel
-               voronoiContext.fillStyle = generatingPoints[findPoint(x,y)].color;
+               voronoiContext.fillStyle = generatingPoints[findPoint(x, y)].color;
 
                //Will actually be filling in the pixel, you don't want to fill in from the center of the pixels
                //You want to add .5 back to the x and y value, to fill the pixel starting from its top left corner
                //If you don't do this, then the colors will show through each other.
-               voronoiContext.fillRect(x + .5,y + .5,1,1);
+               voronoiContext.fillRect(x + (1 / 2), y + (1 / 2), 1, 1);
             }
          }
 
          //Loop through the generatingPoints, and draw them
-         for(i = 0; i < generatingPoints.length; i++) {
+         for (i = 0; i < generatingPoints.length; i += 1) {
             // Draw a black circle with a radius of 5
             voronoiContext.lineWidth = 1;
             voronoiContext.beginPath();
             voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
-            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 5, 0, 2 * Math.PI , false);
+            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 5, 0, 2 * Math.PI, false);
             voronoiContext.fillStyle = 'rgb(0, 0, 0)';
             voronoiContext.fill();
 
@@ -241,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
             voronoiContext.lineWidth = 1;
             voronoiContext.beginPath();
             voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
-            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 4, 0, 2 * Math.PI , false);
+            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 4, 0, 2 * Math.PI, false);
             voronoiContext.fillStyle = 'rgb(255, 255, 255)';
             voronoiContext.fill();
 
@@ -249,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
             voronoiContext.lineWidth = 1;
             voronoiContext.beginPath();
             voronoiContext.moveTo(generatingPoints[i].x, generatingPoints[i].y);
-            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 3, 0, 2 * Math.PI , false);
+            voronoiContext.arc(generatingPoints[i].x, generatingPoints[i].y, 3, 0, 2 * Math.PI, false);
             voronoiContext.fillStyle = generatingPoints[i].color;
             voronoiContext.fill();
          }
@@ -289,8 +287,8 @@ document.addEventListener('DOMContentLoaded', function () {
          //Draw a filled circle same dark background of the pond, drawing over previous circle
          ripplesContext.lineWidth = 1;
          ripplesContext.beginPath();
-         ripplesContext.moveTo(state.x,state.y);
-         ripplesContext.arc(state.x,state.y,state.radius,0,2 * Math.PI, false);
+         ripplesContext.moveTo(state.x, state.y);
+         ripplesContext.arc(state.x, state.y, state.radius, 0, 2 * Math.PI, false);
          ripplesContext.fillStyle = 'rgb(0, 17, 51)';
          ripplesContext.fill();
 
@@ -302,8 +300,8 @@ document.addEventListener('DOMContentLoaded', function () {
          if (state.opacity > 0) {
             ripplesContext.lineWidth = 1;
             ripplesContext.beginPath();
-            ripplesContext.moveTo(state.x,state.y);
-            ripplesContext.arc(state.x,state.y,state.radius,0,2 * Math.PI, false);
+            ripplesContext.moveTo(state.x, state.y);
+            ripplesContext.arc(state.x, state.y, state.radius, 0, 2 * Math.PI, false);
             ripplesContext.fillStyle = 'rgba(200,200,255, ' + state.opacity + ')';
             ripplesContext.fill();
 
