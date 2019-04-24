@@ -16,10 +16,21 @@ html {
    box-sizing: inherit;
 }
 
-.across {
+.across1 {
    display: flex;
-   justify-content: space-between;
+   justify-content: flex-end;
    flex-direction: row;
+   align-items: baseline;
+
+}
+
+
+
+.across2 {
+   display: flex;
+   justify-content: space-around;
+   flex-direction: row;
+   flex-wrap: wrap-reverse;
 }
 
 
@@ -68,23 +79,21 @@ legend {
 
 .gameDescription {
    display: flex;
-   justify-content: center;
    margin: 20px;
    margin-bottom: 100px;
    font-size: 18px;
+   margin-right: 10%;
+   margin-left: 10%;
 }
 
 .HowToPlayText {
    font-size: 18px;
 }
 
-.across {
-   display: flex;
-   flex-direction: row;
-}
+
 
 .gameboard tr td {
-   border-color: rgb(0, 0, 0);
+   border-color: #785e4d;
    border-style: solid;
    border-width: 8px;
    font-family: Spectral;
@@ -95,7 +104,9 @@ legend {
 }
 
 .Percepts {
+   display: flex;
    margin-top: 20px;
+   align-items: flex-end;
 }
 
 .theWumpusLair {
