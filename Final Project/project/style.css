@@ -24,36 +24,41 @@ html {
 
 
 body {
-   background-color: rgb(255, 250, 245);
-   font-family: Georgia, serif;
+   background-color: #f2eee3;
+   font-family: Spectral;
+   color: #785e4d;
 }
 
 h1 {
-   color: rgb(34, 68, 102);
+   color: #785e4d;
    text-align: center;
+   font-weight: bold;
+   font-size: 50px;
 }
 
 
 fieldset {
-   border-color: rgb(68, 136, 204);
+   border-color: #ff8426;
    border-radius: 10px;
    border-style: solid;
    border-width: 4px;
+   box-shadow: 10px 10px 20px black;
 }
 
 legend {
-   border-color: rgb(68, 136, 204);
+   border-color: #ff8426;
    border-style: solid;
    border-width: 2px;
    padding: 0px 5px;
    font-weight: bold;
-   font-family: fantasy;
-   font-size: 18px;
+   font-family: Spectral;
+   font-size: 22px;
 }
 
 /*Making changes here will update the how to play window*/
 #HowToPlay > p {
-
+   font-size: 18px;
+   font-weight: bold;
 }
 
 #toggles {
@@ -66,8 +71,12 @@ legend {
    justify-content: center;
    margin: 20px;
    margin-bottom: 100px;
+   font-size: 18px;
 }
 
+.HowToPlayText {
+   font-size: 18px;
+}
 
 .across {
    display: flex;
@@ -78,7 +87,7 @@ legend {
    border-color: rgb(0, 0, 0);
    border-style: solid;
    border-width: 8px;
-   font-family: monospace;
+   font-family: Spectral;
    font-size: 400%;
    height: 200px;
    text-align: center;
