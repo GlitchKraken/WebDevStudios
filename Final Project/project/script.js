@@ -1,9 +1,16 @@
 /*jslint browser: true, indent: 3 */
 
+/*
+CS 3312, Spring 2019
+Final Project
+Josh Meek & Chad Fry
+*/
+
 // Here's a generic web app that uses model/view/controller code organization and web storage.
 
 // All the code below will be run once the page content finishes loading.
 document.addEventListener('DOMContentLoaded', function () {
+
    'use strict';
    var createToDoList;
 

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-US"><head>
 
-
-   <!--Import some prettier fonts. Not all will be used, but they could be fun to play with-->
+<!-- Import some prettier fonts. Not all will be used, but they could be fun to play with -->
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro">
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Spectral">
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat">
 
-
-
 <meta charset="UTF-8" />
+
+<!-- Title of the webpage -->
 <title>Wumpus World</title>
 
 <!--
@@ -26,15 +25,13 @@ Josh Meek & Chad Fry
 <!-- The below link gives us access to font-awesome icons / vector-art  :)  -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
+<!-- Nice heading for the webpage with the title of the game -->
 <h1><i class="fas fa-dungeon"></i> Hunt The Wumpus <i class="fas fa-dungeon"></i></h1>
 
 <div class="across1">
-
    <div>
-   <fieldset id="HowToPlay" class="HowToPlayText">
+      <fieldset id="HowToPlay" class="HowToPlayText">
       <legend>How to play Hunt the Wumpus</legend>
-
-
       <p>Points</p>
       <ul>
          <li>-1 point for each action taken</li>
@@ -53,95 +50,82 @@ Josh Meek & Chad Fry
       </ul>
 
       <p>Game Parameters</p>
-      <ul>
-         <li>(0,0) is the starting room, and always safe.</li>
-         <li>One Wumpus in a random room other than (0,0)</li>
-         <li>Pits are randomly placed,</li>
-         <li>(20% pit change per room)</li>
-         <li>Gold in a random room</li>
-      </ul>
-   </fieldset>
-
-
-
+         <ul>
+            <li>(0,0) is the starting room, and always safe.</li>
+            <li>One Wumpus in a random room other than (0,0)</li>
+            <li>Pits are randomly placed,</li>
+            <li>(20% pit change per room)</li>
+            <li>Gold in a random room</li>
+         </ul>
+      </fieldset>
    </div>
 
+   <div class= "gameDescription">
+      <fieldset id="descriptionText">
+         <legend>Game Description: </legend>
+         <p>In this game, your mission will be to explore the Wumpus World in search for gold.</p>
+         <p>You will start in the bottom left square (0,0) equipped with a bow and one arrow.</p>
+         <p>In a single room of the cave, sits an immobile, stinky Wumpus.</p>
+         <p>Be careful not to bump into him, or he'll eat you! </p>
+         <p>Additionally, some rooms of the cave may have a pit.</p>
+         <p>Its a long way down, so don't fall into them!</p>
+      </fieldset>
+   </div>
 
-
-<div class= "gameDescription">
-<fieldset id="descriptionText">
-   <p>In this game, your mission will be to explore the Wumpus World in search for gold.</p>
-   <p>You will start in the bottom left square (0,0) equipped with a bow and one arrow.</p>
-   <p>In a single room of the cave, sits an immobile, stinky Wumpus.</p>
-   <p>Be careful not to bump into him, or he'll eat you! </p>
-   <p>Additionally, some rooms of the cave may have a pit.</p>
-   <p>Its a long way down, so don't fall into them!</p>
-   <legend>Game Description: </legend>
-</fieldset>
-</div>
-
-<div>
-<fieldset id="toggles">
-   <legend> Toggle Features</legend>
-      <label><input checked="checked" id="approval-for-roosevelt" type="checkbox" />&nbsp;AI Move Reccomendations</label>
-      <label><input checked="checked" id="approval-for-taft" type="checkbox" />&nbsp;Scoreboard</label>
-      <label><input checked ="checked" id="approval-for-wilson" type="checkbox" />&nbsp;How To Play</label>
-      <label><input checked ="checked" id="approval-for-wilson" type="checkbox" />&nbsp;Game Description</label>
-      <label><input checked ="checked" id="WumpusBoardToggle" type="checkbox" />&nbsp;Wumpus Board (OFF for Pros only!)</label>
-</fieldset>
-</div>
-
-
-
-
-
+   <div>
+      <fieldset id="toggles">
+         <legend> Toggle Features</legend>
+            <label><input checked="checked" id="ai-movement" type="checkbox" />&nbsp;AI Move Reccomendations</label>
+            <label><input checked="checked" id="scorebox" type="checkbox" />&nbsp;Scoreboard</label>
+            <label><input checked ="checked" id="how-to-play" type="checkbox" />&nbsp;How To Play</label>
+            <label><input checked ="checked" id="game-description" type="checkbox" />&nbsp;Game Description</label>
+            <label><input checked ="checked" id="WumpusBoardToggle" type="checkbox" />&nbsp;Wumpus Board (OFF for Pros only!)</label>
+      </fieldset>
+   </div>
 </div>
 
 <div class = "Percepts">
-   <fieldset id= "Current Percepts">
+   <fieldset id="Current-Percepts">
       <legend>Current Percepts: </legend>
       <p>Nothing right now...</p>
    </fieldset>
 </div>
 
 <div class="across2">
-
-
-<div class="theWumpusLair">
-<fieldset id="cave-area">
-   <legend>The Wumpus Lair</legend>
-   <p id="cave-status"></p>
-   <table class="gameboard" id="cave">
-      <tr>
-         <td></td>
-         <td></td>
-         <td></td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td></td>
-         <td></td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td></td>,
-         <td></td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td></td>
-         <td></td>
-         <td></td>
-      </tr>
-   </table>
-</fieldset>
+   <div class="theWumpusLair">
+   <fieldset id="cave-area">
+      <legend>The Wumpus Lair</legend>
+      <p id="cave-status"></p>
+      <table class="gameboard" id="cave">
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+         </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+         </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+         </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+         </tr>
+      </table>
+   </fieldset>
+   </div>
 </div>
 
-
-</div>
 <!-- Import a JavaScript script to add interactivity to the page. -->
 <script src="script.js"></script>
 

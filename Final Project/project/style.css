@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 /*
-CS 3312, spring 2019
-Studio 8
-DON'T CHANGE THIS FILE
+CS 3312, Spring 2019
+Final Project
+Josh Meek & Chad Fry
 */
 
 /* Fixing the box-sizing attribute will make sizing boxes easier. */
@@ -16,6 +16,7 @@ html {
    box-sizing: inherit;
 }
 
+/* Stylize the different units within the across1 class*/
 .across1 {
    display: flex;
    justify-content: space-between;
@@ -25,8 +26,7 @@ html {
 
 }
 
-
-
+/* Stylize the units within the across2 class*/
 .across2 {
    display: flex;
    justify-content: space-around;
@@ -34,13 +34,14 @@ html {
    flex-wrap: wrap-reverse;
 }
 
-
+/* Style everything within the body field*/
 body {
    background-color: #f2eee3;
    font-family: Spectral;
    color: #785e4d;
 }
 
+/* Style the heading one field*/
 h1 {
    color: #785e4d;
    text-align: center;
@@ -48,7 +49,7 @@ h1 {
    font-size: 50px;
 }
 
-
+/* Style all the fieldset fields*/
 fieldset {
    border-color: #ff8426;
    border-radius: 10px;
@@ -57,6 +58,7 @@ fieldset {
    box-shadow: 10px 10px 20px black;
 }
 
+/* Style all the legend fields*/
 legend {
    border-color: #ff8426;
    border-style: solid;
@@ -73,11 +75,13 @@ legend {
    font-weight: bold;
 }
 
+/* Stylize the toggles box section*/
 #toggles {
    display: flex;
    flex-direction: column;
 }
 
+/* Stylize the game descritpion box*/
 .gameDescription {
    display: flex;
    margin: 20px;
@@ -87,12 +91,12 @@ legend {
    margin-left: 20px;
 }
 
+/* Stylize the text in the how to play section*/
 .HowToPlayText {
    font-size: 18px;
 }
 
-
-
+/* Stylize the inside of the gameboard, i.e. the actual boxes*/
 .gameboard tr td {
    border-color: #785e4d;
    border-style: solid;
@@ -104,6 +108,7 @@ legend {
    width: 200px;
 }
 
+/*Used to stylize the percepts box*/
 .Percepts {
    display: flex;
    margin-top: 50px;
@@ -112,12 +117,13 @@ legend {
    justify-content: center;
 }
 
+/*Used to stylize the gameboard*/
 .theWumpusLair {
    justify-content: center;
    margin-bottom: 20px;
 }
 
-
+/* Adjust the styling of the header row that contains the signature*/
 hr {
    margin-top: 100px;
    border-radius: 80px;
@@ -125,6 +131,7 @@ hr {
    text-align: center;
 }
 
+/* Adjust the styling of the signature at the bottom of the webpage*/
 .ourSignature {
    text-align: center;
 }
