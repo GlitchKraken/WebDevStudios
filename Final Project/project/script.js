@@ -157,6 +157,32 @@ document.addEventListener('DOMContentLoaded', function () {
          getPlayerMoves: function () {
             return state.playerMoves; //Return the number of player moves
          },
+         getDisplayAI: function () {
+            return state.displayAI;
+         },
+         getDisplayBoard: function () {
+            return state.displayBoard;
+         },
+         getDisplayDescription: function () {
+            return state.displayDescription;
+         },
+         getDisplayHowToPlay: function () {
+            return state.getDisplayHowToPlay;
+         },
+         setDisplayAI: function (someBool) {
+            // maybe we should do a typeof check here to ensure
+            // that someBool is actually a bool??? who knows.
+            state.displayAI = someBool;
+         },
+         setDisplayBoard: function (someBool) {
+            state.displayBoard = someBool;
+         },
+         setDisplayHowToPlay: function (someBool) {
+            state.displayHowToPlay = someBool;
+         },
+         setDisplayDescription: function (someBool) {
+            state.displayDescription = someBool;
+         },
          setPercept: function (newText) {
             state.perceptText = newText; //Set the new percept
          },
@@ -195,10 +221,10 @@ document.addEventListener('DOMContentLoaded', function () {
          }
 
          // now update the view accordingly, by hiding elements that are marked as hidden.
-         if(!wumpusWorld.displayDescription) {
+         if(!wumpusWorld.getDisplayDescription) {
             document.querySelector('#gameDescriptionBox').style.display = "none";
          }
-         if(wumpusWorld.displayDescription) {
+         if(wumpusWorld.getDisplayDescription) {
             document.querySelector('#gameDescriptionBox').style.display = "";
          }
 
@@ -210,24 +236,16 @@ document.addEventListener('DOMContentLoaded', function () {
          //       but if we were to update the controller (buttons / toggles),
          //       this is where those changes would go.
 
-
-
-
-         updateWumpusWorld();
-
-
-
-
       };
 
          // Setup the wumpus-world controller here!
          document.querySelector('#game-description').addEventListener('click', function () {
                if(document.querySelector('#game-description').checked) {
-                  wumpusWorld.displayDescription = true;
+                  wumpusWorld.setDisplayDescription(true);
                   alert('Im checked!');
                }
                else {
-                  wumpusWorld.displayDescription = false;
+                  wumpusWorld.setDisplayDescription(false);
                   alert('Im not checked!');
                }
          }, false);
