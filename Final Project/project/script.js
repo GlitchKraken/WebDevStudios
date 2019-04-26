@@ -248,6 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   wumpusWorld.setDisplayDescription(false);
                   alert('Im not checked!');
                }
+               updateWumpusWorld();
          }, false);
 
          // When the page is loaded, get any saved state from web storage and use it.
