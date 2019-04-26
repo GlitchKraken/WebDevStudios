@@ -6,60 +6,91 @@ Final Project
 Josh Meek & Chad Fry
 */
 
-// Here's a generic web app that uses model/view/controller code organization and web storage.
-
 // All the code below will be run once the page content finishes loading.
 document.addEventListener('DOMContentLoaded', function () {
-
    'use strict';
-   var createToDoList;
-
-   // Create a factory that makes an object to keep track of a to-do list.
-   createToDoList = function (oldState) {
+   var createWumpusWorld;
+   
+   //Create a factory that makes an object to keep track of the WumpusWorld
+   createWumpusWorld = function (oldState) {
       var self, state;
-
-      // Create a default starting state.
+      
+      //Create a default starting state.
       state = {
-         list: []
+         playerLocation: (0,0),
+         goldLocation: ((Math.floor(Math.random() * (5 - 0)) + 0), (Math.floor(Math.random() * (5 - 0)) + 0)),
+         wumpusLocation: ((Math.floor(Math.random() * (5 - 1)) + 1), (Math.floor(Math.random() * (5 - 1)) + 1)),
+         playerMoves: 0,
+         hasArrow: true,
+         pits: [],
+         perceptText: ''
       };
-      // If there's a valid previous state, use it instead.
+      
+      //Probably don't need this. Each cavern should have a default state
+      /*
+      //If there is a valid previous state, use it instead.
       if (typeof oldState === 'string') {
          try {
             state = JSON.parse(oldState);
          } catch (ignore) {
          }
       }
-
-      // The self object contains public methods.
+      */
+      
+      //The self object contains public methods
       self = {
-         addItem: function (item) {
-            // Add a new item to the end of the list.
-            state.list.push(item);
+         getPlayerLocation: function () {
+            return state.playerLocation; //Return the player location
          },
-         getItem: function (whichItem) {
-            // Return the desired item from the list.
-            return state.list[whichItem];
+         getPercept: function () {
+            return state.perceptText; //Return the percept
          },
-         getList: function () {
-            // Return a copy of the list array.
-            return state.list.slice();
+         getArrowStatus: function () {
+            return state.hasArrow; //Return whether or not the player has an arrow
          },
-         getNumItems: function () {
-            // Return the number of items in the list.
-            return state.list.length;
+         getPlayerMoves: function () {
+            return state.playerMoves; //Return the number of player moves
+         }
+         setPercept: function (newText) {
+            state.perceptText = newText; //Set the new percept
          },
-         getState: function () {
-            // Return a string representation of the state object, to be used for web storage.
-            return JSON.stringify(state);
+         setPlayerLocation: function (x,y) {
+            state.playerLocation(x,y); //Set the player location
          },
-         removeItem: function (whichItem) {
-            // Remove an item from anywhere in the list.
-            state.list = state.list.slice(0, whichItem).concat(state.list.slice(whichItem + 1));
+         setArrowStatus: function () {
+            state.hasArrow = false; //Shot arrow, so set that the player doesn't have an arrow
+         },
+         setPlayerMoves: function () {
+            state.playerMoves += 1; //Increment the number of player moves
          }
       };
-      // Normally it's best to freeze the self object to keep it from being modified later.
+      
+      //Freeze the self object, so it can't be modified.
       return Object.freeze(self);
    };
+   
+   //Create a new closure to hide the view and controller from the model code above.
+   (function () {
+      //Stuff here
+   }());
+   
+   
+   
+
+   //***********************EXAMPLE CODE BELOW*********************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   //**************************************************************************
+   
+   
+   
 
    // Create a new closure to hide the view and controller from the model code above.
    (function () {
