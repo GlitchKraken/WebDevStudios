@@ -10,22 +10,34 @@ Josh Meek & Chad Fry
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
    var createWumpusWorld;
-   
+
    //Create a factory that makes an object to keep track of the WumpusWorld
    createWumpusWorld = function (oldState) {
-      var self, state;
-      
+      var self, state, randomizeWumpusBoard;
+
       //Create a default starting state.
       state = {
-         playerLocation: (0,0),
-         goldLocation: ((Math.floor(Math.random() * (5 - 0)) + 0), (Math.floor(Math.random() * (5 - 0)) + 0)),
-         wumpusLocation: ((Math.floor(Math.random() * (5 - 1)) + 1), (Math.floor(Math.random() * (5 - 1)) + 1)),
+         playerLocation: {
+            x: 0,
+            y: 0
+         },
+         goldLocation: {
+            x: (Math.floor(Math.random() * (5 - 0)) + 0),
+            y: (Math.floor(Math.random() * (5 - 0)) + 0)
+         },
+         wumpusLocation: {
+            x: (Math.floor(Math.random() * (5 - 1)) + 1),
+            y: (Math.floor(Math.random() * (5 - 1)) + 1)
+         },
+
          playerMoves: 0,
          hasArrow: true,
          pits: [],
          perceptText: ''
+
+
       };
-      
+
       //Probably don't need this. Each cavern should have a default state
       /*
       //If there is a valid previous state, use it instead.
@@ -36,9 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       }
       */
-      
+
       //The self object contains public methods
       self = {
+
          getPlayerLocation: function () {
             return state.playerLocation; //Return the player location
          },
@@ -50,32 +63,37 @@ document.addEventListener('DOMContentLoaded', function () {
          },
          getPlayerMoves: function () {
             return state.playerMoves; //Return the number of player moves
-         }
+         },
          setPercept: function (newText) {
             state.perceptText = newText; //Set the new percept
          },
-         setPlayerLocation: function (x,y) {
-            state.playerLocation(x,y); //Set the player location
+         setPlayerLocation: function (xCoord,yCoord) {
+            state.playerLocation.x = xCoord; //Set the player location
+            state.playerLocation.y = yCoord;
          },
          setArrowStatus: function () {
             state.hasArrow = false; //Shot arrow, so set that the player doesn't have an arrow
          },
          setPlayerMoves: function () {
             state.playerMoves += 1; //Increment the number of player moves
+         },
+         shootArrow: function () {
+
          }
+
       };
-      
+
       //Freeze the self object, so it can't be modified.
       return Object.freeze(self);
    };
-   
+
    //Create a new closure to hide the view and controller from the model code above.
    (function () {
       //Stuff here
    }());
-   
-   
-   
+
+
+
 
    //***********************EXAMPLE CODE BELOW*********************************
    //**************************************************************************
@@ -88,9 +106,9 @@ document.addEventListener('DOMContentLoaded', function () {
    //**************************************************************************
    //**************************************************************************
    //**************************************************************************
-   
-   
-   
+
+
+
 
    // Create a new closure to hide the view and controller from the model code above.
    (function () {
