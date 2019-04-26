@@ -39,14 +39,38 @@ document.addEventListener('DOMContentLoaded', function () {
                   // generate a random num between 0 and 4 inclusive (so each num has 20% chance)
                   // here I pick 3 arbitrarily.
                   // if we generate 3, then that pit gets enabled.
-                  if(Math.floor(Math.random() * 5) === 3) {
-                     isPit[x][y] = true;
+                  if(Math.random() < 0.2) {
+                     state.isPit[x][y] = true;
                   }
                }
             }
          }
 
       };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       //Create a default starting state.
@@ -91,22 +115,31 @@ document.addEventListener('DOMContentLoaded', function () {
          perceptText: '',
          playerScore: 0,
          playerWin: false,
-         playerLose: false
+         playerLose: false,
+         displayAI: true,
+         displayBoard: true,
+         displayHowToPlay: true,
+         displayDescription: true
       };
 
       // shuffle everything up for the beginning of the round.
       // (I looked at the example from studio-8, doing this only effects
       // newgames. refreshes)
       randomizeWumpusBoard();
-      //Probably don't need this. Each cavern should have a default state
 
       //If there is a valid previous state, use it instead.
+      // we want this, as it will cause pages to retain info during
+      // refereshes and browser-closings.
+      // we can have another function that goes and removes the old state.
       if (typeof oldState === 'string') {
          try {
             state = JSON.parse(oldState);
          } catch (ignore) {
          }
       }
+
+
+
 
 
       //The self object contains public methods
@@ -139,6 +172,9 @@ document.addEventListener('DOMContentLoaded', function () {
          },
          shootArrow: function () {
 
+         },
+         getState: function () {
+            return JSON.stringify(state);
          }
 
       };
@@ -149,81 +185,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
    //Create a new closure to hide the view and controller from the model code above.
    (function () {
-      //Stuff here
-   }());
+      var wumpusWorld, updateWumpusWorld;
 
+      // Save the new state in web-storage, if we can.
+      updateWumpusWorld = function () {
 
-
-
-   //***********************EXAMPLE CODE BELOW*********************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-   //**************************************************************************
-
-
-
-
-   // Create a new closure to hide the view and controller from the model code above.
-   (function () {
-      var toDoList, updateToDoList;
-
-      // Create a function that updates everything that needs updating whenever the model changes.
-      updateToDoList = function () {
-         var toDoListOutputElement;
-
-         // Save the new state in web storage (if available).
          if (localStorage && localStorage.setItem) {
-            localStorage.setItem('CS 3312 generic web app', toDoList.getState());
+            localStorage.setItem('Wumpus World State', wumpusWorld.getState());
          }
 
-         // Update the view.
-         toDoListOutputElement = document.querySelector('#to-do-list-output');
-         // Empty the #to-do-list-output element of all child elements.
-         while (toDoListOutputElement.hasChildNodes()) {
-            toDoListOutputElement.removeChild(toDoListOutputElement.lastChild);
+         // now update the view accordingly, by hiding elements that are marked as hidden.
+         if(!wumpusWorld.displayDescription) {
+            document.querySelector('#gameDescriptionBox').style.display = "none";
          }
-         // Insert the list items as new li elements one by one.
-         toDoList.getList().forEach(function (item) {
-            var newElement;
-            // Create a new li element in HTML and insert it just inside the end of the list.
-            newElement = document.createElement('li');
-            newElement.textContent = item;
-            toDoListOutputElement.appendChild(newElement);
-         });
+         if(wumpusWorld.displayDescription) {
+            document.querySelector('#gameDescriptionBox').style.display = "";
+         }
 
-         // Update the controller:  Add a click handler to each new li element.
-         Array.from(toDoListOutputElement.querySelectorAll('li')).forEach(function (element, whichItem) {
-            element.addEventListener('click', function () {
-               // Update the model.
-               toDoList.removeItem(whichItem);
-               // Update everything else based on the new model state.
-               updateToDoList();
-            }, false);
-         });
+
+
+         //       Update the wumpus world controller here.
+
+         // NOTE: we probably won't ever have a need to do this,
+         //       but if we were to update the controller (buttons / toggles),
+         //       this is where those changes would go.
+
+
+
+
+         updateWumpusWorld();
+
+
+
+
       };
 
-      // Set up the controller:  Handle adding a new to-do list item.
-      document.querySelector('#add-to-do-list-item').addEventListener('click', function () {
-         var itemToAdd;
-         // Update the model.
-         itemToAdd = document.querySelector('#to-do-list-item-to-add').value;
-         if (itemToAdd.length > 0) {
-            toDoList.addItem(itemToAdd);
-         }
-         // Update everything else based on the new model state.
-         updateToDoList();
-      }, false);
+         // Setup the wumpus-world controller here!
+         document.querySelector('#game-description').addEventListener('click', function () {
+               if(document.querySelector('#game-description').checked) {
+                  wumpusWorld.displayDescription = true;
+                  alert('Im checked!');
+               }
+               else {
+                  wumpusWorld.displayDescription = false;
+                  alert('Im not checked!');
+               }
+         }, false);
 
-      // When the page is loaded, get any saved state from web storage and use it.
-      toDoList = createToDoList(localStorage && localStorage.getItem && localStorage.getItem('CS 3312 generic web app'));
-      // Update everything else based on the new model state.
-      updateToDoList();
+         // When the page is loaded, get any saved state from web storage and use it.
+         wumpusWorld = createWumpusWorld(localStorage && localStorage.getItem && localStorage.getItem('Wumpus World State'));
+         // Update everything else based on the new model state.
+         updateWumpusWorld();
    }());
 }, false);
