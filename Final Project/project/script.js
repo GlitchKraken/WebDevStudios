@@ -119,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
          displayAI: true,
          displayBoard: true,
          displayHowToPlay: true,
-         displayDescription: true
+         displayDescription: true,
+         lastMoveMade: ''
       };
 
       // shuffle everything up for the beginning of the round.
@@ -210,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
             state.hasArrow = true;
             state.perceptText = '';
             //state.playerScore = 0; (actually, playerScore should be loaded)
-            // we could of course, make a hard-reset button, if we wanted. 
+            // we could of course, make a hard-reset button, if we wanted.
             state.playerWin = false;
             state.playerLose = false;
             // don't reset the displays, since those should be memorized.
