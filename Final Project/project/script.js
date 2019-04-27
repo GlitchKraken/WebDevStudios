@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return state.displayDescription;
          },
          getDisplayHowToPlay: function () {
-            return state.getDisplayHowToPlay;
+            return state.displayHowToPlay;
          },
          setDisplayAI: function (someBool) {
             // maybe we should do a typeof check here to ensure
@@ -221,14 +221,25 @@ document.addEventListener('DOMContentLoaded', function () {
          }
 
          // now update the view accordingly, by hiding elements that are marked as hidden.
-         if(!wumpusWorld.getDisplayDescription) {
+
+         // correctly display the gameDescription.
+         if (!wumpusWorld.getDisplayDescription()) {
             document.querySelector('#gameDescriptionBox').style.display = "none";
          }
-         if(wumpusWorld.getDisplayDescription) {
+
+         if (wumpusWorld.getDisplayDescription()) {
             document.querySelector('#gameDescriptionBox').style.display = "";
          }
 
 
+
+         // correctly display the how-to-play section.
+         if (!wumpusWorld.getDisplayHowToPlay()) {
+            document.querySelector('#HowToPlay').style.display = "none";
+         }
+         if (wumpusWorld.getDisplayHowToPlay()) {
+            document.querySelector('#HowToPlay').style.display = "";
+         }
 
          //       Update the wumpus world controller here.
 
@@ -239,17 +250,44 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
          // Setup the wumpus-world controller here!
+
+         // setup description toggle
          document.querySelector('#game-description').addEventListener('click', function () {
                if(document.querySelector('#game-description').checked) {
                   wumpusWorld.setDisplayDescription(true);
-                  alert('Im checked!');
                }
                else {
                   wumpusWorld.setDisplayDescription(false);
-                  alert('Im not checked!');
                }
                updateWumpusWorld();
          }, false);
+
+         //setup the gameboard toggle
+         document.querySelector('#wumpusBoard').addEventListener('click', function () {
+               if(document.querySelector('#wumpusBoard').checked) {
+                  wumpusWorld.setDisplayBoard(true);
+               }
+               else {
+                  wumpusWorld.setDisplayBoard(false);
+               }
+               updateWumpusWorld();
+         }, false);
+
+         // setup how-to-play toggle
+         document.querySelector('#how-to-play').addEventListener('click', function () {
+               if(document.querySelector('#how-to-play').checked) {
+                  wumpusWorld.setDisplayHowToPlay(true);
+               }
+               else {
+                  wumpusWorld.setDisplayHowToPlay(false);
+               }
+               updateWumpusWorld();
+         }, false);
+
+         // setup AI-toggle here
+
+         // setup Scoreboard-toggle here
+
 
          // When the page is loaded, get any saved state from web storage and use it.
          wumpusWorld = createWumpusWorld(localStorage && localStorage.getItem && localStorage.getItem('Wumpus World State'));
