@@ -201,6 +201,21 @@ document.addEventListener('DOMContentLoaded', function () {
          },
          getState: function () {
             return JSON.stringify(state);
+         },
+         resetGame: function () {
+            // reset the game itself.
+            state.playerLocation.x = 0;
+            state.playerLocation.y = 0;
+            state.playerMoves = 0;
+            state.hasArrow = true;
+            state.perceptText = '';
+            //state.playerScore = 0; (actually, playerScore should be loaded)
+            // we could of course, make a hard-reset button, if we wanted. 
+            state.playerWin = false;
+            state.playerLose = false;
+            // don't reset the displays, since those should be memorized.
+
+            randomizeWumpusBoard();
          }
 
       };
