@@ -242,6 +242,12 @@ document.addEventListener('DOMContentLoaded', function () {
          }
 
          //       Update the wumpus world controller here.
+         if (!wumpusWorld.getDisplayBoard()) {
+            document.querySelector('#cave-area').style.display = "none";
+         }
+         if (wumpusWorld.getDisplayBoard()) {
+            document.querySelector('#cave-area').style.display = "";
+         }
 
          // NOTE: we probably won't ever have a need to do this,
          //       but if we were to update the controller (buttons / toggles),
