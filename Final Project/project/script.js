@@ -295,6 +295,10 @@ document.addEventListener('DOMContentLoaded', function () {
          // setup Scoreboard-toggle here
 
 
+
+
+         // right here, we should setup the controller for player movement.
+
          // When the page is loaded, get any saved state from web storage and use it.
          wumpusWorld = createWumpusWorld(localStorage && localStorage.getItem && localStorage.getItem('Wumpus World State'));
          // Update everything else based on the new model state.
