@@ -317,6 +317,85 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('Wumpus World State', wumpusWorld.getState());
          }
 
+
+                        // ****************************************************
+                        // UPDATE CONTROLLER / MODEL BEFORE ANYTHING LOADS.
+
+                        var pitsAroundPlayer = 0;
+                        var tempPit = wumpusWorld.getIsPit();
+
+                        if (wumpusWorld.getPlayerLocation().x < 3) {
+                           if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
+                              wumpusWorld.setSenseBreeze(true);
+                              pitsAroundPlayer +=1;
+                           }
+                        }
+
+                        if (wumpusWorld.getPlayerLocation().x > 0) {
+                           if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y]) {
+                              wumpusWorld.setSenseBreeze(true);
+                              pitsAroundPlayer +=1;
+                           }
+                        }
+
+                        if(wumpusWorld.getPlayerLocation().y < 3) {
+                           if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1]) {
+                              wumpusWorld.setSenseBreeze(true);
+                              pitsAroundPlayer +=1;
+                           }
+                        }
+
+                        if(wumpusWorld.getPlayerLocation().y > 0) {
+                           if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1]) {
+                              wumpusWorld.setSenseBreeze(true);
+                              pitsAroundPlayer +=1;
+                           }
+                        }
+
+                        if (pitsAroundPlayer === 0) {
+                           wumpusWorld.setSenseBreeze(false);
+                        }
+
+                        //Check for Stench
+                        //Right
+                        var wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
+
+                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
+                           wumpusWorld.setSenseStench(true);
+                           wumpiiAroundPlayer += 1;
+                        }
+                        //Left
+                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x - 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
+                           wumpusWorld.setSenseStench(true);
+                           wumpiiAroundPlayer += 1;
+                        }
+                        //Up
+                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y + 1) {
+                           wumpusWorld.setSenseStench(true);
+                           wumpiiAroundPlayer += 1;
+                        }
+                        //Down
+                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y - 1){
+                           wumpusWorld.setSenseStench(true);
+                           wumpiiAroundPlayer += 1;
+                        }
+
+                        //Check for gold
+                        if(wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
+                           wumpusWorld.setSenseGlitter(true);
+                           wumpiiAroundPlayer += 1;
+                        } else wumpusWorld.setSenseGlitter(false);
+
+                        if(wumpiiAroundPlayer === 0) {
+                           wumpusWorld.setSenseStench(false);
+                        }
+
+                        // END OF UPDATE MODEL / CONTROLLER
+                        // ****************************************************
+
+
+
+
          // now update the view accordingly, by hiding elements that are marked as hidden.
 
          // correctly display the gameDescription.
@@ -425,12 +504,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
       };
 
-         // Setup the wumpus-world controller here!
 
 
 
 
-
+                  // Setup the wumpus-world controller here!
 // ---------------------------------------------------------------------------
 //                  === Toggle Events ===
 
