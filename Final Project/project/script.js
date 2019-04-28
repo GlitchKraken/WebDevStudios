@@ -341,13 +341,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // display win text when necessary
             if(wumpusWorld.getPlayerWin()) {
                document.querySelector('#win-text').style.display="";
+               document.querySelector('#score-text').textContent="Total Score: " + wumpusWorld.getPlayerScore();
             } else {
                document.querySelector('#win-text').style.display="none";
+
             }
 
             // display lose text when necessary.
             if(wumpusWorld.getPlayerLose()) {
                document.querySelector('#lose-text').style.display="";
+               document.querySelector('#score-text').textContent="Total Score: " + wumpusWorld.getPlayerScore();
             } else {
                document.querySelector('#lose-text').style.display="none";
 
@@ -360,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // since the game is ongoing, we should hide the win/lose text.
             document.querySelector('#win-text').style.display="none";
             document.querySelector('#lose-text').style.display="none";
-
+            document.querySelector('#score-text').textContent="";
 
             if(wumpusWorld.getSenseBump()) {
                document.querySelector('#bump-percept-text').style.display="";
@@ -541,13 +544,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                // handle player attacks / interactions.
+
                if (keyCode.code === 'Enter') {
                   alert('Enter was was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
+                     wumpusWorld.setPlayerScore(1000);
                      wumpusWorld.setSenseGlitter(false);
                   }
                }
+
+               wumpusWorld.setSenseScream(false);
+
                if (keyCode.code === 'ArrowUp') {
                   alert('Shot arrow up');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y < wumpusWorld.getWumpusLocation().y) {

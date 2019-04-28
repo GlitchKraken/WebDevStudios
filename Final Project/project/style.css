@@ -34,6 +34,13 @@ html {
    flex-wrap: wrap-reverse;
 }
 
+.across3 {
+   display: flex;
+   justify-content: space-between;
+   flex-direction: row;
+   flex-wrap: wrap-reverse;
+}
+
 /* Style everything within the body field*/
 body {
    background-color: #f2eee3;
