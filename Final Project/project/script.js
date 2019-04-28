@@ -86,6 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
             [false, false, false, false]
          ],
 
+         gameInProgress: false,
+         highScore: -100000,
 
          playerMoves: 0,
          hasArrow: true,
@@ -192,6 +194,9 @@ document.addEventListener('DOMContentLoaded', function () {
          getSenseScream: function () {
             return state.senseScream;
          },
+         getHighScore: function () {
+            return state.highScore;
+         },
          setSenseScream: function (someBool) {
             state.senseScream = someBool;
          },
@@ -226,9 +231,15 @@ document.addEventListener('DOMContentLoaded', function () {
             state.playerMoves += 1; //Increment the number of player moves
          },
          setPlayerLose: function () {
+            if(state.playerScore > state.highScore) {
+               state.highScore = state.playerScore;
+            }
             state.playerLose = true;
          },
          setPlayerWin: function () {
+            if(state.playerScore > state.highScore) {
+               state.highScore = state.playerScore;
+            }
             state.playerWin = true;
          },
          shootArrow: function () {
@@ -359,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
          } else {
 
             // if we are here, then the game is ongoing. display senses accordingly.
-
+            document.querySelector('#high-score-text').textContent = wumpusWorld.getHighScore();
             // since the game is ongoing, we should hide the win/lose text.
             document.querySelector('#win-text').style.display="none";
             document.querySelector('#lose-text').style.display="none";
@@ -679,8 +690,16 @@ document.addEventListener('DOMContentLoaded', function () {
                // update the visual, because the player has done *something*.
                updateWumpusWorld();
             }
+
+
+
+
             updateWumpusWorld();
          });
+
+
+
+
 
          // When the page is loaded, get any saved state from web storage and use it.
          wumpusWorld = createWumpusWorld(localStorage && localStorage.getItem && localStorage.getItem('Wumpus World State'));

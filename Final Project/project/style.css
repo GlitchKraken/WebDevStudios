@@ -138,6 +138,12 @@ hr {
    text-align: center;
 }
 
+.Scoreboard {
+   text-align: center;
+   font-weight: bold;
+   font-size: 22px;
+}
+
 /* Adjust the styling of the signature at the bottom of the webpage*/
 .ourSignature {
    text-align: center;
