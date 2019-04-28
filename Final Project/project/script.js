@@ -349,6 +349,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // if we are here, then the game is ongoing. display senses accordingly.
 
+            // since the game is ongoing, we should hide the win/lose text.
+            document.querySelector('#win-text').style.display="none";
+            document.querySelector('#lose-text').style.display="none";
+
+
             if(wumpusWorld.getSenseBump()) {
                document.querySelector('#bump-percept-text').style.display="";
             } else {
@@ -379,6 +384,12 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                document.querySelector('#glitter-percept-text').style.display="none";
             }
+
+            // if there are no percepts to be sensed, make it clear.
+            if(!wumpusWorld.getSenseBump() && !wumpusWorld.getSenseBreeze() && !wumpusWorld.getSenseScream() && !wumpusWorld.getSenseStench() && !wumpusWorld.getSenseGlitter()) {
+               document.querySelector('#default-percept-text').style.display="";
+            }
+            else document.querySelector('#default-percept-text').style.display="none";
 
          }
 
@@ -446,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function () {
          //reset game on button-press.
          document.querySelector('#reset-button').addEventListener('click', function () {
             wumpusWorld.resetGame();
-            //updateWumpusWorld(); //This here?
+            updateWumpusWorld();
          }, false);
 
 
@@ -570,19 +581,36 @@ document.addEventListener('DOMContentLoaded', function () {
                   wumpusWorld.setPlayerScore(-1000);
                }
 
-               //Check for pit breeze
-               if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y] === true) {
-                  wumpusWorld.setSenseBreeze(true);
+
+               // NOTE: we need to check for stench and breeze when the game
+               // starts, not *just* when buttons are pressed.
+
+
+               //Check for pit breeze, but only check existing squares.
+               if (wumpusWorld.getPlayerLocation().x < 3) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y] === true) {
+                     wumpusWorld.setSenseBreeze(true);
+                  }
                }
-               if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y] === true) {
-                  wumpusWorld.setSenseBreeze(true);
+
+               if (wumpusWorld.getPlayerLocation().x > 0) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y] === true) {
+                     wumpusWorld.setSenseBreeze(true);
+                  }
                }
-               if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1] === true) {
-                  wumpusWorld.setSenseBreeze(true);
+
+               if(wumpusWorld.getPlayerLocation().y < 3) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1] === true) {
+                     wumpusWorld.setSenseBreeze(true);
+                  }
                }
-               if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1] === true) {
-                  wumpusWorld.setSenseBreeze(true);
+
+               if(wumpusWorld.getPlayerLocation().y > 0) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1] === true) {
+                     wumpusWorld.setSenseBreeze(true);
+                  }
                }
+
 
                //Check for Stench
                //Right
