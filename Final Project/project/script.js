@@ -276,7 +276,15 @@ document.addEventListener('DOMContentLoaded', function () {
             state.senseGlitter = false;
             state.senseScream = false;
             // don't reset the displays, since those should be memorized.
+            var j,k;
 
+            // reset the pits to all not exist.
+            for(j = 0; j < 4; j++) {
+               for (k = 0; k < 4; k++) {
+                  state.isPit[j][k] = false;
+               }
+            }
+            // then randomize everything.
             randomizeWumpusBoard();
          }
 
@@ -479,6 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                   else {
                      // place the player accordingly.
+                     wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y + 1);
                   }
                }
@@ -490,6 +499,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setPlayerScore(-1);
                   } else {
                      //Place player accordingly
+                     wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x - 1, wumpusWorld.getPlayerLocation().y);
                   }
                }
@@ -500,6 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setPlayerScore(-1);
                   } else {
                      //Place player accordingly
+                     wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y - 1);
                   }
                }
@@ -510,6 +521,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setPlayerScore(-1);
                   } else {
                      //Place player accordingly
+                     wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x + 1, wumpusWorld.getPlayerLocation().y);
                   }
                }
@@ -533,6 +545,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   alert('Enter was was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
+                     wumpusWorld.setSenseGlitter(false);
                   }
                }
                if (keyCode.code === 'ArrowUp') {
@@ -541,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
-                  }
+                  } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowDown') {
                   alert('Shot arrow down');
@@ -549,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
-                  }
+                  } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowLeft') {
                   alert('Shot arrow left');
@@ -557,7 +570,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
-                  }
+                  } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowRight') {
                   alert('Shot arrow right');
@@ -565,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
-                  }
+                  } else wumpusWorld.setSenseScream(false);
                }
 
                //Setup controller to check for player death
@@ -587,53 +600,74 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                //Check for pit breeze, but only check existing squares.
+               var pitsAroundPlayer = 0;
+
                if (wumpusWorld.getPlayerLocation().x < 3) {
-                  if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y] === true) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
                      wumpusWorld.setSenseBreeze(true);
+                     pitsAroundPlayer +=1;
                   }
                }
 
                if (wumpusWorld.getPlayerLocation().x > 0) {
-                  if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y] === true) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y]) {
                      wumpusWorld.setSenseBreeze(true);
+                     pitsAroundPlayer +=1;
                   }
                }
 
                if(wumpusWorld.getPlayerLocation().y < 3) {
-                  if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1] === true) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1]) {
                      wumpusWorld.setSenseBreeze(true);
+                     pitsAroundPlayer +=1;
                   }
                }
 
                if(wumpusWorld.getPlayerLocation().y > 0) {
-                  if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1] === true) {
+                  if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1]) {
                      wumpusWorld.setSenseBreeze(true);
+                     pitsAroundPlayer +=1;
                   }
                }
 
+               if (pitsAroundPlayer === 0) {
+                  wumpusWorld.setSenseBreeze(false);
+               }
 
                //Check for Stench
                //Right
+               var wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
+
                if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
                   wumpusWorld.setSenseStench(true);
+                  wumpiiAroundPlayer += 1;
                }
                //Left
                if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x - 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
                   wumpusWorld.setSenseStench(true);
+                  wumpiiAroundPlayer += 1;
                }
                //Up
                if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y + 1) {
                   wumpusWorld.setSenseStench(true);
+                  wumpiiAroundPlayer += 1;
                }
                //Down
                if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y - 1){
                   wumpusWorld.setSenseStench(true);
+                  wumpiiAroundPlayer += 1;
                }
 
                //Check for gold
                if(wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                   wumpusWorld.setSenseGlitter(true);
+                  wumpiiAroundPlayer += 1;
+               } else wumpusWorld.setSenseGlitter(false);
+
+               if(wumpiiAroundPlayer === 0) {
+                  wumpusWorld.setSenseStench(false);
                }
+
                // update the visual, because the player has done *something*.
                updateWumpusWorld();
             }
