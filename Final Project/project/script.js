@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
          playerMoves: 0,
          hasArrow: true,
+         hasGold: false,
          perceptText: '',
          playerScore: 0,
          playerWin: false,
@@ -120,7 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
          displayBoard: true,
          displayHowToPlay: true,
          displayDescription: true,
-         lastMoveMade: ''
+         lastMoveMade: '',
+         bump: false
       };
 
       // shuffle everything up for the beginning of the round.
@@ -147,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
       self = {
 
          getPlayerLocation: function () {
-            return state.playerLocation; //Return the player location
+            var locationCopy = state.playerLocation;
+            return locationCopy; //Return the player location
          },
          getPercept: function () {
             return state.perceptText; //Return the percept
@@ -170,6 +173,28 @@ document.addEventListener('DOMContentLoaded', function () {
          getDisplayHowToPlay: function () {
             return state.displayHowToPlay;
          },
+         getPlayerScore: function () {
+            return state.playerScore;
+         },
+         getWumpusLocation: function () {
+            var wumpusLocationCopy = state.wumpusLocation;
+            return wumpusLocationCopy;
+         },
+         getGoldLocation: function () {
+            return state.goldLocation;
+         },
+         getHasGold: function () {
+            return state.hasGold;
+         },
+         getPlayerWin: function () {
+            return state.playerWin;
+         },
+         getPlayerLose: function () {
+            return state.playerLose;
+         },
+         getIsPit: function () {
+            return state.isPit;
+         },
          setDisplayAI: function (someBool) {
             // maybe we should do a typeof check here to ensure
             // that someBool is actually a bool??? who knows.
@@ -187,6 +212,9 @@ document.addEventListener('DOMContentLoaded', function () {
          setPercept: function (newText) {
             state.perceptText = newText; //Set the new percept
          },
+         setLastMoveMade: function (newText) {
+            state.lastMoveMade = newText; //Set the last move made
+         },
          setPlayerLocation: function (xCoord,yCoord) {
             state.playerLocation.x = xCoord; //Set the player location
             state.playerLocation.y = yCoord;
@@ -197,8 +225,24 @@ document.addEventListener('DOMContentLoaded', function () {
          setPlayerMoves: function () {
             state.playerMoves += 1; //Increment the number of player moves
          },
+         setPlayerLose: function () {
+            state.playerLose = true;
+         },
+         setPlayerWin: function () {
+            state.playerWin = true;
+         },
          shootArrow: function () {
 
+         },
+         setPlayerScore: function (someNumber) {
+            state.playerScore += someNumber;
+         },
+         setWumpusLocation: function (xCoord,yCoord) {
+            state.wumpusLocation.x = xCoord;
+            state.wumpusLocation.y = yCoord;
+         },
+         setPlayerHasGold: function () {
+            state.hasGold = true;
          },
          getState: function () {
             return JSON.stringify(state);
@@ -214,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // we could of course, make a hard-reset button, if we wanted.
             state.playerWin = false;
             state.playerLose = false;
+            state.hasGold = false;
             // don't reset the displays, since those should be memorized.
 
             randomizeWumpusBoard();
@@ -257,13 +302,21 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#HowToPlay').style.display = "";
          }
 
-         //       Update the wumpus world controller here.
+
          if (!wumpusWorld.getDisplayBoard()) {
             document.querySelector('#cave-area').style.display = "none";
          }
          if (wumpusWorld.getDisplayBoard()) {
             document.querySelector('#cave-area').style.display = "";
          }
+
+         // check the model for game-over or win here, by looking at wumpusWorld. also here is where we
+         // will change the percept text- based on the contents of wumpusWorld.
+
+
+
+
+
 
          // NOTE: we probably won't ever have a need to do this,
          //       but if we were to update the controller (buttons / toggles),
@@ -313,7 +366,113 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-         // right here, we should setup the controller for player movement.
+         //Handle player movement throughout the board.
+         document.addEventListener('keydown', function (keyCode) {
+            if (keyCode.code === 'KeyW') {
+               alert('w was pressed!');
+               // is the player trying to pass through a wall?
+               if(wumpusWorld.getPlayerLocation().y === 3) {
+                  wumpusWorld.setPercept('You Bump into something cold, and course.');
+                  wumpusWorld.setPlayerScore(-1);
+               }
+               else {
+                  // place the player accordingly.
+                  wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y + 1);
+               }
+            }
+
+            if (keyCode.code === 'KeyA') {
+               alert('a was pressed!');
+               if (wumpusWorld.getPlayerLocation().x === 0) {
+                  wumpusWorld.setPercept('You Bump into something cold, and course.');
+                  wumpusWorld.setPlayerScore(-1);
+               } else {
+                  //Place player accordingly
+                  wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x - 1, wumpusWorld.getPlayerLocation().y);
+               }
+            }
+            if (keyCode.code === 'KeyS') {
+               alert('s was pressed!');
+               if (wumpusWorld.getPlayerLocation().y === 0) {
+                  wumpusWorld.setPercept('You Bump into something cold, and course.');
+                  wumpusWorld.setPlayerScore(-1);
+               } else {
+                  //Place player accordingly
+                  wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y - 1);
+               }
+            }
+            if (keyCode.code === 'KeyD') {
+               alert('d was pressed!');
+               if (wumpusWorld.getPlayerLocation().x === 3) {
+                  wumpusWorld.setPercept('You Bump into something cold, and course.');
+                  wumpusWorld.setPlayerScore(-1);
+               } else {
+                  //Place player accordingly
+                  wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x + 1, wumpusWorld.getPlayerLocation().y);
+               }
+            }
+
+            // handle player attacks / interactions.
+            if (keyCode.code === 'Enter') {
+               alert('Enter was was pressed!');
+               if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
+                  wumpusWorld.setPlayerHasGold();
+               }
+            }
+            if (keyCode.code === 'ArrowUp') {
+               alert('Shot arrow up');
+               if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y < wumpusWorld.getWumpusLocation().y) {
+                  wumpusWorld.setPercept('You hear a scream.');
+                  wumpusWorld.setWumpusLocation(-100,-100);
+                  wumpusWorld.setPlayerScore(-10);
+               }
+            }
+            if (keyCode.code === 'ArrowDown') {
+               alert('Shot arrow down');
+               if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y > wumpusWorld.getWumpusLocation().y) {
+                  wumpusWorld.setPercept('You hear a scream.');
+                  wumpusWorld.setWumpusLocation(-100,-100);
+                  wumpusWorld.setPlayerScore(-10);
+               }
+            }
+            if (keyCode.code === 'ArrowLeft') {
+               alert('Shot arrow left');
+               if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x > wumpusWorld.getWumpusLocation().x) {
+                  wumpusWorld.setPercept('You hear a scream.');
+                  wumpusWorld.setWumpusLocation(-100,-100);
+                  wumpusWorld.setPlayerScore(-10);
+               }
+            }
+            if (keyCode.code === 'ArrowRight') {
+               alert('Shot arrow right');
+               if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x < wumpusWorld.getWumpusLocation().x) {
+                  wumpusWorld.setPercept('You hear a scream.');
+                  wumpusWorld.setWumpusLocation(-100,-100);
+                  wumpusWorld.setPlayerScore(-10);
+               }
+            }
+         });
+
+
+         //Setup controller to check for player death
+         if (wumpusWorld.getPlayerLocation.x === wumpusWorld.getWumpusLocation.x && wumpusWorld.getPlayerLocation.y === wumpusWorld.getWumpusLocation.y) {
+               wumpusWorld.setPlayerLose();
+               wumpusWorld.setPlayerScore(-1000);
+         }
+
+         var tempPit = wumpusWorld.getIsPit();
+         if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y]) {
+            wumpusWorld.setPlayerLose();
+            wumpusWorld.setPlayerScore(-1000);
+         }
+
+         //Setup controller to check
+         //MEEK WORKING HERE
+         if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpus.getPlayerLocation().y])
+
+
+
+
 
          // When the page is loaded, get any saved state from web storage and use it.
          wumpusWorld = createWumpusWorld(localStorage && localStorage.getItem && localStorage.getItem('Wumpus World State'));
