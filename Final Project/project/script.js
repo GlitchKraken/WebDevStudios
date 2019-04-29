@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
          displayBoard: true,
          displayHowToPlay: true,
          displayDescription: true,
+         displayScore: true,
          lastMoveMade: '',
 
          // what can the player currently sense.
@@ -106,7 +107,26 @@ document.addEventListener('DOMContentLoaded', function () {
          senseBump: false,
          senseStench: false,
          senseGlitter: false,
-         senseScream: false
+         senseScream: false,
+
+         // what action is the AI currently reccomending?
+         aiReccomend: '',
+
+
+         // stuff the ai needs. ***********************************
+
+
+
+         // Define the Cave as a 4-by-4 set of rooms.
+         Cave: [
+            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}]
+         ],
+
+         // should keep track of all moves made by the player.
+         MovesMade: []
       };
 
       // shuffle everything up for the beginning of the round.
@@ -130,7 +150,71 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       //The self object contains public methods
+
       self = {
+
+         // define the AI! named after Chad's pretty-good one.
+         agentHollowKnight: function() {
+
+            // after everything this guy needs to go and set aiReccomend.
+
+            // pick up  the gold if we sense it!.
+            if (!state.HasGold && state.senseGlitter) {
+               state.aiReccomend = 'Grab The Gold!';
+            }
+
+
+
+            // if the wumpus dies, mark all rooms wumpus-free for the ai.
+            if (state.senseScream) {
+               var x,y;
+               for (x = 0; x < 4; x++) {
+                  for (y = 0; y < 4; y++) {
+                     state.Cave[x][y].Wumpus = -100;
+                  }
+               }
+            }
+
+
+            // don't gamble on the pit-at-spawn scenario.
+            if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
+               if (state.senseBreeze) {
+                  state.aiReccomend = 'Climb Out, this is too risky!';
+               }
+            }
+
+
+
+            //if we're in a non-breezy room, the rooms adjacent to us
+            //CANNOT contain pits.
+            if (!state.senseBreeze) {
+
+               if (state.playerLocation.x+1 <= 3) {
+                  state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit = -5;
+               }
+
+               if (state.playerLocation.x-1 >= 0) {
+                  state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit = -5;
+               }
+
+               if (state.playerLocation.y-1 >= 0) {
+                  state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit = -5;
+               }
+
+               if (state.playerLocation.y+1 <=3) {
+                  state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit = -5;
+               }
+
+            }
+
+
+            //update the surrounding squares as to if they're dangerous.
+            //here we don't even care why they're dangerous, just that they are.
+            if (state.senseBreeze || state.senseStench) {
+               
+            }
+
+         },
 
          getPlayerLocation: function () {
             var locationCopy = state.playerLocation;
@@ -172,6 +256,9 @@ document.addEventListener('DOMContentLoaded', function () {
          getPlayerScore: function () {
             return state.playerScore;
          },
+         getDisplayScore: function () {
+            return state.displayScore;
+         },
          getWumpusLocation: function () {
             var wumpusLocationCopy = state.wumpusLocation;
             return wumpusLocationCopy;
@@ -204,6 +291,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // maybe we should do a typeof check here to ensure
             // that someBool is actually a bool??? who knows.
             state.displayAI = someBool;
+         },
+         setDisplayScore: function (someBool) {
+            state.displayScore = someBool;
          },
          setDisplayBoard: function (someBool) {
             state.displayBoard = someBool;
@@ -295,6 +385,27 @@ document.addEventListener('DOMContentLoaded', function () {
                   state.isPit[j][k] = false;
                }
             }
+
+
+
+
+            // Now, reset the AI's stuff.
+            for (j = 0; j < 4; j++) {
+               for (k = 0; k < 4; k++) {
+                  state.Cave[j][k].DangerLevel = -1;
+                  state.Cave[j][k].visitedBefore = false;
+                  state.Cave[j][k].Wumpus = 0;
+                  state.Cave[j][k].Pit = 0;
+               }
+            }
+
+            // empty out the AI's moves-made array.
+            for (j = 0; j < state.MovesMade.length; j++) {
+               state.MovesMade.pop();
+            }
+
+            state.aiReccomend = '';
+
             // then randomize everything.
             randomizeWumpusBoard();
          }
@@ -396,6 +507,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+
+
+                        // ****************************************************
+                        //       AI CODE GOES HERE. I THINK.
+                        //
+                        // AI will update the model's "AIReccomends" string.
+                        // this way, the string will get handled easily by the view.
+                        // since all percepts were handled above, the ai is now
+                        // set to look at them, and set the AIReccomends string
+                        // accordingly. I really wish we could put this code in
+                        // a seperate file. because hoo-boy would it look
+                        // ugly here.
+
+                        // define what a room is to the ai.
+
+                        //              END OF AI CODE
+                        // ****************************************************
+
+
          // now update the view accordingly, by hiding elements that are marked as hidden.
 
          // correctly display the gameDescription.
@@ -406,6 +537,16 @@ document.addEventListener('DOMContentLoaded', function () {
          if (wumpusWorld.getDisplayDescription()) {
             document.querySelector('#gameDescriptionBox').style.display = "";
          }
+
+         if (!wumpusWorld.getDisplayScore()) {
+            document.querySelector('#high-score-box').style.display = "none";
+         }
+
+         if (wumpusWorld.getDisplayScore()) {
+            document.querySelector('#high-score-box').style.display = "";
+         }
+
+
 
          // correctly display the how-to-play section.
          if (!wumpusWorld.getDisplayHowToPlay()) {
@@ -548,7 +689,15 @@ document.addEventListener('DOMContentLoaded', function () {
          // setup AI-toggle here
 
          // setup Scoreboard-toggle here
-
+         document.querySelector('#scorebox').addEventListener('click', function () {
+               if(document.querySelector('#scorebox').checked) {
+                  wumpusWorld.setDisplayScore(true);
+               }
+               else {
+                  wumpusWorld.setDisplayScore(false);
+               }
+               updateWumpusWorld();
+         }, false);
          // ---------------------------------------------------------------------------
 
 
