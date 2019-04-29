@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // pick up  the gold if we sense it!.
             if (!state.HasGold && state.senseGlitter) {
-               state.aiReccomend = 'Grab The Gold!';
+               return 'Grab The Gold!';
             }
 
 
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // don't gamble on the pit-at-spawn scenario.
             if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
                if (state.senseBreeze) {
-                  state.aiReccomend = 'Climb Out, this is too risky!';
+                  return 'Climb Out, this is too risky!';
                }
             }
 
@@ -208,11 +208,215 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
+            //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
+            if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
+               var n;
+               for (n = state.playerLocation.x; n >= 0; n-=1) {
+                 state.Cave[n][state.playerLocation.y].Wumpus = -5;
+               }
+            }
+            //if the player doesn't have the arrow, and the last move was shoot-Right, mark those as safe.
+            if (!state.hasArrow && state.lastMoveMade === 'shootRight') {
+               var m;
+               for (m = state.playerLocation.x; m <= 3; m+=1) {
+                 state.Cave[m][state.playerLocation.y].Wumpus = -5;
+               }
+            }
+
+            //if the player doesn't have the arrow, and the last move was shoot-Down, mark those as safe.
+            if (!state.hasArrow && state.lastMoveMade === 'shootDown') {
+               var o;
+               for (o = state.playerLocation.y; o >= 0; o-=1) {
+                 state.Cave[state.playerLocation.x][o].Wumpus = -5;
+               }
+            }
+
+            //if the player doesn't have the arrow, and the last move was shoot-up, mark those as safe.
+            if (!state.hasArrow && state.lastMoveMade === 'shootUp') {
+               var p;
+               for (p = state.playerLocation.y; p <= 3; p+=1) {
+                 state.Cave[state.playerLocation.x][p].Wumpus = -5;
+               }
+            }
+
+
             //update the surrounding squares as to if they're dangerous.
             //here we don't even care why they're dangerous, just that they are.
             if (state.senseBreeze || state.senseStench) {
-               
+
+
+
+               //mark all possible adjacent rooms as dangerous, because we've
+               //encountered a dangerous percept. we will take NO Risks!
+               //since we will never go into a dangerous room,
+               //we will never shoot, either. (hey, more arrows for me!)
+
+
+
+                //consider the room to the west of us.
+                if (state.playerLocation.x - 1 >= 0) {
+                   //only mark a room as dangerous if we haven't been there before.
+                   //a room can only be dangerous if we weren't there, since nothing moves.
+                   //also, only mark rooms that can actually exist. for example, we don't
+                   //consider (-1,-1).
+                  if (!state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore) {
+                     if (state.senseStench && !state.senseBreeze) {
+                        state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus += 1;
+                        if (state.hasArrow && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus >= 1) {
+                           return 'Shoot The Arrow Left!';
+                        }
+                     }
+                     // this must be a pit!
+                     else {
+                        state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit += 1;
+                     }
+                  }
+                }
+
+
+
+
+
+                // consider the room east of us.
+                if (state.playerLocation.x + 1 <= 3) {
+
+                   if(!state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore) {
+                      if (state.senseStench && !state.senseBreeze) {
+                        state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus += 1;
+                        if (state.hasArrow && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus >= 1) {
+                           return 'Shoot The Arrow Right!';
+                        }
+                     }
+                     // this must be a pit!
+                     else {
+                        state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit += 1;
+                     }
+                   }
+                }
+
+
+                //consider the room south of us.
+                if (state.playerLocation.y-1 >= 0) {
+                   if (!state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore) {
+                      if (state.senseStench && !state.senseBreeze) {
+                        state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus += 1;
+                        if (state.hasArrow && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus >= 1) {
+                           return 'Shoot The Arrow Down!';
+                        }
+                     }
+                     // this must be a pit!
+                     else {
+                        state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit +=1;
+                     }
+                   }
+                }
+
+
+                //consider the room north of us.
+                if (state.playerLocation.y+1 <= 3) {
+                   if (!state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore) {
+                      if (state.senseStench && !state.senseBreeze) {
+                        state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus += 1;
+                        if (state.hasArrow && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus >= 1) {
+                           return 'Shoot The Arrow Up!';
+                        }
+                     }
+                     // this must be a pit!
+                     else {
+                        state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit +=1;
+                     }
+                   }
+                }
+
+
+
             }
+
+            // store the last move made inside of temp.
+            var temp = state.MovesMade.pop();
+            if (!state.hasGold) {
+               //if we don't have the gold, ***explore the first safe unexplored room.***
+
+               // look east
+               if (state.playerLocation.x + 1 <= 3) {
+                  if (state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit <= 0 && !state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore) {
+                     return 'Try Moving Right!';
+                  }
+               }
+
+               // look north
+               if (state.playerLocation.y + 1 <= 3) {
+                  if (state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit <= 0 && !state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore) {
+                     return 'Try Moving Up!';
+                  }
+               }
+
+
+               // look west.
+               if (state.playerLocation.x - 1 >= 0) {
+                  if (state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit <= 0 && !state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore) {
+                     return 'Try Moving Left!';
+                  }
+               }
+
+               // look south.
+               if (state.playerLocation.y - 1 >= 0) {
+                  if (state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit <= 0 && !state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore) {
+                     return 'Try Moving Down!';
+                  }
+               }
+
+
+               //if we're down here, there IS NO safe, unexplored room to go to,
+               //so we should just go back to the last room we were in, and see
+               //if there's a safe room from there.
+
+               //doing this makes it such that we explore all possible safe rooms!
+
+               //if we're at 0,0 and there are no safe rooms... lets go home.
+               if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
+                  return 'Climb Out, its too risky!';
+               }
+
+               //otherwise, we need to retrace our steps.
+               //look at our last move, and return its opposite.
+
+               if (temp !== undefined) {
+                  if(temp === 'MoveUp') {
+                     return 'Try Moving Down.';
+                  }
+                  if (temp === 'MoveDown') {
+                     return 'Try Moving Up';
+                  }
+                  if (temp === 'MoveLeft') {
+                     return 'Try Moving Right';
+                  }
+                  if (temp === 'MoveRight') {
+                     return 'Try Moving Left';
+                  }
+               }
+
+
+            }
+
+            if (state.hasGold) {
+
+               if (temp !== undefined) {
+                  if(temp === 'MoveUp') {
+                     return 'Try Moving Down.';
+                  }
+                  if (temp === 'MoveDown') {
+                     return 'Try Moving Up';
+                  }
+                  if (temp === 'MoveLeft') {
+                     return 'Try Moving Right';
+                  }
+                  if (temp === 'MoveRight') {
+                     return 'Try Moving Left';
+                  }
+               }
+            }
+
 
          },
 
@@ -314,6 +518,9 @@ document.addEventListener('DOMContentLoaded', function () {
             state.playerLocation.x = xCoord; //Set the player location
             state.playerLocation.y = yCoord;
          },
+         setPushMovesMade: function (someMovement) {
+            state.MovesMade.push(someMovement);
+         },
          setArrowStatus: function () {
             state.hasArrow = false; //Shot arrow, so set that the player doesn't have an arrow
          },
@@ -404,6 +611,7 @@ document.addEventListener('DOMContentLoaded', function () {
                state.MovesMade.pop();
             }
 
+            state.lastMoveMade = '';
             state.aiReccomend = '';
 
             // then randomize everything.
@@ -590,6 +798,10 @@ document.addEventListener('DOMContentLoaded', function () {
          } else {
 
             // if we are here, then the game is ongoing. display senses accordingly.
+
+            // display AI text.
+            document.querySelector('#AI-text').textContent = wumpusWorld.agentHollowKnight();
+            // display high score.
             document.querySelector('#high-score-text').textContent = wumpusWorld.getHighScore();
             // since the game is ongoing, we should hide the win/lose text.
             document.querySelector('#win-text').style.display="none";
@@ -730,6 +942,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      // place the player accordingly.
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y + 1);
+                     wumpusWorld.setPushMovesMade('MoveUp');
                   }
                }
 
@@ -742,6 +955,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      //Place player accordingly
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x - 1, wumpusWorld.getPlayerLocation().y);
+                     wumpusWorld.setPushMovesMade('MoveLeft');
                   }
                }
                if (keyCode.code === 'KeyS') {
@@ -753,6 +967,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      //Place player accordingly
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y - 1);
+                     wumpusWorld.setPushMovesMade('MoveDown');
                   }
                }
                if (keyCode.code === 'KeyD') {
@@ -764,6 +979,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      //Place player accordingly
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x + 1, wumpusWorld.getPlayerLocation().y);
+                     wumpusWorld.setPushMovesMade('MoveRight');
                   }
                }
 
@@ -800,6 +1016,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
+                     wumpusWorld.setLastMoveMade('shootUp');
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowDown') {
@@ -808,6 +1025,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
+                     wumpusWorld.setLastMoveMade('shootDown');
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowLeft') {
@@ -816,6 +1034,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
+                     wumpusWorld.setLastMoveMade('shootLeft');
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowRight') {
@@ -824,6 +1043,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
+                     wumpusWorld.setLastMoveMade('shootRight');
                   } else wumpusWorld.setSenseScream(false);
                }
 
