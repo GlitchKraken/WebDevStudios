@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // define the AI! named after Chad's pretty-good one.
          agentHollowKnight: function() {
-
+            var temp = state.MovesMade.pop();
             // after everything this guy needs to go and set aiReccomend.
 
             // pick up  the gold if we sense it!.
@@ -207,6 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
+            // MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
+
 
             //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
@@ -238,6 +240,32 @@ document.addEventListener('DOMContentLoaded', function () {
                  state.Cave[state.playerLocation.x][p].Wumpus = -5;
                }
             }
+
+            // make sure we don't wast time looking at temp if it aint defined.
+            if (temp !== undefined) {
+
+               if (temp === 'MoveUp') {
+                  //player must have just moved up. mark that as explored.
+                  state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore = true;
+               }
+
+               if (temp === 'MoveDown') {
+                  //player must have just moved up. mark that as explored.
+                  state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore = true;
+               }
+
+               if (temp === 'MoveLeft') {
+                  //player must have just moved up. mark that as explored.
+                  state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore = true;
+               }
+
+               if (temp === 'MoveRight') {
+                  //player must have just moved up. mark that as explored.
+                  state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore = true;
+               }
+            }
+
+            // END OF MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
 
 
             //update the surrounding squares as to if they're dangerous.
@@ -333,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // store the last move made inside of temp.
-            var temp = state.MovesMade.pop();
+
             if (!state.hasGold) {
                //if we don't have the gold, ***explore the first safe unexplored room.***
 
@@ -551,6 +579,10 @@ document.addEventListener('DOMContentLoaded', function () {
          },
          setPlayerHasGold: function () {
             state.hasGold = true;
+         },
+         setRemoveGold: function () {
+            state.goldLocation.x = -100;
+            state.goldLocation.y = -100;
          },
          setSenseBreeze: function (someBool) {
             state.senseBreeze = someBool;
@@ -1004,6 +1036,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
                      wumpusWorld.setPlayerScore(1000);
+                     // move the gold imposisbly far away here.
+                     wumpusWorld.setRemoveGold();
                      wumpusWorld.setSenseGlitter(false);
                   }
                }
