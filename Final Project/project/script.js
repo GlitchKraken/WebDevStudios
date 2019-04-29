@@ -119,10 +119,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // Define the Cave as a 4-by-4 set of rooms.
          Cave: [
-            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}],
-            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}],
-            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}],
-            [{DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: 0, visitedBefore: false,  Wumpus: 0, Pit: 0}]
+            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}]
          ],
 
          // should keep track of all moves made by the player.
