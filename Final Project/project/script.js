@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
 
 
+
             //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
                var n;
@@ -527,6 +528,9 @@ document.addEventListener('DOMContentLoaded', function () {
          setDisplayScore: function (someBool) {
             state.displayScore = someBool;
          },
+         setHasArrow: function (someBool) {
+            state.hasArrow =someBool;
+         },
          setDisplayBoard: function (someBool) {
             state.displayBoard = someBool;
          },
@@ -798,7 +802,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
          if (wumpusWorld.getDisplayAI()) {
             document.querySelector('#AI-box').style.display="";
-            
+
          }
 
          // correctly display the how-to-play section.
@@ -1073,6 +1077,8 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootUp');
+                     // we need to set has arrow.
+                     wumpusWorld.setHasArrow(false);
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowDown') {
@@ -1082,6 +1088,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootDown');
+                     wumpusWorld.setHasArrow(false);
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowLeft') {
@@ -1091,6 +1098,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootLeft');
+                     wumpusWorld.setHasArrow(false);
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowRight') {
@@ -1100,6 +1108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootRight');
+                     wumpusWorld.setHasArrow(false);
                   } else wumpusWorld.setSenseScream(false);
                }
 
