@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
 
-
+            return 'uhhh... sorry, AI got lost!';
          },
 
          getPlayerLocation: function () {
