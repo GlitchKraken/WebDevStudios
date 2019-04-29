@@ -166,12 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // provided temp isn't undefined, assign it to the last move made,
             //  by popping off of the MovesMade array.
-            var temp;
-            if ( (typeof lastMove !== "undefined") && (lastMove === 'MoveUp' || lastMove === 'MoveDown' || lastMove === 'MoveLeft' || lastMove === 'MoveRight') ) {
 
-               temp = lastMove; //set the last movement equal to the back of the "MovesMade" array, but only pop when the lastMove was an actual movement
-               //alert('Popped off a move!\n LastMove = ' + lastMove + '\n temp (created from the pop) = ' + temp);
-            }
 
             //************************************************************
 
@@ -261,25 +256,25 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
 
-            // make sure we don't wast time looking at temp if it aint defined.
-            if (typeof temp !== "undefined") {
+            // make sure we don't wast time looking at lastMove if it aint defined.
+            if (typeof lastMove !== "undefined") {
 
-               if (temp === 'MoveUp') {
+               if (lastMove === 'MoveUp') {
                   //player must have just moved up. mark that as explored.
                   state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore = true;
                }
 
-               if (temp === 'MoveDown') {
+               if (lastMove === 'MoveDown') {
                   //player must have just moved up. mark that as explored.
                   state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore = true;
                }
 
-               if (temp === 'MoveLeft') {
+               if (lastMove === 'MoveLeft') {
                   //player must have just moved up. mark that as explored.
                   state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore = true;
                }
 
-               if (temp === 'MoveRight') {
+               if (lastMove === 'MoveRight') {
                   //player must have just moved up. mark that as explored.
                   state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore = true;
                }
@@ -380,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
-            // store the last move made inside of temp.
+            // store the last move made inside of lastMove.
 
             if (!state.hasGold) {
                //if we don't have the gold, ***explore the first safe unexplored room.***
@@ -429,20 +424,20 @@ document.addEventListener('DOMContentLoaded', function () {
                //otherwise, we need to retrace our steps.
                //look at our last move, and return its opposite.
                alert('We cannot make any safe moves, so retrace back to start!');
-               if (typeof temp !== "undefined") {
-                  if(temp === 'MoveUp') {
+               if (typeof lastMove !== "undefined") {
+                  if(lastMove === 'MoveUp') {
                      state.MovesMade.pop();
                      return 'Try Moving Down.';
                   }
-                  if (temp === 'MoveDown') {
+                  if (lastMove === 'MoveDown') {
                      state.MovesMade.pop();
                      return 'Try Moving Up';
                   }
-                  if (temp === 'MoveLeft') {
+                  if (lastMove === 'MoveLeft') {
                      state.MovesMade.pop();
                      return 'Try Moving Right';
                   }
-                  if (temp === 'MoveRight') {
+                  if (lastMove === 'MoveRight') {
                      state.MovesMade.pop();
                      return 'Try Moving Left';
                   }
@@ -453,20 +448,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (state.hasGold) {
                alert('got the gold, trying to unravel path.');
-               if (typeof temp !== "undefined") {
-                  if(temp === 'MoveUp') {
+               if (typeof lastMove !== "undefined") {
+                  if(lastMove === 'MoveUp') {
                      state.MovesMade.pop();
                      return 'Try Moving Down.';
                   }
-                  if (temp === 'MoveDown') {
+                  if (lastMove === 'MoveDown') {
                      state.MovesMade.pop();
                      return 'Try Moving Up';
                   }
-                  if (temp === 'MoveLeft') {
+                  if (lastMove === 'MoveLeft') {
                      state.MovesMade.pop();
                      return 'Try Moving Right';
                   }
-                  if (temp === 'MoveRight') {
+                  if (lastMove === 'MoveRight') {
                      state.MovesMade.pop();
                      return 'Try Moving Left';
                   }
@@ -474,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             //display "diagnostics" as to why the ai got here in the first place.
-            alert('ERROR: AI Reached END of SITUATIONS. \n\ntemp: ' + temp + '\n' + 'PlayerHasGold?: ' + state.hasGold + '\n Has Arrow?: ' + state.hasArrow + '\nSenseBreeze: ' + state.senseBreeze + '\nSenseStench: ' + state.senseStench);
+            alert('ERROR: AI Reached END of SITUATIONS. \n\nlastMove: ' + lastMove + '\n' + 'PlayerHasGold?: ' + state.hasGold + '\n Has Arrow?: ' + state.hasArrow + '\nSenseBreeze: ' + state.senseBreeze + '\nSenseStench: ' + state.senseStench);
             return 'uhhh... sorry, AI got lost!';
 
 
