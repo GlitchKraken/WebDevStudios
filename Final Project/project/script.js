@@ -155,7 +155,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // define the AI! named after Chad's pretty-good one.
          agentHollowKnight: function() {
-            var temp = state.MovesMade.pop();
+
+
+            //**********************************************************
+            // logic error: this should only pop when the player has moved,
+            // not when they grab or shoot.
+            // as you can see, every time the ai is called at all, it pops.
+            // this is because, for pathfinding, we only push movement onto MovesMade.
+            var lastMove = state.MovesMade[state.MovesMade.length-1];
+
+            // provided temp isn't undefined, assign it to the last move made,
+            //  by popping off of the MovesMade array.
+            var temp;
+            if ( (typeof lastMove !== "undefined") && (lastMove === 'MoveUp' || lastMove === 'MoveDown' || lastMove === 'MoveLeft' || lastMove === 'MoveRight') ) {
+
+               temp = lastMove; //set the last movement equal to the back of the "MovesMade" array, but only pop when the lastMove was an actual movement
+               //alert('Popped off a move!\n LastMove = ' + lastMove + '\n temp (created from the pop) = ' + temp);
+            }
+
+            //************************************************************
+
             // after everything this guy needs to go and set aiReccomend.
 
             // pick up  the gold if we sense it!.
@@ -243,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // make sure we don't wast time looking at temp if it aint defined.
-            if (temp !== undefined) {
+            if (typeof temp !== "undefined") {
 
                if (temp === 'MoveUp') {
                   //player must have just moved up. mark that as explored.
@@ -368,14 +387,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                // look east
                if (state.playerLocation.x + 1 <= 3) {
-                  if (state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit <= 0 && !state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore) {
+                  if (state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore === false) {
                      return 'Try Moving Right!';
                   }
                }
 
                // look north
                if (state.playerLocation.y + 1 <= 3) {
-                  if (state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit <= 0 && !state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore) {
+                  if (state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore === false) {
                      return 'Try Moving Up!';
                   }
                }
@@ -383,14 +402,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                // look west.
                if (state.playerLocation.x - 1 >= 0) {
-                  if (state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit <= 0 && !state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore) {
+                  if (state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore === false) {
                      return 'Try Moving Left!';
                   }
                }
 
                // look south.
                if (state.playerLocation.y - 1 >= 0) {
-                  if (state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit <= 0 && !state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore) {
+                  if (state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore === false) {
                      return 'Try Moving Down!';
                   }
                }
@@ -409,18 +428,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
                //otherwise, we need to retrace our steps.
                //look at our last move, and return its opposite.
-
-               if (temp !== undefined) {
+               alert('We cannot make any safe moves, so retrace back to start!');
+               if (typeof temp !== "undefined") {
                   if(temp === 'MoveUp') {
+                     state.MovesMade.pop();
                      return 'Try Moving Down.';
                   }
                   if (temp === 'MoveDown') {
+                     state.MovesMade.pop();
                      return 'Try Moving Up';
                   }
                   if (temp === 'MoveLeft') {
+                     state.MovesMade.pop();
                      return 'Try Moving Right';
                   }
                   if (temp === 'MoveRight') {
+                     state.MovesMade.pop();
                      return 'Try Moving Left';
                   }
                }
@@ -429,23 +452,29 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (state.hasGold) {
-
-               if (temp !== undefined) {
+               alert('got the gold, trying to unravel path.');
+               if (typeof temp !== "undefined") {
                   if(temp === 'MoveUp') {
+                     state.MovesMade.pop();
                      return 'Try Moving Down.';
                   }
                   if (temp === 'MoveDown') {
+                     state.MovesMade.pop();
                      return 'Try Moving Up';
                   }
                   if (temp === 'MoveLeft') {
+                     state.MovesMade.pop();
                      return 'Try Moving Right';
                   }
                   if (temp === 'MoveRight') {
+                     state.MovesMade.pop();
                      return 'Try Moving Left';
                   }
                }
             }
 
+            //display "diagnostics" as to why the ai got here in the first place.
+            alert('ERROR: AI Reached END of SITUATIONS. \n\ntemp: ' + temp + '\n' + 'PlayerHasGold?: ' + state.hasGold + '\n Has Arrow?: ' + state.hasArrow + '\nSenseBreeze: ' + state.senseBreeze + '\nSenseStench: ' + state.senseStench);
             return 'uhhh... sorry, AI got lost!';
          },
 
@@ -641,6 +670,9 @@ document.addEventListener('DOMContentLoaded', function () {
                   state.Cave[j][k].Pit = 0;
                }
             }
+
+            state.Cave[0][0].visitedBefore = true;
+            state.Cave[0][0].DangerLevel = -1;
 
             // empty out the AI's moves-made array.
             for (j = 0; j < state.MovesMade.length; j++) {
@@ -1061,7 +1093,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   alert('Enter was was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
-                     wumpusWorld.setPlayerScore(1000);
+                     //wumpusWorld.setPlayerScore(1000);
                      // move the gold imposisbly far away here.
                      wumpusWorld.setRemoveGold();
                      wumpusWorld.setSenseGlitter(false);
