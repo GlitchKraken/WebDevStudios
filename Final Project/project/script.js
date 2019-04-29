@@ -769,6 +769,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // now update the view accordingly, by hiding elements that are marked as hidden.
 
+
+
+
          // correctly display the gameDescription.
          if (!wumpusWorld.getDisplayDescription()) {
             document.querySelector('#gameDescriptionBox').style.display = "none";
@@ -778,6 +781,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#gameDescriptionBox').style.display = "";
          }
 
+         // correctly display the high score.
          if (!wumpusWorld.getDisplayScore()) {
             document.querySelector('#high-score-box').style.display = "none";
          }
@@ -786,7 +790,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#high-score-box').style.display = "";
          }
 
+         //correctly display the AI
+         if (!wumpusWorld.getDisplayAI()) {
+            document.querySelector('#AI-box').style.display="none";
 
+         }
+
+         if (wumpusWorld.getDisplayAI()) {
+            document.querySelector('#AI-box').style.display="";
+            
+         }
 
          // correctly display the how-to-play section.
          if (!wumpusWorld.getDisplayHowToPlay()) {
@@ -931,7 +944,16 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
 
          // setup AI-toggle here
-
+         document.querySelector('#ai-movement').addEventListener('click', function () {
+               if(document.querySelector('#ai-movement').checked) {
+                  wumpusWorld.setDisplayAI(true);
+               }
+               else {
+                  wumpusWorld.setDisplayAI(false);
+               }
+               updateWumpusWorld();
+         }, false);
+         // ---------
          // setup Scoreboard-toggle here
          document.querySelector('#scorebox').addEventListener('click', function () {
                if(document.querySelector('#scorebox').checked) {
