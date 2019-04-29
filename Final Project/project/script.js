@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
          ],
 
          gameInProgress: false,
-         highScore: -100000,
+         highScore: 0,
 
          playerMoves: 0,
          hasArrow: true,
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
          // define the AI! named after Chad's pretty-good one.
          agentHollowKnight: function() {
 
-
+            /*
             //**********************************************************
             // logic error: this should only pop when the player has moved,
             // not when they grab or shoot.
@@ -476,6 +476,10 @@ document.addEventListener('DOMContentLoaded', function () {
             //display "diagnostics" as to why the ai got here in the first place.
             alert('ERROR: AI Reached END of SITUATIONS. \n\ntemp: ' + temp + '\n' + 'PlayerHasGold?: ' + state.hasGold + '\n Has Arrow?: ' + state.hasArrow + '\nSenseBreeze: ' + state.senseBreeze + '\nSenseStench: ' + state.senseStench);
             return 'uhhh... sorry, AI got lost!';
+            */
+
+
+
          },
 
          getPlayerLocation: function () {
@@ -595,6 +599,7 @@ document.addEventListener('DOMContentLoaded', function () {
             state.playerLose = true;
          },
          setPlayerWin: function () {
+            state.playerScore += 1000;
             if(state.playerScore > state.highScore) {
                state.highScore = state.playerScore;
             }
@@ -881,7 +886,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // if we are here, then the game is ongoing. display senses accordingly.
 
             // display AI text.
-            document.querySelector('#AI-text').textContent = wumpusWorld.agentHollowKnight();
+            //fdocument.querySelector('#AI-text').textContent = wumpusWorld.agentHollowKnight();
             // display high score.
             document.querySelector('#high-score-text').textContent = wumpusWorld.getHighScore();
             // since the game is ongoing, we should hide the win/lose text.
