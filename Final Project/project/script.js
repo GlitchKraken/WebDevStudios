@@ -112,7 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
          // what action is the AI currently reccomending?
          aiReccomend: '',
 
+         lastRecommendation: '',
 
+         checkForBreadCrumbs: false,
          // stuff the ai needs. ***********************************
 
 
@@ -164,6 +166,13 @@ document.addEventListener('DOMContentLoaded', function () {
             // this is because, for pathfinding, we only push movement onto MovesMade.
             var lastMove = state.MovesMade[state.MovesMade.length-1];
 
+            if (state.checkForBreadCrumbs) {
+               if (lastMove === state.lastRecommendation) {
+                  //the player has undone their last move. all according to plan. hahahaha. now we can pop.
+               }
+
+               state.checkForBreadCrumbs = false;
+            }
             // provided temp isn't undefined, assign it to the last move made,
             //  by popping off of the MovesMade array.
 
@@ -383,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
                // look east
                if (state.playerLocation.x + 1 <= 3) {
                   if (state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore === false) {
+                     state.lastRecommendation = 'MoveRight';
                      return 'Try Moving Right!';
                   }
                }
@@ -390,6 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
                // look north
                if (state.playerLocation.y + 1 <= 3) {
                   if (state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore === false) {
+                     state.lastRecommendation = 'MoveUp';
                      return 'Try Moving Up!';
                   }
                }
@@ -398,6 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
                // look west.
                if (state.playerLocation.x - 1 >= 0) {
                   if (state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore === false) {
+                     state.lastRecommendation = 'MoveLeft';
                      return 'Try Moving Left!';
                   }
                }
@@ -405,6 +417,7 @@ document.addEventListener('DOMContentLoaded', function () {
                // look south.
                if (state.playerLocation.y - 1 >= 0) {
                   if (state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore === false) {
+                     state.lastRecommendation = 'MoveDown';
                      return 'Try Moving Down!';
                   }
                }
@@ -426,19 +439,27 @@ document.addEventListener('DOMContentLoaded', function () {
                alert('We cannot make any safe moves, so retrace back to start!');
                if (typeof lastMove !== "undefined") {
                   if(lastMove === 'MoveUp') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveDown';
                      return 'Try Moving Down.';
                   }
                   if (lastMove === 'MoveDown') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveUp';
                      return 'Try Moving Up';
                   }
                   if (lastMove === 'MoveLeft') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveRight';
                      return 'Try Moving Right';
                   }
                   if (lastMove === 'MoveRight') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveLeft';
                      return 'Try Moving Left';
                   }
                }
@@ -450,19 +471,27 @@ document.addEventListener('DOMContentLoaded', function () {
                alert('got the gold, trying to unravel path.');
                if (typeof lastMove !== "undefined") {
                   if(lastMove === 'MoveUp') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveDown';
                      return 'Try Moving Down.';
                   }
                   if (lastMove === 'MoveDown') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveUp';
                      return 'Try Moving Up';
                   }
                   if (lastMove === 'MoveLeft') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveRight';
                      return 'Try Moving Right';
                   }
                   if (lastMove === 'MoveRight') {
-                     state.MovesMade.pop();
+                     //state.MovesMade.pop();
+                     state.checkForBreadCrumbs = true;
+                     state.lastRecommendation = 'MoveLeft';
                      return 'Try Moving Left';
                   }
                }
@@ -678,10 +707,10 @@ document.addEventListener('DOMContentLoaded', function () {
             for (j = 0; j < state.MovesMade.length; j++) {
                state.MovesMade.pop();
             }
-
+            state.lastRecommendation = '';
             state.lastMoveMade = '';
             state.aiReccomend = '';
-
+            state.checkForBreadCrumbs = false;
             // then randomize everything.
             randomizeWumpusBoard();
          }
