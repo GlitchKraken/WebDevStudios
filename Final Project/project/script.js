@@ -11,17 +11,19 @@ document.addEventListener('DOMContentLoaded', function () {
    'use strict';
 
    (function () {
-      var createWumpusWorld; // Create the variable used when creating the WumpusWorld
+      var createWumpusWorld; //Create the variable used when creating the WumpusWorld
 
       //*****************************************************************************
       //**************************BEGINNING OF MODEL*********************************
       //*****************************************************************************
 
-      // Create a factory that makes an object to keep track of the WumpusWorld
+      //Create a factory that makes an object to keep track of the WumpusWorld
       createWumpusWorld = function (oldState) {
          var self, state, x, y, randomizeWumpusBoard;
 
-         //Function to randomize the WumpusBoard
+         //*****************************************************************************
+         //************************Randomize WumpusBoard Function***********************
+         //*****************************************************************************
          randomizeWumpusBoard = function () {
 
             //Randomize the Wumpus Board
@@ -35,120 +37,105 @@ document.addEventListener('DOMContentLoaded', function () {
             state.goldLocation.y = Math.floor(Math.random() * 4);
 
             // Randomize Pits.
-            for(x = 0; x < 4; x += 1) {
-               for(y = 0; y < 4; y += 1) {
-                  if(x === 0 && y === 0) {
+            for (x = 0; x < 4; x += 1) {
+               for (y = 0; y < 4; y += 1) {
+                  if (x === 0 && y === 0) {
                      state.isPit[x][y] = false; //Make sure the player spawn is not a pit
                   } else {
                      //There is a 20% chance that each cavern will become a pit.
-                     if(Math.random() < 0.2) {
+                     if (Math.random() < 0.2) {
                         state.isPit[x][y] = true;
                      }
                   }
                }
             }
          };
-
-      //Create a default starting state.
-      state = {
-         playerLocation: {
-            x: 0,
-            y: 0
-         },
-         goldLocation: {
-            x: 0,
-            y: 0
-         },
-         wumpusLocation: {
-            // make sure the wumpus starts in an impossible place.
-            // we don't want to start with the player dying.
-            // he will get randomized when the randomizeWumpusBoard funciton
-            // is called.
-            x:  -10,
-            y:  -10
-         },
-
-         // a 2d array of pits. by default, nothing is a pit.
-         // we can use this as follows: if (isPit[playerLocation.x][playerLocation.y]) {gameOver()};
-
-         // NOTE FOR JOSH: you may be concerened that 0,0 in the isPit array
-         // does not directly correspond to 0,0 on the wumpus-map (0,0 here is in top-left
-         // because of JavaScript, and not the bottom-left!). However, we will simply treat it
-         // like a parallel  array in CS 1.
-
-         // in other words, as long as we are consistant in our mapping of
-         // coordinates, there will be no need for translation.
-         isPit: [
-            [false, false, false, false],
-            [false, false, false, false],
-            [false, false, false, false],
-            [false, false, false, false]
-         ],
-
-         gameInProgress: false,
-         highScore: 0,
-
-         playerMoves: 0,
-         hasArrow: true,
-         hasGold: false,
-         playerScore: 0,
-         playerWin: false,
-         playerLose: false,
-         displayAI: true,
-         displayBoard: true,
-         displayHowToPlay: true,
-         displayDescription: true,
-         displayScore: true,
-         lastMoveMade: '',
-
-         // what can the player currently sense.
-         senseBreeze: false,
-         senseBump: false,
-         senseStench: false,
-         senseGlitter: false,
-         senseScream: false,
-
-         // what action is the AI currently reccomending?
-         aiReccomend: '',
-
-         lastRecommendation: '',
-
-         checkForBreadCrumbs: false,
-         // stuff the ai needs. ***********************************
+         //*****************************************************************************
+         //**********************End Randomize WumpusBoard Function*********************
+         //*****************************************************************************
 
 
+         //*****************************************************************************
+         //************************Create a default starting state**********************
+         //*****************************************************************************
+         state = {
+            playerLocation: { //Player starts at (0,0)
+               x: 0,
+               y: 0
+            },
+            goldLocation: { //Gold starts at (0,0) and is randomized
+               x: 0,
+               y: 0
+            },
+            wumpusLocation: { //Put the wumpus at a impossible spot, then randomize it
+               x:  -10,
+               y:  -10
+            },
 
-         // Define the Cave as a 4-by-4 set of rooms.
-         Cave: [
-            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
-            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
-            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
-            [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}]
-         ],
+            //Create a 2D array to keep track of pits and by default they are not in the rooms
+            isPit: [
+               [false, false, false, false],
+               [false, false, false, false],
+               [false, false, false, false],
+               [false, false, false, false]
+            ],
 
-         // should keep track of all moves made by the player.
-         MovesMade: []
-      };
+            //Conditions for the game. Set them all to a starting state
+            gameInProgress: false,
+            highScore: 0,
+            playerMoves: 0,
+            hasArrow: true,
+            hasGold: false,
+            playerScore: 0,
+            playerWin: false,
+            playerLose: false,
+            displayAI: true,
+            displayBoard: true,
+            displayHowToPlay: true,
+            displayDescription: true,
+            displayScore: true,
+            lastMoveMade: '',
 
-      // shuffle everything up for the beginning of the round.
-      // (I looked at the example from studio-8, doing this only effects
-      // newgames. refreshes)
+            //Percepts that can be sensed by the player, set them all false
+            senseBreeze: false,
+            senseBump: false,
+            senseStench: false,
+            senseGlitter: false,
+            senseScream: false,
 
+            //Keep track of the current action recommended by the AI
+            aiReccomend: '',
 
-      //If there is a valid previous state, use it instead.
-      // we want this, as it will cause pages to retain info during
-      // refereshes and browser-closings.
-      // we can have another function that goes and removes the old state.
+            //Keep track of the last action recommended by the AI
+            lastRecommendation: '',
 
-      randomizeWumpusBoard();
+            //Used to decide whether or not the player path needs to be unraveled
+            checkForBreadCrumbs: false,
 
+            //Set the cave as a 4-by-4
+            Cave: [
+               [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+               [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+               [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}],
+               [{DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}, {DangerLevel: -1, visitedBefore: false,  Wumpus: 0, Pit: 0}]
+            ],
 
-      if (typeof oldState === 'string') {
-         try {
-            state = JSON.parse(oldState);
-         } catch (ignore) {
+            //Keep track of all moves made by the player.
+            MovesMade: []
+         };
+         //*****************************************************************************
+         //**************************End default starting state*************************
+         //*****************************************************************************
+
+         randomizeWumpusBoard(); //Randomize the wumpus board
+
+         //If there is a valid previous state, use it instead. Retain info from refresh and browser closing
+         if (typeof oldState === 'string') {
+            try {
+               state = JSON.parse(oldState);
+            } catch (ignore) {
+            }
          }
-      }
 
       //The self object contains public methods
 
