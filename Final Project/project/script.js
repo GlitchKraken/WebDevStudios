@@ -445,224 +445,213 @@ document.addEventListener('DOMContentLoaded', function () {
             getDisplayAI: function () {
                return state.displayAI; //Return the AI recommendation
             },
-         getSenseBreeze: function () {
-            return state.senseBreeze;
-         },
-         getSenseStench: function () {
-            return state.senseStench;
-         },
-         getSenseGlitter: function () {
-            return state.senseGlitter;
-         },
-         getSenseBump: function () {
-            return state.senseBump;
-         },
-         getDisplayBoard: function () {
-            return state.displayBoard;
-         },
-         getDisplayDescription: function () {
-            return state.displayDescription;
-         },
-         getDisplayHowToPlay: function () {
-            return state.displayHowToPlay;
-         },
-         getPlayerScore: function () {
-            return state.playerScore;
-         },
-         getDisplayScore: function () {
-            return state.displayScore;
-         },
-         getWumpusLocation: function () {
-            var wumpusLocationCopy = state.wumpusLocation;
-            return wumpusLocationCopy;
-         },
-         getGoldLocation: function () {
-            return state.goldLocation;
-         },
-         getHasGold: function () {
-            return state.hasGold;
-         },
-         getPlayerWin: function () {
-            return state.playerWin;
-         },
-         getPlayerLose: function () {
-            return state.playerLose;
-         },
-         getIsPit: function () {
-            return state.isPit;
-         },
-         getSenseScream: function () {
-            return state.senseScream;
-         },
-         getHighScore: function () {
-            return state.highScore;
-         },
-         setSenseScream: function (someBool) {
-            state.senseScream = someBool;
-         },
-         setDisplayAI: function (someBool) {
-            // maybe we should do a typeof check here to ensure
-            // that someBool is actually a bool??? who knows.
-            state.displayAI = someBool;
-         },
-         setDisplayScore: function (someBool) {
-            state.displayScore = someBool;
-         },
-         setHasArrow: function (someBool) {
-            state.hasArrow = someBool;
-         },
-         setDisplayBoard: function (someBool) {
-            state.displayBoard = someBool;
-         },
-         setDisplayHowToPlay: function (someBool) {
-            state.displayHowToPlay = someBool;
-         },
-         setDisplayDescription: function (someBool) {
-            state.displayDescription = someBool;
-         },
-         setPercept: function (newText) {
-            state.perceptText = newText; //Set the new percept
-         },
-         setLastMoveMade: function (newText) {
-            state.lastMoveMade = newText; //Set the last move made
-         },
-         setPlayerLocation: function (xCoord,yCoord) {
-            state.playerLocation.x = xCoord; //Set the player location
-            state.playerLocation.y = yCoord;
-         },
-         setPushMovesMade: function (someMovement) {
-            state.MovesMade.push(someMovement);
-         },
-         setPlayerMoves: function () {
-            state.playerMoves += 1; //Increment the number of player moves
-         },
-         setPlayerLose: function () {
-            if(state.playerScore > state.highScore) {
-               state.highScore = state.playerScore;
-            }
-            state.playerLose = true;
-         },
-         setPlayerWin: function () {
-            if(state.hasGold) {
-               state.playerScore += 1000;
-            }
-            if(state.playerScore > state.highScore) {
-               state.highScore = state.playerScore;
-            }
-            state.playerWin = true;
-         },
-         setPlayerScore: function (someNumber) {
-            state.playerScore += someNumber;
-         },
-         setWumpusLocation: function (xCoord,yCoord) {
-            state.wumpusLocation.x = xCoord;
-            state.wumpusLocation.y = yCoord;
-         },
-         setPlayerHasGold: function () {
-            state.hasGold = true;
-         },
-         setRemoveGold: function () {
-            state.goldLocation.x = -100;
-            state.goldLocation.y = -100;
-         },
-         setSenseBreeze: function (someBool) {
-            state.senseBreeze = someBool;
-         },
-         setSenseBump: function (someBool) {
-            state.senseBump = someBool;
-         },
-         setSenseStench: function (someBool) {
-            state.senseStench = someBool;
-         },
-         setSenseGlitter: function (someBool) {
-            state.senseGlitter = someBool;
-         },
-         getState: function () {
-            return JSON.stringify(state);
-         },
-         resetGame: function () {
-            // reset the game itself.
-            state.playerLocation.x = 0;
-            state.playerLocation.y = 0;
-            state.playerMoves = 0;
-            state.hasArrow = true;
-            state.perceptText = '';
-            //state.playerScore = 0; (actually, playerScore should be loaded)
-            state.playerWin = false;
-            state.playerLose = false;
-            state.hasGold = false;
-            state.senseBreeze = false;
-            state.senseBump = false;
-            state.senseStench = false;
-            state.senseGlitter = false;
-            state.senseScream = false;
-            // don't reset the displays, since those should be memorized.
-            var j,k;
-
-            // reset the pits to all not exist.
-            for(j = 0; j < 4; j += 1) {
-               for (k = 0; k < 4; k += 1) {
-                  state.isPit[j][k] = false;
+            getSenseBreeze: function () {
+               return state.senseBreeze; //Return the breeze percept
+            },
+            getSenseStench: function () {
+               return state.senseStench; //Return the stench percept
+            },
+            getSenseGlitter: function () {
+               return state.senseGlitter; //Return the glitter percept
+            },
+            getSenseBump: function () {
+               return state.senseBump; //Return the bump percept
+            },
+            getDisplayBoard: function () {
+               return state.displayBoard; //Display the game board
+            },
+            getDisplayDescription: function () {
+               return state.displayDescription; //Display the game description
+            },
+            getDisplayHowToPlay: function () {
+               return state.displayHowToPlay; //Display how to play
+            },
+            getPlayerScore: function () {
+               return state.playerScore; //Get the player's score
+            },
+            getDisplayScore: function () {
+               return state.displayScore; //Display the player's score
+            },
+            getWumpusLocation: function () {
+               var wumpusLocationCopy = state.wumpusLocation;
+               return wumpusLocationCopy; //Return the wumpus location
+            },
+            getGoldLocation: function () {
+               return state.goldLocation; //Return the gold location
+            },
+            getHasGold: function () {
+               return state.hasGold; //Return whether the player has gold
+            },
+            getPlayerWin: function () {
+               return state.playerWin; //Return if the player won
+            },
+            getPlayerLose: function () {
+               return state.playerLose; //Return if the player lost
+            },
+            getIsPit: function () {
+               return state.isPit; //Return if the room is a pit
+            },
+            getSenseScream: function () {
+               return state.senseScream; //Return if the wumpus got shot
+            },
+            getHighScore: function () {
+               return state.highScore; //Return the high score
+            },
+            setSenseScream: function (someBool) {
+               state.senseScream = someBool; //Set the wumpus scream percept
+            },
+            setDisplayAI: function (someBool) {
+               state.displayAI = someBool; //Set to display the AI recommendations
+            },
+            setDisplayScore: function (someBool) {
+               state.displayScore = someBool; //Set to display the score
+            },
+            setHasArrow: function (someBool) {
+               state.hasArrow = someBool; //Set to tell whether the player still has an arrow
+            },
+            setDisplayBoard: function (someBool) {
+               state.displayBoard = someBool; //Set to display the game board
+            },
+            setDisplayHowToPlay: function (someBool) {
+               state.displayHowToPlay = someBool; //Set to display the how to play section
+            },
+            setDisplayDescription: function (someBool) {
+               state.displayDescription = someBool; //Set to display the game description
+            },
+            setPercept: function (newText) {
+               state.perceptText = newText; //Set the new percept
+            },
+            setLastMoveMade: function (newText) {
+               state.lastMoveMade = newText; //Set the last move made
+            },
+            setPlayerLocation: function (xCoord, yCoord) {
+               state.playerLocation.x = xCoord; //Set the player location
+               state.playerLocation.y = yCoord;
+            },
+            setPushMovesMade: function (someMovement) {
+               state.MovesMade.push(someMovement); //Push new moves onto the stack
+            },
+            setPlayerMoves: function () {
+               state.playerMoves += 1; //Increment the number of player moves
+            },
+            setPlayerLose: function () {
+               if (state.playerScore > state.highScore) {
+                  state.highScore = state.playerScore; //Set a new highscore if needed
                }
-            }
-
-
-
-
-            // Now, reset the AI's stuff.
-            for (j = 0; j < 4; j += 1) {
-               for (k = 0; k < 4; k += 1) {
-                  state.Cave[j][k].DangerLevel = -1;
-                  state.Cave[j][k].visitedBefore = false;
-                  state.Cave[j][k].Wumpus = 0;
-                  state.Cave[j][k].Pit = 0;
+               state.playerLose = true; //Player lost
+            },
+            setPlayerWin: function () {
+               if (state.hasGold) {
+                  state.playerScore += 1000; //Increment the player's score if they got the gold
                }
+               if (state.playerScore > state.highScore) {
+                  state.highScore = state.playerScore; //Set a new highscore if needed
+               }
+               state.playerWin = true; //Player won
+            },
+            setPlayerScore: function (someNumber) {
+               state.playerScore += someNumber; //Adjust the players score
+            },
+            setWumpusLocation: function (xCoord, yCoord) {
+               state.wumpusLocation.x = xCoord; //Set the wumpus x coordinate
+               state.wumpusLocation.y = yCoord; //Set the wumpus y coordinate
+            },
+            setPlayerHasGold: function () {
+               state.hasGold = true; //Player found the gold
+            },
+            setRemoveGold: function () {
+               state.goldLocation.x = -100; //Remove the gold off the map
+               state.goldLocation.y = -100; //Remove the gold off the map
+            },
+            setSenseBreeze: function (someBool) {
+               state.senseBreeze = someBool; //Set the breeze percept
+            },
+            setSenseBump: function (someBool) {
+               state.senseBump = someBool; //Set the bump percept
+            },
+            setSenseStench: function (someBool) {
+               state.senseStench = someBool; //Set the stench percept
+            },
+            setSenseGlitter: function (someBool) {
+               state.senseGlitter = someBool; //Set the glitter percept
+            },
+            getState: function () {
+               return JSON.stringify(state);
+            },
+            resetGame: function () {
+               state.playerLocation.x = 0;
+               state.playerLocation.y = 0;
+               state.playerMoves = 0;
+               state.hasArrow = true;
+               state.perceptText = '';
+               state.playerWin = false;
+               state.playerLose = false;
+               state.hasGold = false;
+               state.senseBreeze = false;
+               state.senseBump = false;
+               state.senseStench = false;
+               state.senseGlitter = false;
+               state.senseScream = false;
+
+               var j, k; //Variables to use to reset stuff
+
+               // reset the pits to all not exist.
+               for(j = 0; j < 4; j += 1) {
+                  for (k = 0; k < 4; k += 1) {
+                     state.isPit[j][k] = false;
+                  }
+               }
+
+               // Now, reset the AI's stuff.
+               for (j = 0; j < 4; j += 1) {
+                  for (k = 0; k < 4; k += 1) {
+                     state.Cave[j][k].DangerLevel = -1;
+                     state.Cave[j][k].visitedBefore = false;
+                     state.Cave[j][k].Wumpus = 0;
+                     state.Cave[j][k].Pit = 0;
+                  }
+               }
+
+               state.Cave[0][0].visitedBefore = true;
+               state.Cave[0][0].DangerLevel = -1;
+
+               // empty out the AI's moves-made array.
+               for (j = 0; j < state.MovesMade.length; j += 1) {
+                  state.MovesMade.pop();
+               }
+               state.lastRecommendation = '';
+               state.lastMoveMade = '';
+               state.aiReccomend = '';
+               state.checkForBreadCrumbs = false;
+               // then randomize everything.
+               randomizeWumpusBoard();
             }
-
-            state.Cave[0][0].visitedBefore = true;
-            state.Cave[0][0].DangerLevel = -1;
-
-            // empty out the AI's moves-made array.
-            for (j = 0; j < state.MovesMade.length; j += 1) {
-               state.MovesMade.pop();
-            }
-            state.lastRecommendation = '';
-            state.lastMoveMade = '';
-            state.aiReccomend = '';
-            state.checkForBreadCrumbs = false;
-            // then randomize everything.
-            randomizeWumpusBoard();
-         }
-
-      };
+         };
          //*****************************************************************************
          //*****************************End of Self Object******************************
          //*****************************************************************************
 
-      //Freeze the self object, so it can't be modified.
-      return Object.freeze(self);
-   };
+         //Freeze the self object, so it can't be modified.
+         return Object.freeze(self);
+      };
+      //*****************************************************************************
+      //*****************************END OF MODEL************************************
+      //*****************************************************************************
 
-   //*****************************************************************************
-   //*****************************END OF MODEL************************************
-   //*****************************************************************************
-   
-   
-   
-   
-   
 
-   //Create a new closure to hide the view and controller from the model code above.
-   (function () {
-      var wumpusWorld, updateWumpusWorld;
 
-      // Save the new state in web-storage, if we can.
-      updateWumpusWorld = function () {
+      //*****************************************************************************
+      //****************************Begin View & Controller**************************
+      //*****************************************************************************
+      (function () {
+         var wumpusWorld, updateWumpusWorld;
 
-         // Save the state in web storage if available.
-         if (localStorage && localStorage.setItem) {
-            localStorage.setItem('Wumpus World State', wumpusWorld.getState());
-         }
+         updateWumpusWorld = function () {
+
+            // Save the state in web storage if available.
+            if (localStorage && localStorage.setItem) {
+               localStorage.setItem('Wumpus World State', wumpusWorld.getState());
+            }
 
 
                         // ****************************************************
