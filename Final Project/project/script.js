@@ -1063,10 +1063,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if(!wumpusWorld.getPlayerWin() && !wumpusWorld.getPlayerLose()) {
 
                if (keyCode.code === 'KeyW') {
+                  wumpusWorld.setPlayerScore(-1);
                   // is the player trying to pass through a wall?
                   if(wumpusWorld.getPlayerLocation().y === 3) {
                      wumpusWorld.setSenseBump(true);
-                     wumpusWorld.setPlayerScore(-1);
                   }
                   else {
                      // place the player accordingly.
@@ -1077,9 +1077,9 @@ document.addEventListener('DOMContentLoaded', function () {
                }
 
                if (keyCode.code === 'KeyA') {
+                  wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().x === 0) {
                      wumpusWorld.setSenseBump(true);
-                     wumpusWorld.setPlayerScore(-1);
                   } else {
                      //Place player accordingly
                      wumpusWorld.setSenseBump(false);
@@ -1088,9 +1088,9 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
                if (keyCode.code === 'KeyS') {
+                  wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().y === 0) {
                      wumpusWorld.setSenseBump(true);
-                     wumpusWorld.setPlayerScore(-1);
                   } else {
                      //Place player accordingly
                      wumpusWorld.setSenseBump(false);
@@ -1099,9 +1099,9 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
                if (keyCode.code === 'KeyD') {
+                  wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().x === 3) {
                      wumpusWorld.setSenseBump(true);
-                     wumpusWorld.setPlayerScore(-1);
                   } else {
                      //Place player accordingly
                      wumpusWorld.setSenseBump(false);
@@ -1112,10 +1112,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                if (keyCode.code === 'KeyC') {
+                  wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().x === 0 && wumpusWorld.getPlayerLocation().y === 0) {
                      wumpusWorld.setPlayerWin(true); // they 'technically' win, but with a score of 0.;
-                  } else {
-                     wumpusWorld.setPlayerScore(-1); //Subtract a point cause they bump their noggin
                   }
                }
 
@@ -1125,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                // handle player attacks / interactions.
 
-               if (keyCode.code === 'Enter') {
+               if (keyCode.code === 'KeyG') {
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
                      //wumpusWorld.setPlayerScore(1000);
@@ -1138,11 +1137,11 @@ document.addEventListener('DOMContentLoaded', function () {
                wumpusWorld.setSenseScream(false);
 
                if (keyCode.code === 'ArrowUp') {
+                  wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y < wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
-                     wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootUp');
                      // we need to set has arrow.
 
@@ -1151,22 +1150,22 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
                if (keyCode.code === 'ArrowDown') {
+                  wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y > wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
-                     wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootDown');
                   } else {
                      wumpusWorld.setSenseScream(false);
                   }
                }
                if (keyCode.code === 'ArrowLeft') {
+                  wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x > wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
-                     wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootLeft');
 
                   } else {
@@ -1174,11 +1173,11 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
                if (keyCode.code === 'ArrowRight') {
+                  wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x < wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
-                     wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootRight');
                   } else {
                      wumpusWorld.setSenseScream(false);
