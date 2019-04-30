@@ -166,13 +166,15 @@ document.addEventListener('DOMContentLoaded', function () {
             // this is because, for pathfinding, we only push movement onto MovesMade.
             var lastMove = state.MovesMade[state.MovesMade.length-1];
 
+
             if (state.checkForBreadCrumbs) {
                if (lastMove === state.lastRecommendation) {
                   //the player has undone their last move. all according to plan. hahahaha. now we can pop.
-                  state.MovesMade.pop();
-               }
+                  state.MovesMade.pop(); // dont delete move left, delete the one before it. we are deleting the most recent, should be deleting second most recent.
 
-               state.checkForBreadCrumbs = false;
+               } // else state.checkForBreadCrumbs = false; (almost worked?)
+
+               //state.checkForBreadCrumbs = false;
             }
             // provided temp isn't undefined, assign it to the last move made,
             //  by popping off of the MovesMade array.
@@ -405,6 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
                if (state.playerLocation.x + 1 <= 3) {
                   if (state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore === false) {
                      state.lastRecommendation = 'MoveRight';
+                     state.checkForBreadCrumbs = false;
                      return 'Try Moving Right!';
                   }
                }
@@ -413,6 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
                if (state.playerLocation.y + 1 <= 3) {
                   if (state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore === false) {
                      state.lastRecommendation = 'MoveUp';
+                     state.checkForBreadCrumbs = false;
                      return 'Try Moving Up!';
                   }
                }
@@ -422,6 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
                if (state.playerLocation.x - 1 >= 0) {
                   if (state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore === false) {
                      state.lastRecommendation = 'MoveLeft';
+                     state.checkForBreadCrumbs = false;
                      return 'Try Moving Left!';
                   }
                }
@@ -430,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function () {
                if (state.playerLocation.y - 1 >= 0) {
                   if (state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore === false) {
                      state.lastRecommendation = 'MoveDown';
+                     state.checkForBreadCrumbs = false;
                      return 'Try Moving Down!';
                   }
                }
@@ -636,7 +642,9 @@ document.addEventListener('DOMContentLoaded', function () {
             state.playerLose = true;
          },
          setPlayerWin: function () {
-            state.playerScore += 1000;
+            if(state.hasGold) {
+               state.playerScore += 1000;
+            }
             if(state.playerScore > state.highScore) {
                state.highScore = state.playerScore;
             }
