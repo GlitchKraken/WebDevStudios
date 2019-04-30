@@ -233,9 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
 
-            if (!state.hasArrow) {
-               alert('no longer has arrow.');
-            }
+
 
             //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
@@ -482,6 +480,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (state.hasGold) {
+
+               if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
+                  // we have gold, and we're at the beginning. lets get out!
+                  return 'Climb Out With Your Riches!';
+               }
+
+
                alert('got the gold, trying to unravel path.');
                if (typeof lastMove !== "undefined") {
                   if(lastMove === 'MoveUp') {
