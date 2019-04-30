@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (state.checkForBreadCrumbs) {
                if (lastMove === state.lastRecommendation) {
                   //the player has undone their last move. all according to plan. hahahaha. now we can pop.
+                  state.MovesMade.pop();
                }
 
                state.checkForBreadCrumbs = false;
@@ -232,7 +233,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
 
-
+            if (!state.hasArrow) {
+               alert('no longer has arrow.');
+            }
 
             //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
@@ -270,22 +273,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
                if (lastMove === 'MoveUp') {
                   //player must have just moved up. mark that as explored.
-                  state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore = true;
+                  if (state.playerLocation.y-1 >=0) {
+                     state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore = true;
+                  }
+
                }
 
                if (lastMove === 'MoveDown') {
                   //player must have just moved up. mark that as explored.
+                  if(state.playerLocation.y+1 <= 3) {
                   state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore = true;
+                  }
                }
 
                if (lastMove === 'MoveLeft') {
                   //player must have just moved up. mark that as explored.
-                  state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore = true;
+                  if (state.playerLocation.x+1 <=3) {
+                     state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore = true;
+                  }
+
                }
 
                if (lastMove === 'MoveRight') {
                   //player must have just moved up. mark that as explored.
-                  state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore = true;
+                  if (state.playerLocation.x-1 >=0) {
+                     state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore = true;
+                  }
+
                }
             }
 
@@ -431,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                //if we're at 0,0 and there are no safe rooms... lets go home.
                if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
-                  return 'Climb Out, its too risky!';
+                  return 'Try Climbing Out!';
                }
 
                //otherwise, we need to retrace our steps.
@@ -513,9 +527,6 @@ document.addEventListener('DOMContentLoaded', function () {
          getPercept: function () {
             return state.perceptText; //Return the percept
          },
-         getArrowStatus: function () {
-            return state.hasArrow; //Return whether or not the player has an arrow
-         },
          getPlayerMoves: function () {
             return state.playerMoves; //Return the number of player moves
          },
@@ -586,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function () {
             state.displayScore = someBool;
          },
          setHasArrow: function (someBool) {
-            state.hasArrow =someBool;
+            state.hasArrow = someBool;
          },
          setDisplayBoard: function (someBool) {
             state.displayBoard = someBool;
@@ -610,9 +621,6 @@ document.addEventListener('DOMContentLoaded', function () {
          setPushMovesMade: function (someMovement) {
             state.MovesMade.push(someMovement);
          },
-         setArrowStatus: function () {
-            state.hasArrow = false; //Shot arrow, so set that the player doesn't have an arrow
-         },
          setPlayerMoves: function () {
             state.playerMoves += 1; //Increment the number of player moves
          },
@@ -628,9 +636,6 @@ document.addEventListener('DOMContentLoaded', function () {
                state.highScore = state.playerScore;
             }
             state.playerWin = true;
-         },
-         shootArrow: function () {
-            state.hasArrow = false;
          },
          setPlayerScore: function (someNumber) {
             state.playerScore += someNumber;
@@ -1271,7 +1276,7 @@ document.addEventListener('DOMContentLoaded', function () {
          });
 
 
-
+         
 
 
          // When the page is loaded, get any saved state from web storage and use it.
