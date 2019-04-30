@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // make sure we don't wast time looking at lastMove if it aint defined.
-            if (typeof lastMove !== "undefined") {
+            if (lastMove !== undefined) {
 
                if (lastMove === 'MoveUp') {
                   //player must have just moved up. mark that as explored.
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                //otherwise, we need to retrace our steps.
                //look at our last move, and return its opposite.
-               if (typeof lastMove !== "undefined") {
+               if (lastMove !== undefined) {
                   if(lastMove === 'MoveUp') {
                      //state.MovesMade.pop();
                      state.checkForBreadCrumbs = true;
@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
                }
 
 
-               if (typeof lastMove !== "undefined") {
+               if (lastMove !== undefined) {
                   if(lastMove === 'MoveUp') {
                      //state.MovesMade.pop();
                      state.checkForBreadCrumbs = true;
