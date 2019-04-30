@@ -142,373 +142,309 @@ document.addEventListener('DOMContentLoaded', function () {
          //*****************************************************************************
          self = {
 
+            //*****************************************************************************
+            //**************************Artificial Intelligence****************************
+            //*****************************************************************************
             //We used Chad's AI from the AI class
-            agentHollowKnight: function() {
+            agentHollowKnight: function () {
 
-            //Use the lastMove made for pathfinding, declare other variables
-            var lastMove = state.MovesMade[state.MovesMade.length-1],n,m,o,p;
+               //Use the lastMove made for pathfinding, declare other variables
+               var lastMove = state.MovesMade[state.MovesMade.length - 1], n, m, o, p;
 
-            //If statement for unraveling the player's path
-            if (state.checkForBreadCrumbs) {
-               if (lastMove === state.lastRecommendation) {
-               }
-               state.MovesMade.pop(); //Pop the MovesMade array if unraveling moves
-            }
-
-            // after everything this guy needs to go and set aiReccomend.
-
-            // pick up  the gold if we sense it!.
-            if (!state.HasGold && state.senseGlitter) {
-               return 'Grab The Gold!';
-            }
-
-
-
-            // if the wumpus dies, mark all rooms wumpus-free for the ai.
-            if (state.senseScream) {
-               for (x = 0; x < 4; x += 1) {
-                  for (y = 0; y < 4; y += 1) {
-                     state.Cave[x][y].Wumpus = -100;
-                  }
-               }
-            }
-
-
-            // don't gamble on the pit-at-spawn scenario.
-            if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
-               if (state.senseBreeze) {
-                  return 'Climb Out, this is too risky!';
-               }
-            }
-
-
-
-            //if we're in a non-breezy room, the rooms adjacent to us
-            //CANNOT contain pits.
-            if (!state.senseBreeze) {
-
-               if (state.playerLocation.x+1 <= 3) {
-                  state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit = -5;
+               //If statement for unraveling the player's path
+               if (state.checkForBreadCrumbs) {
+                  state.MovesMade.pop(); //Pop the MovesMade array if unraveling moves
                }
 
-               if (state.playerLocation.x-1 >= 0) {
-                  state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit = -5;
+               //If we don't have the gold and we perceive, recommend grabbing the gold
+               if (!state.HasGold && state.senseGlitter) {
+                  return 'Grab The Gold!';
                }
 
-               if (state.playerLocation.y-1 >= 0) {
-                  state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit = -5;
-               }
-
-               if (state.playerLocation.y+1 <=3) {
-                  state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit = -5;
-               }
-
-            }
-
-            // MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
-
-
-
-            //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
-            if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
-               for (n = state.playerLocation.x; n >= 0; n-=1) {
-                 state.Cave[n][state.playerLocation.y].Wumpus = -5;
-               }
-            }
-            //if the player doesn't have the arrow, and the last move was shoot-Right, mark those as safe.
-            if (!state.hasArrow && state.lastMoveMade === 'shootRight') {
-               for (m = state.playerLocation.x; m <= 3; m+=1) {
-                 state.Cave[m][state.playerLocation.y].Wumpus = -5;
-               }
-            }
-
-            //if the player doesn't have the arrow, and the last move was shoot-Down, mark those as safe.
-            if (!state.hasArrow && state.lastMoveMade === 'shootDown') {
-               for (o = state.playerLocation.y; o >= 0; o-=1) {
-                 state.Cave[state.playerLocation.x][o].Wumpus = -5;
-               }
-            }
-
-            //if the player doesn't have the arrow, and the last move was shoot-up, mark those as safe.
-            if (!state.hasArrow && state.lastMoveMade === 'shootUp') {
-               for (p = state.playerLocation.y; p <= 3; p+=1) {
-                 state.Cave[state.playerLocation.x][p].Wumpus = -5;
-               }
-            }
-
-            // make sure we don't wast time looking at lastMove if it aint defined.
-            if (lastMove !== undefined) {
-
-               if (lastMove === 'MoveUp') {
-                  //player must have just moved up. mark that as explored.
-                  if (state.playerLocation.y-1 >=0) {
-                     state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore = true;
-                  }
-
-               }
-
-               if (lastMove === 'MoveDown') {
-                  //player must have just moved up. mark that as explored.
-                  if(state.playerLocation.y+1 <= 3) {
-                  state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore = true;
-                  }
-               }
-
-               if (lastMove === 'MoveLeft') {
-                  //player must have just moved up. mark that as explored.
-                  if (state.playerLocation.x+1 <=3) {
-                     state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore = true;
-                  }
-
-               }
-
-               if (lastMove === 'MoveRight') {
-                  //player must have just moved up. mark that as explored.
-                  if (state.playerLocation.x-1 >=0) {
-                     state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore = true;
-                  }
-
-               }
-            }
-
-            // END OF MARK THINGS ACCORDING TO WHAT THE PLAYER HAS DONE SO FAR *******
-
-
-            //update the surrounding squares as to if they're dangerous.
-            //here we don't even care why they're dangerous, just that they are.
-            if (state.senseBreeze || state.senseStench) {
-
-
-
-               //mark all possible adjacent rooms as dangerous, because we've
-               //encountered a dangerous percept. we will take NO Risks!
-               //since we will never go into a dangerous room,
-               //we will never shoot, either. (hey, more arrows for me!)
-
-
-
-                //consider the room to the west of us.
-                if (state.playerLocation.x - 1 >= 0) {
-                   //only mark a room as dangerous if we haven't been there before.
-                   //a room can only be dangerous if we weren't there, since nothing moves.
-                   //also, only mark rooms that can actually exist. for example, we don't
-                   //consider (-1,-1).
-                  if (!state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore) {
-                     if (state.senseStench && !state.senseBreeze) {
-                        state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus += 1;
-                        if (state.hasArrow && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus >= 1) {
-                           return 'Shoot The Arrow Left!';
-                        }
-                     }
-                     // this must be a pit!
-                     else {
-                        state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit += 1;
+               //If the wumpus dies, mark all rooms wumpus-free for the ai.
+               if (state.senseScream) {
+                  for (x = 0; x < 4; x += 1) {
+                     for (y = 0; y < 4; y += 1) {
+                        state.Cave[x][y].Wumpus = -100;
                      }
                   }
-                }
-
-
-
-
-
-                // consider the room east of us.
-                if (state.playerLocation.x + 1 <= 3) {
-
-                   if(!state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore) {
-                      if (state.senseStench && !state.senseBreeze) {
-                        state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus += 1;
-                        if (state.hasArrow && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus >= 1) {
-                           return 'Shoot The Arrow Right!';
-                        }
-                     }
-                     // this must be a pit!
-                     else {
-                        state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit += 1;
-                     }
-                   }
-                }
-
-
-                //consider the room south of us.
-                if (state.playerLocation.y-1 >= 0) {
-                   if (!state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore) {
-                      if (state.senseStench && !state.senseBreeze) {
-                        state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus += 1;
-                        if (state.hasArrow && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus >= 1) {
-                           return 'Shoot The Arrow Down!';
-                        }
-                     }
-                     // this must be a pit!
-                     else {
-                        state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit +=1;
-                     }
-                   }
-                }
-
-
-                //consider the room north of us.
-                if (state.playerLocation.y+1 <= 3) {
-                   if (!state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore) {
-                      if (state.senseStench && !state.senseBreeze) {
-                        state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus += 1;
-                        if (state.hasArrow && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus >= 1) {
-                           return 'Shoot The Arrow Up!';
-                        }
-                     }
-                     // this must be a pit!
-                     else {
-                        state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit +=1;
-                     }
-                   }
-                }
-
-
-
-            }
-
-            // store the last move made inside of lastMove.
-
-            if (!state.hasGold) {
-               //if we don't have the gold, ***explore the first safe unexplored room.***
-
-               // look east
-               if (state.playerLocation.x + 1 <= 3) {
-                  if (state.Cave[state.playerLocation.x+1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x+1][state.playerLocation.y].visitedBefore === false) {
-                     state.lastRecommendation = 'MoveRight';
-                     state.checkForBreadCrumbs = false;
-                     return 'Try Moving Right!';
-                  }
                }
 
-               // look north
-               if (state.playerLocation.y + 1 <= 3) {
-                  if (state.Cave[state.playerLocation.x][state.playerLocation.y+1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y+1].visitedBefore === false) {
-                     state.lastRecommendation = 'MoveUp';
-                     state.checkForBreadCrumbs = false;
-                     return 'Try Moving Up!';
-                  }
-               }
-
-
-               // look west.
-               if (state.playerLocation.x - 1 >= 0) {
-                  if (state.Cave[state.playerLocation.x-1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x-1][state.playerLocation.y].visitedBefore === false) {
-                     state.lastRecommendation = 'MoveLeft';
-                     state.checkForBreadCrumbs = false;
-                     return 'Try Moving Left!';
-                  }
-               }
-
-               // look south.
-               if (state.playerLocation.y - 1 >= 0) {
-                  if (state.Cave[state.playerLocation.x][state.playerLocation.y-1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y-1].visitedBefore === false) {
-                     state.lastRecommendation = 'MoveDown';
-                     state.checkForBreadCrumbs = false;
-                     return 'Try Moving Down!';
-                  }
-               }
-
-
-               //if we're down here, there IS NO safe, unexplored room to go to,
-               //so we should just go back to the last room we were in, and see
-               //if there's a safe room from there.
-
-               //doing this makes it such that we explore all possible safe rooms!
-
-               //if we're at 0,0 and there are no safe rooms... lets go home.
+               //If there is a breeze at spawn, don't chance it, climb out.
                if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
-                  return 'Try Climbing Out!';
+                  if (state.senseBreeze) {
+                     return 'Climb Out, this is too risky!';
+                  }
                }
 
-               //otherwise, we need to retrace our steps.
-               //look at our last move, and return its opposite.
+               //If we don't sense a breeze, the rooms adjacent don't have a pit.
+               if (!state.senseBreeze) {
+
+                  if (state.playerLocation.x + 1 <= 3) {
+                     state.Cave[state.playerLocation.x + 1][state.playerLocation.y].Pit = -5;
+                  }
+
+                  if (state.playerLocation.x - 1 >= 0) {
+                     state.Cave[state.playerLocation.x - 1][state.playerLocation.y].Pit = -5;
+                  }
+
+                  if (state.playerLocation.y - 1 >= 0) {
+                     state.Cave[state.playerLocation.x][state.playerLocation.y - 1].Pit = -5;
+                  }
+
+                  if (state.playerLocation.y + 1 <= 3) {
+                     state.Cave[state.playerLocation.x][state.playerLocation.y + 1].Pit = -5;
+                  }
+
+               }
+
+               //If the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
+               if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
+                  for (n = state.playerLocation.x; n >= 0; n -= 1) {
+                     state.Cave[n][state.playerLocation.y].Wumpus = -5;
+                  }
+               }
+
+               //If the player doesn't have the arrow, and the last move was shoot-Right, mark those as safe.
+               if (!state.hasArrow && state.lastMoveMade === 'shootRight') {
+                  for (m = state.playerLocation.x; m <= 3; m += 1) {
+                     state.Cave[m][state.playerLocation.y].Wumpus = -5;
+                  }
+               }
+
+               //If the player doesn't have the arrow, and the last move was shoot-Down, mark those as safe.
+               if (!state.hasArrow && state.lastMoveMade === 'shootDown') {
+                  for (o = state.playerLocation.y; o >= 0; o -= 1) {
+                     state.Cave[state.playerLocation.x][o].Wumpus = -5;
+                  }
+               }
+
+               //If the player doesn't have the arrow, and the last move was shoot-up, mark those as safe.
+               if (!state.hasArrow && state.lastMoveMade === 'shootUp') {
+                  for (p = state.playerLocation.y; p <= 3; p += 1) {
+                     state.Cave[state.playerLocation.x][p].Wumpus = -5;
+                  }
+               }
+
+               //Make sure we don't waste time looking at lastMove if it isn't defined.
                if (lastMove !== undefined) {
-                  if(lastMove === 'MoveUp') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveDown';
-                     return 'Try Moving Down.';
+
+                  //Player just moved up, mark the room as explored.
+                  if (lastMove === 'MoveUp') {
+                     if (state.playerLocation.y - 1 >= 0) {
+                        state.Cave[state.playerLocation.x][state.playerLocation.y - 1].visitedBefore = true;
+                     }
                   }
+
+                  //Player just moved down, mark the room as explored.
                   if (lastMove === 'MoveDown') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveUp';
-                     return 'Try Moving Up';
+                     if (state.playerLocation.y + 1 <= 3) {
+                        state.Cave[state.playerLocation.x][state.playerLocation.y + 1].visitedBefore = true;
+                     }
                   }
+
+                  //Player just moved left, mark the room as explored.
                   if (lastMove === 'MoveLeft') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveRight';
-                     return 'Try Moving Right';
+                     if (state.playerLocation.x + 1 <= 3) {
+                        state.Cave[state.playerLocation.x + 1][state.playerLocation.y].visitedBefore = true;
+                     }
                   }
+
+                  //Player just moved right, mark the room as explored.
                   if (lastMove === 'MoveRight') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveLeft';
-                     return 'Try Moving Left';
+                     if (state.playerLocation.x - 1 >= 0) {
+                        state.Cave[state.playerLocation.x - 1][state.playerLocation.y].visitedBefore = true;
+                     }
                   }
                }
 
+               //Check surrounding for a breeze or stench.
+               if (state.senseBreeze || state.senseStench) {
 
-            }
+                  //Consider the room to the west of the player.
+                  if (state.playerLocation.x - 1 >= 0) {
+                     if (!state.Cave[state.playerLocation.x - 1][state.playerLocation.y].visitedBefore) {
+                        if (state.senseStench && !state.senseBreeze) {
+                           state.Cave[state.playerLocation.x - 1][state.playerLocation.y].Wumpus += 1;
+                           if (state.hasArrow && state.Cave[state.playerLocation.x - 1][state.playerLocation.y].Wumpus >= 1) {
+                              return 'Shoot The Arrow Left!';
+                           }
+                        } else {
+                           state.Cave[state.playerLocation.x - 1][state.playerLocation.y].Pit += 1;
+                        }
+                     }
+                  }
 
-            if (state.hasGold) {
+                  //Consider the room to the east of the player.
+                  if (state.playerLocation.x + 1 <= 3) {
+                     if (!state.Cave[state.playerLocation.x + 1][state.playerLocation.y].visitedBefore) {
+                        if (state.senseStench && !state.senseBreeze) {
+                           state.Cave[state.playerLocation.x + 1][state.playerLocation.y].Wumpus += 1;
+                           if (state.hasArrow && state.Cave[state.playerLocation.x + 1][state.playerLocation.y].Wumpus >= 1) {
+                              return 'Shoot The Arrow Right!';
+                           }
+                        } else {
+                           state.Cave[state.playerLocation.x + 1][state.playerLocation.y].Pit += 1;
+                        }
+                     }
+                  }
 
-               if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
-                  // we have gold, and we're at the beginning. lets get out!
-                  return 'Climb Out With Your Riches!';
+                  //Consider the room to the south of the player.
+                  if (state.playerLocation.y - 1 >= 0) {
+                     if (!state.Cave[state.playerLocation.x][state.playerLocation.y - 1].visitedBefore) {
+                        if (state.senseStench && !state.senseBreeze) {
+                           state.Cave[state.playerLocation.x][state.playerLocation.y - 1].Wumpus += 1;
+                           if (state.hasArrow && state.Cave[state.playerLocation.x][state.playerLocation.y - 1].Wumpus >= 1) {
+                              return 'Shoot The Arrow Down!';
+                           }
+                        } else {
+                           state.Cave[state.playerLocation.x][state.playerLocation.y - 1].Pit += 1;
+                        }
+                     }
+                  }
+
+                  //Consider the room to the north of the player.
+                  if (state.playerLocation.y + 1 <= 3) {
+                     if (!state.Cave[state.playerLocation.x][state.playerLocation.y + 1].visitedBefore) {
+                        if (state.senseStench && !state.senseBreeze) {
+                           state.Cave[state.playerLocation.x][state.playerLocation.y + 1].Wumpus += 1;
+                           if (state.hasArrow && state.Cave[state.playerLocation.x][state.playerLocation.y + 1].Wumpus >= 1) {
+                              return 'Shoot The Arrow Up!';
+                           }
+                        } else {
+                           state.Cave[state.playerLocation.x][state.playerLocation.y + 1].Pit += 1;
+                        }
+                     }
+                  }
                }
 
+               //If the player doesn't have the gold, explore the first safe unexplored room
+               if (!state.hasGold) {
 
-               if (lastMove !== undefined) {
-                  if(lastMove === 'MoveUp') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveDown';
-                     return 'Try Moving Down.';
+                  //Look to the east
+                  if (state.playerLocation.x + 1 <= 3) {
+                     if (state.Cave[state.playerLocation.x + 1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x + 1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x + 1][state.playerLocation.y].visitedBefore === false) {
+                        state.lastRecommendation = 'MoveRight';
+                        state.checkForBreadCrumbs = false;
+                        return 'Try Moving Right!';
+                     }
                   }
-                  if (lastMove === 'MoveDown') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveUp';
-                     return 'Try Moving Up';
+
+                  //Look to the north
+                  if (state.playerLocation.y + 1 <= 3) {
+                     if (state.Cave[state.playerLocation.x][state.playerLocation.y + 1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y + 1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y + 1].visitedBefore === false) {
+                        state.lastRecommendation = 'MoveUp';
+                        state.checkForBreadCrumbs = false;
+                        return 'Try Moving Up!';
+                     }
                   }
-                  if (lastMove === 'MoveLeft') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveRight';
-                     return 'Try Moving Right';
+
+                  //Look to the west
+                  if (state.playerLocation.x - 1 >= 0) {
+                     if (state.Cave[state.playerLocation.x - 1][state.playerLocation.y].Wumpus <= 0 && state.Cave[state.playerLocation.x - 1][state.playerLocation.y].Pit <= 0 && state.Cave[state.playerLocation.x - 1][state.playerLocation.y].visitedBefore === false) {
+                        state.lastRecommendation = 'MoveLeft';
+                        state.checkForBreadCrumbs = false;
+                        return 'Try Moving Left!';
+                     }
                   }
-                  if (lastMove === 'MoveRight') {
-                     //state.MovesMade.pop();
-                     state.checkForBreadCrumbs = true;
-                     state.lastRecommendation = 'MoveLeft';
-                     return 'Try Moving Left';
+
+                  //Look to the south
+                  if (state.playerLocation.y - 1 >= 0) {
+                     if (state.Cave[state.playerLocation.x][state.playerLocation.y - 1].Wumpus <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y - 1].Pit <= 0 && state.Cave[state.playerLocation.x][state.playerLocation.y - 1].visitedBefore === false) {
+                        state.lastRecommendation = 'MoveDown';
+                        state.checkForBreadCrumbs = false;
+                        return 'Try Moving Down!';
+                     }
+                  }
+
+                  //If it gets to this point in the code, there is no safe room that is
+                  //unexplored that we are able to get to. Go back to the last room and
+                  //see if there is a safe room from there.
+
+                  //If we're at 0,0 and there are no safe rooms... lets go home.
+                  if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
+                     return 'Try Climbing Out!';
+                  }
+
+                  //otherwise, we need to retrace our steps.
+                  //look at our last move, and return its opposite.
+                  if (lastMove !== undefined) {
+                     if (lastMove === 'MoveUp') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveDown';
+                        return 'Try Moving Down.';
+                     }
+                     if (lastMove === 'MoveDown') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveUp';
+                        return 'Try Moving Up';
+                     }
+                     if (lastMove === 'MoveLeft') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveRight';
+                        return 'Try Moving Right';
+                     }
+                     if (lastMove === 'MoveRight') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveLeft';
+                        return 'Try Moving Left';
+                     }
                   }
                }
-            }
 
-            //display "diagnostics" as to why the ai got here in the first place.
-            return 'uhhh... sorry, AI got lost!';
+               //Conditions for if the player has the gold
+               if (state.hasGold) {
 
+                  //If the player is in (0,0) with gold, climb out
+                  if (state.playerLocation.x === 0 && state.playerLocation.y === 0) {
+                     return 'Climb Out With Your Riches!';
+                  }
 
+                  //Backtrace to escape the cave
+                  if (lastMove !== undefined) {
+                     if (lastMove === 'MoveUp') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveDown';
+                        return 'Try Moving Down.';
+                     }
+                     if (lastMove === 'MoveDown') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveUp';
+                        return 'Try Moving Up';
+                     }
+                     if (lastMove === 'MoveLeft') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveRight';
+                        return 'Try Moving Right';
+                     }
+                     if (lastMove === 'MoveRight') {
+                        state.checkForBreadCrumbs = true;
+                        state.lastRecommendation = 'MoveLeft';
+                        return 'Try Moving Left';
+                     }
+                  }
+               }
 
+               //Display if the AI gets lost in its recommendations
+               return 'uhhh... sorry, AI got lost!';
+            },
+            //*****************************************************************************
+            //************************End of Artificial Intelligence***********************
+            //*****************************************************************************
 
-         },
-
-         getPlayerLocation: function () {
-            var locationCopy = state.playerLocation;
-            return locationCopy; //Return the player location
-         },
-         getPercept: function () {
-            return state.perceptText; //Return the percept
-         },
-         getPlayerMoves: function () {
-            return state.playerMoves; //Return the number of player moves
-         },
-         getDisplayAI: function () {
-            return state.displayAI;
-         },
+            getPlayerLocation: function () {
+               var locationCopy = state.playerLocation;
+               return locationCopy; //Return the player location
+            },
+            getPercept: function () {
+               return state.perceptText; //Return the percept
+            },
+            getPlayerMoves: function () {
+               return state.playerMoves; //Return the number of player moves
+            },
+            getDisplayAI: function () {
+               return state.displayAI; //Return the AI recommendation
+            },
          getSenseBreeze: function () {
             return state.senseBreeze;
          },
