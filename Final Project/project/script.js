@@ -169,10 +169,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (state.checkForBreadCrumbs) {
                if (lastMove === state.lastRecommendation) {
                   //the player has undone their last move. all according to plan. hahahaha. now we can pop.
-                  state.MovesMade.pop(); // dont delete move left, delete the one before it. we are deleting the most recent, should be deleting second most recent.
-
+                  //state.MovesMade.pop(); // dont delete move left, delete the one before it. we are deleting the most recent, should be deleting second most recent.
+                  //state.MovesMade.splice(states.MovesMade.length-2, 1);
                } // else state.checkForBreadCrumbs = false; (almost worked?)
-
+               state.MovesMade.pop();
                //state.checkForBreadCrumbs = false;
             }
             // provided temp isn't undefined, assign it to the last move made,
@@ -729,7 +729,7 @@ document.addEventListener('DOMContentLoaded', function () {
       //Freeze the self object, so it can't be modified.
       return Object.freeze(self);
    };
-   
+
    //*****************************************************************************
    //*****************************END OF MODEL************************************
    //*****************************************************************************
