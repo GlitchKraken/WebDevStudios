@@ -137,36 +137,23 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }
 
-      //The self object contains public methods
+         //*****************************************************************************
+         //*********************Self object contains public methods*********************
+         //*****************************************************************************
+         self = {
 
-      self = {
+            //We used Chad's AI from the AI class
+            agentHollowKnight: function() {
 
-         // define the AI! named after Chad's pretty-good one.
-         agentHollowKnight: function() {
-
-
-            //**********************************************************
-            // logic error: this should only pop when the player has moved,
-            // not when they grab or shoot.
-            // as you can see, every time the ai is called at all, it pops.
-            // this is because, for pathfinding, we only push movement onto MovesMade.
+            //Use the lastMove made for pathfinding, declare other variables
             var lastMove = state.MovesMade[state.MovesMade.length-1],n,m,o,p;
 
-
+            //If statement for unraveling the player's path
             if (state.checkForBreadCrumbs) {
                if (lastMove === state.lastRecommendation) {
-                  //the player has undone their last move. all according to plan. hahahaha. now we can pop.
-                  //state.MovesMade.pop(); // dont delete move left, delete the one before it. we are deleting the most recent, should be deleting second most recent.
-                  //state.MovesMade.splice(states.MovesMade.length-2, 1);
-               } // else state.checkForBreadCrumbs = false; (almost worked?)
-               state.MovesMade.pop();
-               //state.checkForBreadCrumbs = false;
+               }
+               state.MovesMade.pop(); //Pop the MovesMade array if unraveling moves
             }
-            // provided temp isn't undefined, assign it to the last move made,
-            //  by popping off of the MovesMade array.
-
-
-            //************************************************************
 
             // after everything this guy needs to go and set aiReccomend.
 
@@ -712,6 +699,9 @@ document.addEventListener('DOMContentLoaded', function () {
          }
 
       };
+         //*****************************************************************************
+         //*****************************End of Self Object******************************
+         //*****************************************************************************
 
       //Freeze the self object, so it can't be modified.
       return Object.freeze(self);
@@ -720,6 +710,11 @@ document.addEventListener('DOMContentLoaded', function () {
    //*****************************************************************************
    //*****************************END OF MODEL************************************
    //*****************************************************************************
+   
+   
+   
+   
+   
 
    //Create a new closure to hide the view and controller from the model code above.
    (function () {
