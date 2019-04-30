@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // not when they grab or shoot.
             // as you can see, every time the ai is called at all, it pops.
             // this is because, for pathfinding, we only push movement onto MovesMade.
-            var lastMove = state.MovesMade[state.MovesMade.length-1];
+            var lastMove = state.MovesMade[state.MovesMade.length-1],n,m,o,p;
 
 
             if (state.checkForBreadCrumbs) {
@@ -193,9 +193,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // if the wumpus dies, mark all rooms wumpus-free for the ai.
             if (state.senseScream) {
-               var x,y;
-               for (x = 0; x < 4; x++) {
-                  for (y = 0; y < 4; y++) {
+               for (x = 0; x < 4; x += 1) {
+                  for (y = 0; y < 4; y += 1) {
                      state.Cave[x][y].Wumpus = -100;
                   }
                }
@@ -239,14 +238,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //if the player doesn't have the arrow, and the last move was shoot-left, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootLeft') {
-               var n;
                for (n = state.playerLocation.x; n >= 0; n-=1) {
                  state.Cave[n][state.playerLocation.y].Wumpus = -5;
                }
             }
             //if the player doesn't have the arrow, and the last move was shoot-Right, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootRight') {
-               var m;
                for (m = state.playerLocation.x; m <= 3; m+=1) {
                  state.Cave[m][state.playerLocation.y].Wumpus = -5;
                }
@@ -254,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //if the player doesn't have the arrow, and the last move was shoot-Down, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootDown') {
-               var o;
                for (o = state.playerLocation.y; o >= 0; o-=1) {
                  state.Cave[state.playerLocation.x][o].Wumpus = -5;
                }
@@ -262,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //if the player doesn't have the arrow, and the last move was shoot-up, mark those as safe.
             if (!state.hasArrow && state.lastMoveMade === 'shootUp') {
-               var p;
                for (p = state.playerLocation.y; p <= 3; p+=1) {
                  state.Cave[state.playerLocation.x][p].Wumpus = -5;
                }
@@ -454,7 +449,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                //otherwise, we need to retrace our steps.
                //look at our last move, and return its opposite.
-               alert('We cannot make any safe moves, so retrace back to start!');
                if (typeof lastMove !== "undefined") {
                   if(lastMove === 'MoveUp') {
                      //state.MovesMade.pop();
@@ -493,7 +487,6 @@ document.addEventListener('DOMContentLoaded', function () {
                }
 
 
-               alert('got the gold, trying to unravel path.');
                if (typeof lastMove !== "undefined") {
                   if(lastMove === 'MoveUp') {
                      //state.MovesMade.pop();
@@ -523,7 +516,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             //display "diagnostics" as to why the ai got here in the first place.
-            alert('ERROR: AI Reached END of SITUATIONS. \n\nlastMove: ' + lastMove + '\n' + 'PlayerHasGold?: ' + state.hasGold + '\n Has Arrow?: ' + state.hasArrow + '\nSenseBreeze: ' + state.senseBreeze + '\nSenseStench: ' + state.senseStench);
             return 'uhhh... sorry, AI got lost!';
 
 
@@ -699,8 +691,8 @@ document.addEventListener('DOMContentLoaded', function () {
             var j,k;
 
             // reset the pits to all not exist.
-            for(j = 0; j < 4; j++) {
-               for (k = 0; k < 4; k++) {
+            for(j = 0; j < 4; j += 1) {
+               for (k = 0; k < 4; k += 1) {
                   state.isPit[j][k] = false;
                }
             }
@@ -709,8 +701,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             // Now, reset the AI's stuff.
-            for (j = 0; j < 4; j++) {
-               for (k = 0; k < 4; k++) {
+            for (j = 0; j < 4; j += 1) {
+               for (k = 0; k < 4; k += 1) {
                   state.Cave[j][k].DangerLevel = -1;
                   state.Cave[j][k].visitedBefore = false;
                   state.Cave[j][k].Wumpus = 0;
@@ -722,7 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
             state.Cave[0][0].DangerLevel = -1;
 
             // empty out the AI's moves-made array.
-            for (j = 0; j < state.MovesMade.length; j++) {
+            for (j = 0; j < state.MovesMade.length; j += 1) {
                state.MovesMade.pop();
             }
             state.lastRecommendation = '';
@@ -755,8 +747,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // ****************************************************
                         // UPDATE CONTROLLER / MODEL BEFORE ANYTHING LOADS.
 
-                        var pitsAroundPlayer = 0;
-                        var tempPit = wumpusWorld.getIsPit();
+                        var pitsAroundPlayer = 0, tempPit = wumpusWorld.getIsPit(), wumpiiAroundPlayer;
 
                         if (wumpusWorld.getPlayerLocation().x < 3) {
                            if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
@@ -792,7 +783,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         //Check for Stench
                         //Right
-                        var wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
+                        wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
 
                         if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
                            wumpusWorld.setSenseStench(true);
@@ -818,7 +809,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         if(wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                            wumpusWorld.setSenseGlitter(true);
                            wumpiiAroundPlayer += 1;
-                        } else wumpusWorld.setSenseGlitter(false);
+                        } else {
+                           wumpusWorld.setSenseGlitter(false);
+                        }
 
                         if(wumpiiAroundPlayer === 0) {
                            wumpusWorld.setSenseStench(false);
@@ -970,8 +963,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // if there are no percepts to be sensed, make it clear.
             if(!wumpusWorld.getSenseBump() && !wumpusWorld.getSenseBreeze() && !wumpusWorld.getSenseScream() && !wumpusWorld.getSenseStench() && !wumpusWorld.getSenseGlitter()) {
                document.querySelector('#default-percept-text').style.display="";
+            } else {
+               document.querySelector('#default-percept-text').style.display="none";
             }
-            else document.querySelector('#default-percept-text').style.display="none";
 
          }
 
@@ -1069,7 +1063,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if(!wumpusWorld.getPlayerWin() && !wumpusWorld.getPlayerLose()) {
 
                if (keyCode.code === 'KeyW') {
-                  alert('w was pressed!');
                   // is the player trying to pass through a wall?
                   if(wumpusWorld.getPlayerLocation().y === 3) {
                      wumpusWorld.setSenseBump(true);
@@ -1084,7 +1077,6 @@ document.addEventListener('DOMContentLoaded', function () {
                }
 
                if (keyCode.code === 'KeyA') {
-                  alert('a was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === 0) {
                      wumpusWorld.setSenseBump(true);
                      wumpusWorld.setPlayerScore(-1);
@@ -1096,7 +1088,6 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
                if (keyCode.code === 'KeyS') {
-                  alert('s was pressed!');
                   if (wumpusWorld.getPlayerLocation().y === 0) {
                      wumpusWorld.setSenseBump(true);
                      wumpusWorld.setPlayerScore(-1);
@@ -1108,7 +1099,6 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
                if (keyCode.code === 'KeyD') {
-                  alert('d was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === 3) {
                      wumpusWorld.setSenseBump(true);
                      wumpusWorld.setPlayerScore(-1);
@@ -1122,7 +1112,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                if (keyCode.code === 'KeyC') {
-                  alert('c was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === 0 && wumpusWorld.getPlayerLocation().y === 0) {
                      wumpusWorld.setPlayerWin(true); // they 'technically' win, but with a score of 0.;
                   } else {
@@ -1137,7 +1126,6 @@ document.addEventListener('DOMContentLoaded', function () {
                // handle player attacks / interactions.
 
                if (keyCode.code === 'Enter') {
-                  alert('Enter was was pressed!');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
                      //wumpusWorld.setPlayerScore(1000);
@@ -1151,7 +1139,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                if (keyCode.code === 'ArrowUp') {
                   wumpusWorld.setHasArrow(false);
-                  alert('Shot arrow up');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y < wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
@@ -1159,38 +1146,43 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setLastMoveMade('shootUp');
                      // we need to set has arrow.
 
-                  } else wumpusWorld.setSenseScream(false);
+                  } else {
+                     wumpusWorld.setSenseScream(false);
+                  }
                }
                if (keyCode.code === 'ArrowDown') {
                   wumpusWorld.setHasArrow(false);
-                  alert('Shot arrow down');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y > wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootDown');
-                  } else wumpusWorld.setSenseScream(false);
+                  } else {
+                     wumpusWorld.setSenseScream(false);
+                  }
                }
                if (keyCode.code === 'ArrowLeft') {
                   wumpusWorld.setHasArrow(false);
-                  alert('Shot arrow left');
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x > wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootLeft');
 
-                  } else wumpusWorld.setSenseScream(false);
+                  } else {
+                     wumpusWorld.setSenseScream(false);
+                  }
                }
                if (keyCode.code === 'ArrowRight') {
                   wumpusWorld.setHasArrow(false);
-                  alert('Shot arrow right');
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x < wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootRight');
-                  } else wumpusWorld.setSenseScream(false);
+                  } else {
+                     wumpusWorld.setSenseScream(false);
+                  }
                }
 
                //Setup controller to check for player death
@@ -1200,7 +1192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                }
 
                //Check for pit death
-               var tempPit = wumpusWorld.getIsPit();
+               var tempPit = wumpusWorld.getIsPit(), pitsAroundPlayer, wumpiiAroundPlayer;
                if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y]) {
                   wumpusWorld.setPlayerLose();
                   wumpusWorld.setPlayerScore(-1000);
@@ -1212,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                //Check for pit breeze, but only check existing squares.
-               var pitsAroundPlayer = 0;
+               pitsAroundPlayer = 0;
 
                if (wumpusWorld.getPlayerLocation().x < 3) {
                   if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
@@ -1248,7 +1240,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                //Check for Stench
                //Right
-               var wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
+               wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
 
                if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
                   wumpusWorld.setSenseStench(true);
@@ -1274,7 +1266,9 @@ document.addEventListener('DOMContentLoaded', function () {
                if(wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                   wumpusWorld.setSenseGlitter(true);
                   wumpiiAroundPlayer += 1;
-               } else wumpusWorld.setSenseGlitter(false);
+               } else {
+                  wumpusWorld.setSenseGlitter(false);
+               }
 
                if(wumpiiAroundPlayer === 0) {
                   wumpusWorld.setSenseStench(false);
