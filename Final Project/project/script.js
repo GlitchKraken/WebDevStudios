@@ -11,44 +11,43 @@ document.addEventListener('DOMContentLoaded', function () {
    'use strict';
 
    (function () {
-   var createWumpusWorld;
+      var createWumpusWorld; // Create the variable used when creating the WumpusWorld
 
-   //Create a factory that makes an object to keep track of the WumpusWorld
-   createWumpusWorld = function (oldState) {
-      var self, state, x,y, randomizeWumpusBoard;
+      //*****************************************************************************
+      //**************************BEGINNING OF MODEL*********************************
+      //*****************************************************************************
 
-      randomizeWumpusBoard = function () {
-         //Randomize Wumpus Location.
-         do {
-            // set the x and y coordinates to random-numbers between 0 and 3
-            state.wumpusLocation.x = Math.floor(Math.random() * 4);
-            state.wumpusLocation.y = Math.floor(Math.random() * 4);
-            // make sure the wumpus doesn't start on top of the player.
-         } while(state.wumpusLocation.x === 0 && state.wumpusLocation.y === 0);
+      // Create a factory that makes an object to keep track of the WumpusWorld
+      createWumpusWorld = function (oldState) {
+         var self, state, x, y, randomizeWumpusBoard;
 
+         //Function to randomize the WumpusBoard
+         randomizeWumpusBoard = function () {
 
-         // Randomize Gold Location.
-         state.goldLocation.x = Math.floor(Math.random() * 4);
-         state.goldLocation.y = Math.floor(Math.random() * 4);
+            //Randomize the Wumpus Board
+            do {
+               state.wumpusLocation.x = Math.floor(Math.random() * 4); // Get a random x coordinate between 0 and 3
+               state.wumpusLocation.y = Math.floor(Math.random() * 4); // Get a random y coordinate between 0 and 3
+            } while (state.wumpusLocation.x === 0 && state.wumpusLocation.y === 0); // Make sure the wumpus doesn't start at (0,0)
 
-         // Randomize Pits.
-         for(x = 0; x < 4; x += 1) {
-            for(y = 0; y < 4; y += 1) {
-               if(x === 0 && y === 0) {
-                  // always make sure spawn is not a pit.
-                  state.isPit[x][y] = false;
-               } else {
-                  // generate a random num between 0 and 4 inclusive (so each num has 20% chance)
-                  // here I pick 3 arbitrarily.
-                  // if we generate 3, then that pit gets enabled.
-                  if(Math.random() < 0.2) {
-                     state.isPit[x][y] = true;
+            // Randomize Gold Location.
+            state.goldLocation.x = Math.floor(Math.random() * 4);
+            state.goldLocation.y = Math.floor(Math.random() * 4);
+
+            // Randomize Pits.
+            for(x = 0; x < 4; x += 1) {
+               for(y = 0; y < 4; y += 1) {
+                  if(x === 0 && y === 0) {
+                     state.isPit[x][y] = false; //Make sure the player spawn is not a pit
+                  } else {
+                     //There is a 20% chance that each cavern will become a pit.
+                     if(Math.random() < 0.2) {
+                        state.isPit[x][y] = true;
+                     }
                   }
                }
             }
-         }
-
-      };
+         };
 
       //Create a default starting state.
       state = {
@@ -730,6 +729,10 @@ document.addEventListener('DOMContentLoaded', function () {
       //Freeze the self object, so it can't be modified.
       return Object.freeze(self);
    };
+   
+   //*****************************************************************************
+   //*****************************END OF MODEL************************************
+   //*****************************************************************************
 
    //Create a new closure to hide the view and controller from the model code above.
    (function () {
