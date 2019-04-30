@@ -1137,6 +1137,7 @@ document.addEventListener('DOMContentLoaded', function () {
                wumpusWorld.setSenseScream(false);
 
                if (keyCode.code === 'ArrowUp') {
+                  wumpusWorld.setHasArrow(false);
                   alert('Shot arrow up');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y < wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
@@ -1144,37 +1145,38 @@ document.addEventListener('DOMContentLoaded', function () {
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootUp');
                      // we need to set has arrow.
-                     wumpusWorld.setHasArrow(false);
+
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowDown') {
+                  wumpusWorld.setHasArrow(false);
                   alert('Shot arrow down');
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y > wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootDown');
-                     wumpusWorld.setHasArrow(false);
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowLeft') {
+                  wumpusWorld.setHasArrow(false);
                   alert('Shot arrow left');
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x > wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootLeft');
-                     wumpusWorld.setHasArrow(false);
+
                   } else wumpusWorld.setSenseScream(false);
                }
                if (keyCode.code === 'ArrowRight') {
+                  wumpusWorld.setHasArrow(false);
                   alert('Shot arrow right');
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x < wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
                      wumpusWorld.setWumpusLocation(-100,-100);
                      wumpusWorld.setPlayerScore(-10);
                      wumpusWorld.setLastMoveMade('shootRight');
-                     wumpusWorld.setHasArrow(false);
                   } else wumpusWorld.setSenseScream(false);
                }
 
@@ -1276,7 +1278,7 @@ document.addEventListener('DOMContentLoaded', function () {
          });
 
 
-         
+
 
 
          // When the page is loaded, get any saved state from web storage and use it.
