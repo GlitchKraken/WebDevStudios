@@ -595,8 +595,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                var j, k; //Variables to use to reset stuff
 
-               // reset the pits to all not exist.
-               for(j = 0; j < 4; j += 1) {
+               // Reset the pits to all not exist.
+               for (j = 0; j < 4; j += 1) {
                   for (k = 0; k < 4; k += 1) {
                      state.isPit[j][k] = false;
                   }
@@ -615,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function () {
                state.Cave[0][0].visitedBefore = true;
                state.Cave[0][0].DangerLevel = -1;
 
-               // empty out the AI's moves-made array.
+               // Empty out the AI's moves-made array.
                for (j = 0; j < state.MovesMade.length; j += 1) {
                   state.MovesMade.pop();
                }
@@ -623,8 +623,8 @@ document.addEventListener('DOMContentLoaded', function () {
                state.lastMoveMade = '';
                state.aiReccomend = '';
                state.checkForBreadCrumbs = false;
-               // then randomize everything.
-               randomizeWumpusBoard();
+
+               randomizeWumpusBoard(); //Randomize everything
             }
          };
          //*****************************************************************************
@@ -653,281 +653,249 @@ document.addEventListener('DOMContentLoaded', function () {
                localStorage.setItem('Wumpus World State', wumpusWorld.getState());
             }
 
+            //*****************************************************************************
+            //*********************************UPDATE VIEW*********************************
+            //*****************************************************************************
+            var pitsAroundPlayer = 0, tempPit = wumpusWorld.getIsPit(), wumpiiAroundPlayer;
 
-                        // ****************************************************
-                        // UPDATE CONTROLLER / MODEL BEFORE ANYTHING LOADS.
-
-                        var pitsAroundPlayer = 0, tempPit = wumpusWorld.getIsPit(), wumpiiAroundPlayer;
-
-                        if (wumpusWorld.getPlayerLocation().x < 3) {
-                           if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
-                              wumpusWorld.setSenseBreeze(true);
-                              pitsAroundPlayer +=1;
-                           }
-                        }
-
-                        if (wumpusWorld.getPlayerLocation().x > 0) {
-                           if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y]) {
-                              wumpusWorld.setSenseBreeze(true);
-                              pitsAroundPlayer +=1;
-                           }
-                        }
-
-                        if(wumpusWorld.getPlayerLocation().y < 3) {
-                           if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1]) {
-                              wumpusWorld.setSenseBreeze(true);
-                              pitsAroundPlayer +=1;
-                           }
-                        }
-
-                        if(wumpusWorld.getPlayerLocation().y > 0) {
-                           if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1]) {
-                              wumpusWorld.setSenseBreeze(true);
-                              pitsAroundPlayer +=1;
-                           }
-                        }
-
-                        if (pitsAroundPlayer === 0) {
-                           wumpusWorld.setSenseBreeze(false);
-                        }
-
-                        //Check for Stench
-                        //Right
-                        wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
-
-                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
-                           wumpusWorld.setSenseStench(true);
-                           wumpiiAroundPlayer += 1;
-                        }
-                        //Left
-                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x - 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
-                           wumpusWorld.setSenseStench(true);
-                           wumpiiAroundPlayer += 1;
-                        }
-                        //Up
-                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y + 1) {
-                           wumpusWorld.setSenseStench(true);
-                           wumpiiAroundPlayer += 1;
-                        }
-                        //Down
-                        if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y - 1){
-                           wumpusWorld.setSenseStench(true);
-                           wumpiiAroundPlayer += 1;
-                        }
-
-                        //Check for gold
-                        if(wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
-                           wumpusWorld.setSenseGlitter(true);
-                           wumpiiAroundPlayer += 1;
-                        } else {
-                           wumpusWorld.setSenseGlitter(false);
-                        }
-
-                        if(wumpiiAroundPlayer === 0) {
-                           wumpusWorld.setSenseStench(false);
-                        }
-
-                        // END OF UPDATE MODEL / CONTROLLER
-                        // ****************************************************
-
-
-
-
-
-
-
-                        // ****************************************************
-                        //       AI CODE GOES HERE. I THINK.
-                        //
-                        // AI will update the model's "AIReccomends" string.
-                        // this way, the string will get handled easily by the view.
-                        // since all percepts were handled above, the ai is now
-                        // set to look at them, and set the AIReccomends string
-                        // accordingly. I really wish we could put this code in
-                        // a seperate file. because hoo-boy would it look
-                        // ugly here.
-
-                        // define what a room is to the ai.
-
-                        //              END OF AI CODE
-                        // ****************************************************
-
-
-         // now update the view accordingly, by hiding elements that are marked as hidden.
-
-
-
-
-         // correctly display the gameDescription.
-         if (!wumpusWorld.getDisplayDescription()) {
-            document.querySelector('#gameDescriptionBox').style.display = "none";
-         }
-
-         if (wumpusWorld.getDisplayDescription()) {
-            document.querySelector('#gameDescriptionBox').style.display = "";
-         }
-
-         // correctly display the high score.
-         if (!wumpusWorld.getDisplayScore()) {
-            document.querySelector('#high-score-box').style.display = "none";
-         }
-
-         if (wumpusWorld.getDisplayScore()) {
-            document.querySelector('#high-score-box').style.display = "";
-         }
-
-         //correctly display the AI
-         if (!wumpusWorld.getDisplayAI()) {
-            document.querySelector('#AI-box').style.display="none";
-
-         }
-
-         if (wumpusWorld.getDisplayAI()) {
-            document.querySelector('#AI-box').style.display="";
-
-         }
-
-         // correctly display the how-to-play section.
-         if (!wumpusWorld.getDisplayHowToPlay()) {
-            document.querySelector('#HowToPlay').style.display = "none";
-         }
-         if (wumpusWorld.getDisplayHowToPlay()) {
-            document.querySelector('#HowToPlay').style.display = "";
-         }
-
-         if (!wumpusWorld.getDisplayBoard()) {
-            document.querySelector('#cave-area').style.display = "none";
-         }
-         if (wumpusWorld.getDisplayBoard()) {
-            document.querySelector('#cave-area').style.display = "";
-         }
-
-         // check the model for game-over or win here, by looking at wumpusWorld. also here is where we
-         // will change the percept text- based on the contents of wumpusWorld.
-         if(wumpusWorld.getPlayerWin() || wumpusWorld.getPlayerLose()) {
-
-            // if we are here, game is over- display appropriate game over screen.
-
-            // display win text when necessary
-            if(wumpusWorld.getPlayerWin()) {
-               document.querySelector('#win-text').style.display="";
-               document.querySelector('#score-text').textContent="Total Score: " + wumpusWorld.getPlayerScore();
-            } else {
-               document.querySelector('#win-text').style.display="none";
-
+            //Check for pit to the east
+            if (wumpusWorld.getPlayerLocation().x < 3) {
+               if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
+                  wumpusWorld.setSenseBreeze(true);
+                  pitsAroundPlayer += 1;
+               }
             }
 
-            // display lose text when necessary.
-            if(wumpusWorld.getPlayerLose()) {
-               document.querySelector('#lose-text').style.display="";
-               document.querySelector('#score-text').textContent="Total Score: " + wumpusWorld.getPlayerScore();
-            } else {
-               document.querySelector('#lose-text').style.display="none";
-
+            //Check for pit to the west
+            if (wumpusWorld.getPlayerLocation().x > 0) {
+               if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y]) {
+                  wumpusWorld.setSenseBreeze(true);
+                  pitsAroundPlayer += 1;
+               }
             }
 
-         } else {
+            //Check for pit to the north
+            if (wumpusWorld.getPlayerLocation().y < 3) {
+               if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1]) {
+                  wumpusWorld.setSenseBreeze(true);
+                  pitsAroundPlayer += 1;
+               }
+            }
 
-            // if we are here, then the game is ongoing. display senses accordingly.
+            //Check for pit to the south
+            if (wumpusWorld.getPlayerLocation().y > 0) {
+               if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1]) {
+                  wumpusWorld.setSenseBreeze(true);
+                  pitsAroundPlayer += 1;
+               }
+            }
 
-            // display AI text.
-            document.querySelector('#AI-text').textContent = wumpusWorld.agentHollowKnight();
-            // display high score.
-            document.querySelector('#high-score-text').textContent = wumpusWorld.getHighScore();
-            // since the game is ongoing, we should hide the win/lose text.
-            document.querySelector('#win-text').style.display="none";
-            document.querySelector('#lose-text').style.display="none";
-            document.querySelector('#score-text').textContent="";
+            //If there isn't a pit around the player make sure the breeze percept isn't set
+            if (pitsAroundPlayer === 0) {
+               wumpusWorld.setSenseBreeze(false);
+            }
 
-            if(wumpusWorld.getSenseBump()) {
-               document.querySelector('#bump-percept-text').style.display="";
+            //Check for a wumpus
+            wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
+
+            //Check for wumpus to the right
+            if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
+               wumpusWorld.setSenseStench(true);
+               wumpiiAroundPlayer += 1;
+            }
+            //Check for wumpus to the left
+            if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x - 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
+               wumpusWorld.setSenseStench(true);
+               wumpiiAroundPlayer += 1;
+            }
+            //Check for wumpus to the north
+            if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y + 1) {
+               wumpusWorld.setSenseStench(true);
+               wumpiiAroundPlayer += 1;
+            }
+            //Check for wumpus to the south
+            if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y - 1) {
+               wumpusWorld.setSenseStench(true);
+               wumpiiAroundPlayer += 1;
+            }
+
+            //Check for gold
+            if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
+               wumpusWorld.setSenseGlitter(true);
+               wumpiiAroundPlayer += 1;
             } else {
-               document.querySelector('#bump-percept-text').style.display="none";
+               wumpusWorld.setSenseGlitter(false);
+            }
+
+            //If there isn't a stench around the player, make sure the percept isn't set
+            if (wumpiiAroundPlayer === 0) {
+               wumpusWorld.setSenseStench(false);
             }
 
 
-            if(wumpusWorld.getSenseBreeze()) {
-               document.querySelector('#breeze-percept-text').style.display="";
-            } else {
-               document.querySelector('#breeze-percept-text').style.display="none";
+
+
+            //*****************************************************************************
+            //***********************Update page view accordingly**************************
+            //*****************************************************************************
+
+            //Correctly display the gameDescription.
+            if (!wumpusWorld.getDisplayDescription()) {
+               document.querySelector('#gameDescriptionBox').style.display = "none";
+            }
+            if (wumpusWorld.getDisplayDescription()) {
+               document.querySelector('#gameDescriptionBox').style.display = "";
             }
 
-            if(wumpusWorld.getSenseScream()) {
-               document.querySelector('#scream-percept-text').style.display="";
-            } else {
-               document.querySelector('#scream-percept-text').style.display="none";
+            //Correctly display the high score.
+            if (!wumpusWorld.getDisplayScore()) {
+               document.querySelector('#high-score-box').style.display = "none";
+            }
+            if (wumpusWorld.getDisplayScore()) {
+               document.querySelector('#high-score-box').style.display = "";
             }
 
-            if(wumpusWorld.getSenseStench()) {
-               document.querySelector('#stench-percept-text').style.display="";
-            } else {
-               document.querySelector('#stench-percept-text').style.display="none";
+            //Correctly display the AI
+            if (!wumpusWorld.getDisplayAI()) {
+               document.querySelector('#AI-box').style.display = "none";
+            }
+            if (wumpusWorld.getDisplayAI()) {
+               document.querySelector('#AI-box').style.display = "";
             }
 
-            if(wumpusWorld.getSenseGlitter()) {
-               document.querySelector('#glitter-percept-text').style.display="";
-            } else {
-               document.querySelector('#glitter-percept-text').style.display="none";
+            //Correctly display the how-to-play section.
+            if (!wumpusWorld.getDisplayHowToPlay()) {
+               document.querySelector('#HowToPlay').style.display = "none";
+            }
+            if (wumpusWorld.getDisplayHowToPlay()) {
+               document.querySelector('#HowToPlay').style.display = "";
             }
 
-            // if there are no percepts to be sensed, make it clear.
-            if(!wumpusWorld.getSenseBump() && !wumpusWorld.getSenseBreeze() && !wumpusWorld.getSenseScream() && !wumpusWorld.getSenseStench() && !wumpusWorld.getSenseGlitter()) {
-               document.querySelector('#default-percept-text').style.display="";
-            } else {
-               document.querySelector('#default-percept-text').style.display="none";
+            //Correctly display the game board
+            if (!wumpusWorld.getDisplayBoard()) {
+               document.querySelector('#cave-area').style.display = "none";
+            }
+            if (wumpusWorld.getDisplayBoard()) {
+               document.querySelector('#cave-area').style.display = "";
             }
 
-         }
+
+
+
+            //*****************************************************************************
+            //*****************************WIN, LOSE, or UPDATE****************************
+            //*****************************************************************************
+
+            //Check the model for game-over or win. Update the percept text
+            if (wumpusWorld.getPlayerWin() || wumpusWorld.getPlayerLose()) {
+
+               //Display win test
+               if (wumpusWorld.getPlayerWin()) {
+                  document.querySelector('#win-text').style.display = "";
+                  document.querySelector('#score-text').textContent = "Total Score: " + wumpusWorld.getPlayerScore();
+               } else {
+                  document.querySelector('#win-text').style.display = "none";
+               }
+
+               //Display lose text
+               if (wumpusWorld.getPlayerLose()) {
+                  document.querySelector('#lose-text').style.display = "";
+                  document.querySelector('#score-text').textContent = "Total Score: " + wumpusWorld.getPlayerScore();
+               } else {
+                  document.querySelector('#lose-text').style.display = "none";
+               }
+            } else {
+
+               //Player didn't win or lose, keep going
+
+               //Display AI text.
+               document.querySelector('#AI-text').textContent = wumpusWorld.agentHollowKnight();
+               //Display high score.
+               document.querySelector('#high-score-text').textContent = wumpusWorld.getHighScore();
+               //Since the game is ongoing, we should hide the win/lose text.
+               document.querySelector('#win-text').style.display = "none";
+               document.querySelector('#lose-text').style.display = "none";
+               document.querySelector('#score-text').textContent = "";
+
+               if (wumpusWorld.getSenseBump()) {
+                  document.querySelector('#bump-percept-text').style.display = "";
+               } else {
+                  document.querySelector('#bump-percept-text').style.display = "none";
+               }
+
+               if (wumpusWorld.getSenseBreeze()) {
+                  document.querySelector('#breeze-percept-text').style.display = "";
+               } else {
+                  document.querySelector('#breeze-percept-text').style.display = "none";
+               }
+
+               if (wumpusWorld.getSenseScream()) {
+                  document.querySelector('#scream-percept-text').style.display = "";
+               } else {
+                  document.querySelector('#scream-percept-text').style.display = "none";
+               }
+
+               if (wumpusWorld.getSenseStench()) {
+                  document.querySelector('#stench-percept-text').style.display = "";
+               } else {
+                  document.querySelector('#stench-percept-text').style.display = "none";
+               }
+
+               if (wumpusWorld.getSenseGlitter()) {
+                  document.querySelector('#glitter-percept-text').style.display = "";
+               } else {
+                  document.querySelector('#glitter-percept-text').style.display = "none";
+               }
+
+               // if there are no percepts to be sensed, make it clear.
+               if (!wumpusWorld.getSenseBump() && !wumpusWorld.getSenseBreeze() && !wumpusWorld.getSenseScream() && !wumpusWorld.getSenseStench() && !wumpusWorld.getSenseGlitter()) {
+                  document.querySelector('#default-percept-text').style.display = "";
+               } else {
+                  document.querySelector('#default-percept-text').style.display = "none";
+               }
+            }
+         };
 
 
 
 
-
-         // NOTE: we probably won't ever have a need to do this,
-         //       but if we were to update the controller (buttons / toggles),
-         //       this is where those changes would go.
-
-      };
+         //*****************************************************************************
+         //******************************UPDATE CONTROLLER******************************
+         //*****************************************************************************
 
 
+         //*****************************************************************************
+         //********************************TOGGLE EVENTS********************************
+         //*****************************************************************************
 
-
-
-                  // Setup the wumpus-world controller here!
-// ---------------------------------------------------------------------------
-//                  === Toggle Events ===
-
-         // setup description toggle
+         //Setup description toggle
          document.querySelector('#game-description').addEventListener('click', function () {
-               if(document.querySelector('#game-description').checked) {
-                  wumpusWorld.setDisplayDescription(true);
-               }
-               else {
-                  wumpusWorld.setDisplayDescription(false);
-               }
-               updateWumpusWorld();
+            if (document.querySelector('#game-description').checked) {
+               wumpusWorld.setDisplayDescription(true);
+            } else {
+               wumpusWorld.setDisplayDescription(false);
+            }
+            updateWumpusWorld();
          }, false);
 
-         //setup the gameboard toggle
+         //Setup the gameboard toggle
          document.querySelector('#wumpusBoard').addEventListener('click', function () {
-               if(document.querySelector('#wumpusBoard').checked) {
-                  wumpusWorld.setDisplayBoard(true);
-               }
-               else {
-                  wumpusWorld.setDisplayBoard(false);
-               }
-               updateWumpusWorld();
+            if (document.querySelector('#wumpusBoard').checked) {
+               wumpusWorld.setDisplayBoard(true);
+            } else {
+               wumpusWorld.setDisplayBoard(false);
+            }
+            updateWumpusWorld();
          }, false);
 
-         // setup how-to-play toggle
+         //Setup how-to-play toggle
          document.querySelector('#how-to-play').addEventListener('click', function () {
-               if(document.querySelector('#how-to-play').checked) {
-                  wumpusWorld.setDisplayHowToPlay(true);
-               }
-               else {
-                  wumpusWorld.setDisplayHowToPlay(false);
-               }
-               updateWumpusWorld();
+            if (document.querySelector('#how-to-play').checked) {
+               wumpusWorld.setDisplayHowToPlay(true);
+            } else {
+               wumpusWorld.setDisplayHowToPlay(false);
+            }
+            updateWumpusWorld();
          }, false);
 
          // setup AI-toggle here
