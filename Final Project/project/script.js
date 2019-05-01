@@ -898,164 +898,157 @@ document.addEventListener('DOMContentLoaded', function () {
             updateWumpusWorld();
          }, false);
 
-         // setup AI-toggle here
+         //Setup AI-toggle here
          document.querySelector('#ai-movement').addEventListener('click', function () {
-               if(document.querySelector('#ai-movement').checked) {
-                  wumpusWorld.setDisplayAI(true);
-               }
-               else {
-                  wumpusWorld.setDisplayAI(false);
-               }
-               updateWumpusWorld();
+            if (document.querySelector('#ai-movement').checked) {
+               wumpusWorld.setDisplayAI(true);
+            } else {
+               wumpusWorld.setDisplayAI(false);
+            }
+            updateWumpusWorld();
          }, false);
-         // ---------
-         // setup Scoreboard-toggle here
+
+         //Setup Scoreboard-toggle here
          document.querySelector('#scorebox').addEventListener('click', function () {
-               if(document.querySelector('#scorebox').checked) {
-                  wumpusWorld.setDisplayScore(true);
-               }
-               else {
-                  wumpusWorld.setDisplayScore(false);
-               }
-               updateWumpusWorld();
+            if (document.querySelector('#scorebox').checked) {
+               wumpusWorld.setDisplayScore(true);
+            } else {
+               wumpusWorld.setDisplayScore(false);
+            }
+            updateWumpusWorld();
          }, false);
-         // ---------------------------------------------------------------------------
 
-
-
-
-         //reset game on button-press.
+         //Reset game on button-press.
          document.querySelector('#reset-button').addEventListener('click', function () {
             wumpusWorld.resetGame();
             updateWumpusWorld();
          }, false);
+         //*****************************************************************************
 
 
-         // ---------------------------------------------------------------------------
-         //                ===== Handle Player movement and actions =====
 
+
+         //*****************************************************************************
+         //**************************PLAYER MOVEMENT & ACTIONS**************************
+         //*****************************************************************************
          document.addEventListener('keydown', function (keyCode) {
 
+            //If the player hasn't won or lost yet, keep going
+            if (!wumpusWorld.getPlayerWin() && !wumpusWorld.getPlayerLose()) {
 
-
-            if(!wumpusWorld.getPlayerWin() && !wumpusWorld.getPlayerLose()) {
-
+               //Handle moving the player North
                if (keyCode.code === 'KeyW') {
                   wumpusWorld.setPlayerScore(-1);
-                  // is the player trying to pass through a wall?
-                  if(wumpusWorld.getPlayerLocation().y === 3) {
+                  if (wumpusWorld.getPlayerLocation().y === 3) {
                      wumpusWorld.setSenseBump(true);
-                  }
-                  else {
-                     // place the player accordingly.
+                  } else {
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y + 1);
                      wumpusWorld.setPushMovesMade('MoveUp');
                   }
                }
 
+               //Handle moving the player West
                if (keyCode.code === 'KeyA') {
                   wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().x === 0) {
                      wumpusWorld.setSenseBump(true);
                   } else {
-                     //Place player accordingly
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x - 1, wumpusWorld.getPlayerLocation().y);
                      wumpusWorld.setPushMovesMade('MoveLeft');
                   }
                }
+
+               //Handle moving the player South
                if (keyCode.code === 'KeyS') {
                   wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().y === 0) {
                      wumpusWorld.setSenseBump(true);
                   } else {
-                     //Place player accordingly
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x, wumpusWorld.getPlayerLocation().y - 1);
                      wumpusWorld.setPushMovesMade('MoveDown');
                   }
                }
+
+               //Handle moving the player East
                if (keyCode.code === 'KeyD') {
                   wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().x === 3) {
                      wumpusWorld.setSenseBump(true);
                   } else {
-                     //Place player accordingly
                      wumpusWorld.setSenseBump(false);
                      wumpusWorld.setPlayerLocation(wumpusWorld.getPlayerLocation().x + 1, wumpusWorld.getPlayerLocation().y);
                      wumpusWorld.setPushMovesMade('MoveRight');
                   }
                }
 
-
+               //Handle climbing out of the cavern
                if (keyCode.code === 'KeyC') {
                   wumpusWorld.setPlayerScore(-1);
                   if (wumpusWorld.getPlayerLocation().x === 0 && wumpusWorld.getPlayerLocation().y === 0) {
-                     wumpusWorld.setPlayerWin(true); // they 'technically' win, but with a score of 0.;
+                     wumpusWorld.setPlayerWin(true);
                   }
                }
 
-
-
-
-
-               // handle player attacks / interactions.
-
+               //Handle picking up gold
                if (keyCode.code === 'KeyG') {
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                      wumpusWorld.setPlayerHasGold();
-                     //wumpusWorld.setPlayerScore(1000);
-                     // move the gold imposisbly far away here.
                      wumpusWorld.setRemoveGold();
                      wumpusWorld.setSenseGlitter(false);
                   }
                }
 
-               wumpusWorld.setSenseScream(false);
+               wumpusWorld.setSenseScream(false); //Wumpus is not dead initially
 
+               //Handle shooting arrow North
                if (keyCode.code === 'ArrowUp') {
                   wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y < wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
-                     wumpusWorld.setWumpusLocation(-100,-100);
+                     wumpusWorld.setWumpusLocation(-100, -100);
                      wumpusWorld.setLastMoveMade('shootUp');
-                     // we need to set has arrow.
-
                   } else {
                      wumpusWorld.setSenseScream(false);
                   }
                }
+
+               //Handle shooting arrow South
                if (keyCode.code === 'ArrowDown') {
                   wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y > wumpusWorld.getWumpusLocation().y) {
                      wumpusWorld.setSenseScream(true);
-                     wumpusWorld.setWumpusLocation(-100,-100);
+                     wumpusWorld.setWumpusLocation(-100, -100);
                      wumpusWorld.setLastMoveMade('shootDown');
                   } else {
                      wumpusWorld.setSenseScream(false);
                   }
                }
+
+               //Handle shooting arrow West
                if (keyCode.code === 'ArrowLeft') {
                   wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x > wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
-                     wumpusWorld.setWumpusLocation(-100,-100);
+                     wumpusWorld.setWumpusLocation(-100, -100);
                      wumpusWorld.setLastMoveMade('shootLeft');
-
                   } else {
                      wumpusWorld.setSenseScream(false);
                   }
                }
+
+               //Handle shooting arrow East
                if (keyCode.code === 'ArrowRight') {
                   wumpusWorld.setPlayerScore(-10);
                   wumpusWorld.setHasArrow(false);
                   if (wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y && wumpusWorld.getPlayerLocation().x < wumpusWorld.getWumpusLocation().x) {
                      wumpusWorld.setSenseScream(true);
-                     wumpusWorld.setWumpusLocation(-100,-100);
+                     wumpusWorld.setWumpusLocation(-100, -100);
                      wumpusWorld.setLastMoveMade('shootRight');
                   } else {
                      wumpusWorld.setSenseScream(false);
@@ -1064,8 +1057,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                //Setup controller to check for player death
                if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getWumpusLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getWumpusLocation().y) {
-                     wumpusWorld.setPlayerLose();
-                     wumpusWorld.setPlayerScore(-1000);
+                  wumpusWorld.setPlayerLose();
+                  wumpusWorld.setPlayerScore(-1000);
                }
 
                //Check for pit death
@@ -1075,100 +1068,97 @@ document.addEventListener('DOMContentLoaded', function () {
                   wumpusWorld.setPlayerScore(-1000);
                }
 
-
-               // NOTE: we need to check for stench and breeze when the game
-               // starts, not *just* when buttons are pressed.
-
-
                //Check for pit breeze, but only check existing squares.
                pitsAroundPlayer = 0;
 
+               //Check for pit to the West
                if (wumpusWorld.getPlayerLocation().x < 3) {
                   if (tempPit[wumpusWorld.getPlayerLocation().x + 1][wumpusWorld.getPlayerLocation().y]) {
                      wumpusWorld.setSenseBreeze(true);
-                     pitsAroundPlayer +=1;
+                     pitsAroundPlayer += 1;
                   }
                }
 
+               //Check for pit to the East
                if (wumpusWorld.getPlayerLocation().x > 0) {
                   if (tempPit[wumpusWorld.getPlayerLocation().x - 1][wumpusWorld.getPlayerLocation().y]) {
                      wumpusWorld.setSenseBreeze(true);
-                     pitsAroundPlayer +=1;
+                     pitsAroundPlayer += 1;
                   }
                }
 
-               if(wumpusWorld.getPlayerLocation().y < 3) {
+               //Check for pit to the North
+               if (wumpusWorld.getPlayerLocation().y < 3) {
                   if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y + 1]) {
                      wumpusWorld.setSenseBreeze(true);
-                     pitsAroundPlayer +=1;
+                     pitsAroundPlayer += 1;
                   }
                }
 
-               if(wumpusWorld.getPlayerLocation().y > 0) {
+               //Check for pit to the South
+               if (wumpusWorld.getPlayerLocation().y > 0) {
                   if (tempPit[wumpusWorld.getPlayerLocation().x][wumpusWorld.getPlayerLocation().y - 1]) {
                      wumpusWorld.setSenseBreeze(true);
-                     pitsAroundPlayer +=1;
+                     pitsAroundPlayer += 1;
                   }
                }
 
+               //If there are no pits around the player, clear out the breeze percept
                if (pitsAroundPlayer === 0) {
                   wumpusWorld.setSenseBreeze(false);
                }
 
                //Check for Stench
-               //Right
                wumpiiAroundPlayer = 0; //technically, this should never be more than 1.
 
-               if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
+               //Check for wumpus to the right
+               if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x + 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
                   wumpusWorld.setSenseStench(true);
                   wumpiiAroundPlayer += 1;
                }
-               //Left
-               if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x - 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
+
+               //Check for wumpus to the left
+               if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x - 1 && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y) {
                   wumpusWorld.setSenseStench(true);
                   wumpiiAroundPlayer += 1;
                }
-               //Up
-               if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y + 1) {
+
+               //Check for wumpus to the north
+               if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y + 1) {
                   wumpusWorld.setSenseStench(true);
                   wumpiiAroundPlayer += 1;
                }
-               //Down
-               if(wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y - 1){
+
+               //Check for wumpus to the south
+               if (wumpusWorld.getWumpusLocation().x === wumpusWorld.getPlayerLocation().x && wumpusWorld.getWumpusLocation().y === wumpusWorld.getPlayerLocation().y - 1) {
                   wumpusWorld.setSenseStench(true);
                   wumpiiAroundPlayer += 1;
                }
 
                //Check for gold
-               if(wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
+               if (wumpusWorld.getPlayerLocation().x === wumpusWorld.getGoldLocation().x && wumpusWorld.getPlayerLocation().y === wumpusWorld.getGoldLocation().y) {
                   wumpusWorld.setSenseGlitter(true);
                   wumpiiAroundPlayer += 1;
                } else {
                   wumpusWorld.setSenseGlitter(false);
                }
 
-               if(wumpiiAroundPlayer === 0) {
+               //If there isn't a wumpus, clear out the stench percept
+               if (wumpiiAroundPlayer === 0) {
                   wumpusWorld.setSenseStench(false);
                }
 
                // update the visual, because the player has done *something*.
                updateWumpusWorld();
             }
-
-
-
-
             updateWumpusWorld();
          });
 
-
-
-
-
          // When the page is loaded, get any saved state from web storage and use it.
          wumpusWorld = createWumpusWorld(localStorage && localStorage.getItem && localStorage.getItem('Wumpus World State'));
+
          // Update everything else based on the new model state.
          updateWumpusWorld();
+      }());
    }());
-}());
 }, false);
