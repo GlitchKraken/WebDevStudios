@@ -789,10 +789,53 @@ document.addEventListener('DOMContentLoaded', function () {
             //Check the model for game-over or win. Update the percept text
             if (wumpusWorld.getPlayerWin() || wumpusWorld.getPlayerLose()) {
 
-               //Display win test
+               //Display win text
                if (wumpusWorld.getPlayerWin()) {
                   document.querySelector('#win-text').style.display = "";
                   document.querySelector('#score-text').textContent = "Total Score: " + wumpusWorld.getPlayerScore();
+                  // loop through each of the boards rows.
+                  Array.from(document.querySelectorAll('tr')).reverse().forEach(function (Row, whichRow) {
+                     // loop through each of the rows' elements.
+                     Array.from(Row.children).forEach(function (element, whichElement) {
+
+                        // remove those elements.
+                        Row.removeChild(element);
+
+                     });
+
+                     // then, fill them in with the final board state.
+                     var i;
+                     for(i = 0; i < 4; i++) {
+                        // assume nothing is in the cell.
+                        var cellReveal = "";
+                        // if there is a wumpus in the cell, add 'W' to the string that will be placed.
+                        if(wumpusWorld.getWumpusLocation().x == i && wumpusWorld.getWumpusLocation().y == whichRow) {
+                           cellReveal += 'W';
+                        }
+                        //  if there is a pit in the cell, ad a 'P' to the string that will be placed.
+                        var pitLocations = wumpusWorld.getIsPit();
+                        if(pitLocations[i][whichRow]) {
+                           cellReveal += 'P';
+                        }
+
+                        if(wumpusWorld.getGoldLocation().x == i && wumpusWorld.getGoldLocation().y == whichRow) {
+                           cellReveal += 'G';
+                        }
+                        if (wumpusWorld.getPlayerLocation().x == i && wumpusWorld.getPlayerLocation().y == whichRow) {
+                           cellReveal +='\n YOU';
+                        }
+                        // create the new td element
+                        var tableData = document.createElement("td");
+                        // create the apropriate text content for that element.
+                        var tableDataContent = document.createTextNode(cellReveal);
+                        // add the content to the newly created element.
+                        tableData.appendChild(tableDataContent);
+
+                        //insert the element to the current row.
+                        Row.appendChild(tableData);
+                     }
+
+                  });
                } else {
                   document.querySelector('#win-text').style.display = "none";
                }
@@ -801,13 +844,55 @@ document.addEventListener('DOMContentLoaded', function () {
                if (wumpusWorld.getPlayerLose()) {
                   document.querySelector('#lose-text').style.display = "";
                   document.querySelector('#score-text').textContent = "Total Score: " + wumpusWorld.getPlayerScore();
+                  // loop through each of the boards rows.
+                  Array.from(document.querySelectorAll('tr')).reverse().forEach(function (Row, whichRow) {
+                     // loop through each of the rows' elements.
+                     Array.from(Row.children).forEach(function (element, whichElement) {
+
+                        // remove those elements.
+                        Row.removeChild(element);
+
+                     });
+
+                     // then, fill them in with the final board state.
+                     var i;
+                     for(i = 0; i < 4; i++) {
+                        // assume nothing is in the cell.
+                        var cellReveal = "";
+                        // if there is a wumpus in the cell, add 'W' to the string that will be placed.
+                        if(wumpusWorld.getWumpusLocation().x == i && wumpusWorld.getWumpusLocation().y == whichRow) {
+                           cellReveal += 'W';
+                        }
+                        //  if there is a pit in the cell, ad a 'P' to the string that will be placed.
+                        var pitLocations = wumpusWorld.getIsPit();
+                        if(pitLocations[i][whichRow]) {
+                           cellReveal += 'P';
+                        }
+
+                        if(wumpusWorld.getGoldLocation().x == i && wumpusWorld.getGoldLocation().y == whichRow) {
+                           cellReveal += 'G';
+                        }
+                        if (wumpusWorld.getPlayerLocation().x == i && wumpusWorld.getPlayerLocation().y == whichRow) {
+                           cellReveal +='\n YOU';
+                        }
+                        // create the new td element
+                        var tableData = document.createElement("td");
+                        // create the apropriate text content for that element.
+                        var tableDataContent = document.createTextNode(cellReveal);
+                        // add the content to the newly created element.
+                        tableData.appendChild(tableDataContent);
+
+                        //insert the element to the current row.
+                        Row.appendChild(tableData);
+                     }
+
+                  });
                } else {
                   document.querySelector('#lose-text').style.display = "none";
                }
             } else {
 
                //Player didn't win or lose, keep going
-
                //Display AI text.
                document.querySelector('#AI-text').textContent = wumpusWorld.agentHollowKnight();
                //Display high score.
@@ -921,6 +1006,76 @@ document.addEventListener('DOMContentLoaded', function () {
          //Reset game on button-press.
          document.querySelector('#reset-button').addEventListener('click', function () {
             wumpusWorld.resetGame();
+
+            // RESET BOARD VIEW WITH  CHECKBOXES. this should only be called
+            // once, at the start of each round. currently its always called,
+            // which resets the player's notepad/
+            // ***************
+            // go through each row
+            document.querySelectorAll('tr').forEach(function (Row, whichRow) {
+               // loop through each of the rows' elements.
+               Array.from(Row.children).forEach(function (element, whichElement) {
+
+                  // remove those elements.
+                  Row.removeChild(element);
+
+               });
+
+               //create 4 series of checkboxes for each row.
+               var i;
+               for(i = 0; i < 4; i++) {
+
+                     // create the start-box.
+                     if(i == 0 && whichRow == 3) {
+                        var td = document.createElement('td');
+                        td.appendChild(document.createTextNode('START'));
+                        Row.appendChild(td);
+                     } else {
+
+                        // create the checkboxes with w
+                        var tableData = document.createElement('td');
+                        var checkbox = document.createElement('input');
+                        checkbox.type = "checkbox";
+                        var checkboxLabel = document.createElement('label');
+                        checkboxLabel.appendChild(checkbox);
+                        checkboxLabel.appendChild(document.createTextNode('W'));
+
+                        // create checkbox for p.
+                        var p = document.createElement('p');
+                        var checkboxLable2 = document.createElement('label');
+                        var checkbox2 = document.createElement('input');
+                        checkbox2.type = "checkbox";
+
+
+                        checkboxLable2.appendChild(checkbox2);
+                        checkboxLable2.appendChild(document.createTextNode('P'));
+
+                        tableData.appendChild(checkboxLabel);
+                        tableData.appendChild(p);
+                        tableData.appendChild(checkboxLable2);
+                        Row.appendChild(tableData);
+                     }
+               }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             updateWumpusWorld();
          }, false);
          //*****************************************************************************
