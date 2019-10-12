@@ -56,6 +56,14 @@ h1 {
    font-size: 50px;
 }
 
+/* Style the heading one field*/
+h2 {
+   color: #785e4d;
+   text-align: center;
+   font-weight: bold;
+   font-size: 30px;
+}
+
 /* Style all the fieldset fields*/
 fieldset {
    border-color: #ff8426;
