@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+
+<meta charset="UTF-8" />
+<title>JavaScript examples for Studio 9</title>
+
+<!--
+CS 3312, spring 2019
+Examples for Studio 9
+-->
+
+<!-- Import a CSS stylesheet to style the page. -->
+<link href="example.css" rel="stylesheet" />
+
+</head><body>
+
+<h1>Drawing and animating</h1>
+
+<fieldset id="simple-drawing-area">
+   <legend>Simple drawing</legend>
+   <p id="simple-drawing-instructions">
+      Click on the canvas below to redraw it.
+   </p>
+   <div>
+      <canvas id="simple-drawing"></canvas>
+   </div>
+</fieldset>
+
+<fieldset id="responsive-drawing-area">
+   <legend>Responsive drawing</legend>
+   <p id="responsive-drawing-instructions">
+      Click and move around the canvas below to draw curves.
+   </p>
+   <div>
+      <canvas id="responsive-drawing"></canvas>
+   </div>
+   <p id="responsive-drawing-status"></p>
+</fieldset>
+
+<fieldset id="color-show-area">
+   <legend>Color show</legend>
+   <div class="square" id="color-show"></div>
+   <div>
+      <button id="toggle-color-show" type="button">Start color show</button>
+   </div>
+</fieldset>
+
+<fieldset id="fading-effects-area">
+   <legend>Fading effects</legend>
+   <div class="framed square" id="move-over-me">
+      Move over me!
+   </div>
+   <div class="framed square" id="click-me">
+      Click me!
+   </div>
+</fieldset>
+
+<!-- Import a JavaScript script to add interactivity to the page. -->
+<script src="example.js"></script>
+
+</body></html>
