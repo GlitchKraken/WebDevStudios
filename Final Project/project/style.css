@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 /*
-CS 3312, spring 2019
-Studio 8
-DON'T CHANGE THIS FILE
+CS 3312, Spring 2019
+Final Project
+Josh Meek & Chad Fry
 */
 
 /* Fixing the box-sizing attribute will make sizing boxes easier. */
@@ -16,52 +16,143 @@ html {
    box-sizing: inherit;
 }
 
+/* Stylize the different units within the across1 class*/
+.across1 {
+   display: flex;
+   justify-content: space-between;
+   flex-direction: row;
+   align-items: baseline;
+   flex-wrap: wrap-reverse;
+
+}
+
+/* Stylize the units within the across2 class*/
+.across2 {
+   display: flex;
+   justify-content: space-around;
+   flex-direction: row;
+   flex-wrap: wrap-reverse;
+}
+
+.across3 {
+   display: flex;
+   justify-content: space-between;
+   flex-direction: row;
+   flex-wrap: wrap-reverse;
+}
+
+/* Style everything within the body field*/
 body {
-   background-color: rgb(255, 250, 245);
-   font-family: Georgia, serif;
+   background-color: #f2eee3;
+   font-family: Spectral;
+   color: #785e4d;
 }
 
+/* Style the heading one field*/
 h1 {
-   color: rgb(34, 68, 102);
+   color: #785e4d;
    text-align: center;
+   font-weight: bold;
+   font-size: 50px;
 }
 
+/* Style the heading one field*/
+h2 {
+   color: #785e4d;
+   text-align: center;
+   font-weight: bold;
+   font-size: 30px;
+}
+
+/* Style all the fieldset fields*/
 fieldset {
-   border-color: rgb(68, 136, 204);
+   border-color: #ff8426;
    border-radius: 10px;
    border-style: solid;
-   border-width: 2px;
-   float: left;
+   border-width: 4px;
+   box-shadow: 10px 10px 20px black;
 }
 
+/* Style all the legend fields*/
 legend {
-   border-color: rgb(68, 136, 204);
+   border-color: #ff8426;
    border-style: solid;
    border-width: 2px;
    padding: 0px 5px;
+   font-weight: bold;
+   font-family: Spectral;
+   font-size: 22px;
 }
 
-textarea {
-   display: block;
+/*Making changes here will update the how to play window*/
+#HowToPlay > p {
+   font-size: 18px;
+   font-weight: bold;
 }
 
-.number-output {
-   color: rgb(17, 68, 34);
-   font-size: 200%;
-}
-
-.card-set {
+/* Stylize the toggles box section*/
+#toggles {
    display: flex;
-   flex-wrap: wrap;
+   flex-direction: column;
 }
 
-.card-set div {
-   background-color: rgb(17, 68, 34);
-   border-color: rgb(0, 0, 0);
+/* Stylize the game descritpion box*/
+.gameDescription {
+   display: flex;
+   margin: 20px;
+   margin-bottom: 100px;
+   font-size: 18px;
+   margin-right: 20px;
+   margin-left: 20px;
+}
+
+/* Stylize the text in the how to play section*/
+.HowToPlayText {
+   font-size: 18px;
+}
+
+/* Stylize the inside of the gameboard, i.e. the actual boxes*/
+.gameboard tr td {
+   border-color: #785e4d;
    border-style: solid;
-   border-width: 1px;
-   color: rgb(255, 250, 245);
-   cursor: pointer;
-   margin: 5px;
-   padding: 5px;
+   border-width: 8px;
+   font-family: Spectral;
+   font-size: 20px;
+   height: 200px;
+   text-align: center;
+   width: 200px;
+}
+
+/*Used to stylize the percepts box*/
+.Percepts {
+   display: flex;
+   margin-top: 50px;
+   align-items: flex-end;
+   flex-direction: row;
+   justify-content: center;
+}
+
+/*Used to stylize the gameboard*/
+.theWumpusLair {
+   justify-content: center;
+   margin-bottom: 20px;
+}
+
+/* Adjust the styling of the header row that contains the signature*/
+hr {
+   margin-top: 100px;
+   border-radius: 80px;
+   border-color: #785e4f;
+   text-align: center;
+}
+
+.Scoreboard {
+   text-align: center;
+   font-weight: bold;
+   font-size: 22px;
+}
+
+/* Adjust the styling of the signature at the bottom of the webpage*/
+.ourSignature {
+   text-align: center;
 }
